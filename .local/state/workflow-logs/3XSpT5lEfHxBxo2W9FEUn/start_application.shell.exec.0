@@ -1,0 +1,36 @@
+[1G[0K⠙[1G[0K
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K⠙[1G[0K8:42:50 AM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+8:43:00 AM [express] GET /api/auth/me 304 in 5ms :: {"authenticated":false}
+8:46:50 AM [express] POST /api/logs 201 in 74ms :: {"id":110,"familyId":"family-agent-test","childId":null,"userId":"papa","type":"milk","points":10,"message":"母乳を記録しました！ 母乳 左5分/右5分","subType":"breast","foodItems":null,"foodAmount":null,"foodNote":null,"isNewFood":false,"imageUrl":null,"poopColor":null,"poopConsistency":null,"bodyTemperature":null,"symptoms":null,"symptomNote":null,"breastLeftMin":5,"breastRightMin":5,"isExpressed":false,"expressedMl":null,"formulaMl":null,"stoolType":null,"stoolAmount":null,"stoolColor":null,"medicineName":null,"medicineDose":null,"performedBy":"papa","settlingMethod":null,"settlingMinutes":null,"sleepLocation":null,"sleepNote":null,"spitUp":true,"spitUpAmount":"small","spitUpTiming":"immediate","spitUpNote":null,"excludeFromInterval":false,"holdEndAt":null,"walkEndAt":null,"createdAt":"2026-07-27T08:46:50.460Z"}
+8:46:50 AM [express] POST /api/logs 201 in 9ms :: {"id":111,"familyId":"family-agent-test","childId":null,"userId":"papa","type":"milk","points":10,"message":"テスト","subType":"breast","foodItems":null,"foodAmount":null,"foodNote":null,"isNewFood":false,"imageUrl":null,"poopColor":null,"poopConsistency":null,"bodyTemperature":null,"symptoms":null,"symptomNote":null,"breastLeftMin":5,"breastRightMin":5,"isExpressed":false,"expressedMl":null,"formulaMl":null,"stoolType":null,"stoolAmount":null,"stoolColor":null,"medicineName":null,"medicineDose":null,"performedBy":"papa","settlingMethod":null,"settlingMinutes":null,"sleepLocation":null,"sleepNote":null,"spitUp":false,"spitUpAmount":null,"spitUpTiming":null,"spitUpNote":null,"excludeFromInterval":false,"holdEndAt":null,"walkEndAt":null,"createdAt":"2026-07-27T08:46:50.525Z"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m8:49:45 AM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Timeline.tsx[22m
+8:50:11 AM [express] GET /api/auth/me 304 in 5ms :: {"authenticated":false}

@@ -1,0 +1,109 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K5:56:51 PM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+5:56:59 PM [express] GET /api/auth/me 200 in 14ms :: {"authenticated":false}
+5:57:03 PM [express] GET /api/auth/me 304 in 5ms :: {"authenticated":false}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:57:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/pages/Settings.tsx, /src/pages/Timeline.tsx, /src/pages/Onboarding.tsx, /src/pages/Calendar.tsx, /src/pages/Home.tsx, /src/pages/SleepTraining.tsx, /src/pages/Rescue.tsx, /src/pages/Shop.tsx, /src/pages/SkillTree.tsx, /src/pages/Health.tsx, /src/pages/ChildProfile.tsx, /src/pages/Dashboard.tsx, /src/pages/FoodTracker.tsx, /src/pages/LogReview.tsx, /src/pages/DailyStats.tsx, /src/components/Header.tsx, /src/components/ActionButtons.tsx, /src/components/WeBoard.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:57:41 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/pages/Home.tsx[22m
+[2m5:57:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [33mhmr invalidate [39m[2m/src/pages/SkillTree.tsx[22m Could not Fast Refresh ("TEAM_SKILL_LEVELS" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m5:57:42 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/App.tsx, /src/pages/ChildProfile.tsx[22m
+5:57:44 PM [express] GET /api/auth/me 304 in 8ms :: {"authenticated":false}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:57:47 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/ActionButtons.tsx[22m
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1;1H[0J[2m5:57:48 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/components/ActionButtons.tsx[22m [33m(x2)[39m
