@@ -336,6 +336,7 @@ export default function Timeline() {
   const [tlManualNoEnd, setTlManualNoEnd] = useState(false);
   const [tlManualSleepError, setTlManualSleepError] = useState("");
   const [tlSettlingMethod, setTlSettlingMethod] = useState<string[]>([]);
+  const [tlSettlingMinutes, setTlSettlingMinutes] = useState(0);
   const [tlSleepLocation, setTlSleepLocation] = useState("");
   const [tlSleepNote, setTlSleepNote] = useState("");
   const [tlSleepPerformers, setTlSleepPerformers] = useState<string[]>(() => [localStorage.getItem("userType") || "papa"]);
@@ -354,6 +355,7 @@ export default function Timeline() {
     setTlManualSleepError("");
     setTlManualNoEnd(false);
     setTlSettlingMethod([]);
+    setTlSettlingMinutes(0);
     setTlSleepLocation("");
     setTlSleepNote("");
     setShowManualSleepDialog(true);
@@ -384,7 +386,7 @@ export default function Timeline() {
       const res = await fetch(`/api/logs/${id}/update-time`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ createdAt }),
+        body: JSON.stringify({ createdAt, familyId }),
       });
       if (!res.ok) throw new Error("Failed to update");
       return res.json();
@@ -400,7 +402,7 @@ export default function Timeline() {
       const res = await fetch(`/api/logs/${id}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
       if (!res.ok) throw new Error("Failed to update");
       return res.json();
@@ -416,7 +418,7 @@ export default function Timeline() {
       const res = await fetch(`/api/sleep-sessions/${id}/update-time`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startedAt, endedAt, wakingMinutes: wakingMinutes ?? 0 }),
+        body: JSON.stringify({ startedAt, endedAt, wakingMinutes: wakingMinutes ?? 0, familyId }),
       });
       if (!res.ok) throw new Error("Failed to update");
       return res.json();
@@ -1919,7 +1921,7 @@ export default function Timeline() {
                             await fetch(`/api/logs/${editingLog.id}/sleep-detail`, {
                               method: "PATCH",
                               headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify(sleepDetailPayload),
+                              body: JSON.stringify({ ...sleepDetailPayload, familyId }),
                             });
                             queryClient.invalidateQueries({ queryKey: ["/api/logs"] });
                           }
@@ -2230,6 +2232,7 @@ export default function Timeline() {
                                   settlingMethod: tlSettlingMethod.length > 0 ? tlSettlingMethod.join("・") : "",
                                   sleepLocation: tlSleepLocation,
                                   sleepNote: tlSleepNote.trim() || null,
+                                  familyId,
                                 }),
                               });
                               queryClient.invalidateQueries({ queryKey: ["/api/logs"] });
@@ -2405,6 +2408,29 @@ export default function Timeline() {
 
             <div className="space-y-2">
               <p className="text-[11px] font-bold text-purple-400 flex items-center gap-1">
+                <Clock className="w-3 h-3" />
+                寝かしつけにかかった時間（任意）
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {[5, 10, 15, 30, 45, 60].map((min) => (
+                  <button
+                    key={min}
+                    type="button"
+                    data-testid={`button-tl-settling-minutes-${min}`}
+                    onClick={() => setTlSettlingMinutes(tlSettlingMinutes === min ? 0 : min)}
+                    className={cn(
+                      "px-3 h-7 rounded-xl text-xs font-bold border-2 transition-colors",
+                      tlSettlingMinutes === min
+                        ? "bg-purple-500 border-purple-500 text-white"
+                        : "bg-white border-purple-100 text-purple-500"
+                    )}
+                  >{min}分</button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-[11px] font-bold text-purple-400 flex items-center gap-1">
                 <Moon className="w-3 h-3" />
                 ねんねメモ（任意）
               </p>
@@ -2496,6 +2522,7 @@ export default function Timeline() {
                       startedAt: start.toISOString(),
                       performedBy: tlSleepPerformers.join("・"),
                       ...(tlSettlingMethod.length > 0 ? { settlingMethod: tlSettlingMethod.join("・") } : {}),
+                      ...(tlSettlingMinutes > 0 ? { settlingMinutes: tlSettlingMinutes } : {}),
                       ...(tlSleepLocation ? { sleepLocation: tlSleepLocation } : {}),
                       ...(tlSleepNote.trim() ? { sleepNote: tlSleepNote.trim() } : {}),
                     }, {

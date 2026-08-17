@@ -4,9 +4,9 @@ import App from "./App";
 import "./index.css";
 import { enterDemoMode, installDemoFetch } from "./lib/demo";
 
-if (window.location.pathname === "/demo" || window.location.pathname.startsWith("/demo/")) {
+if (window.location.pathname === "/demo/app" || window.location.pathname.startsWith("/demo/app/")) {
   enterDemoMode();
-  const rest = window.location.pathname.slice("/demo".length) || "/";
+  const rest = window.location.pathname.slice("/demo/app".length) || "/";
   window.history.replaceState({}, "", rest);
 }
 installDemoFetch();

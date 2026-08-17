@@ -1,11 +1,17 @@
 ---
-name: Demo mode (login-free /demo)
+name: Demo mode (login-free /demo/app)
 description: How the login-free demo intercepts API calls and why window.fetch is patched
 ---
 
 # Demo mode architecture
 
-The login-free demo (`/demo`, `/demo/<path>`) works by monkey-patching
+Since July 2026 the URL split is: `/demo` = story-style marketing LP
+(`client/src/pages/WeIkuDemo.tsx` + `components/weiku-demo/`, front-end only,
+rendered via a standalone branch in App.tsx that bypasses splash/onboarding
+gates), while the login-free app-experience demo lives at `/demo/app`,
+`/demo/app/<path>` (intercepted in `client/src/main.tsx`).
+
+The login-free demo works by monkey-patching
 `window.fetch` (`installDemoFetch()` in `client/src/lib/demo.ts`) to return
 in-memory mock JSON for `/api/*` requests while `isDemoMode()` is true.
 

@@ -510,7 +510,7 @@ export default function Dashboard() {
       </Dialog>
 
       <Dialog open={addCustomDialogOpen} onOpenChange={setAddCustomDialogOpen}>
-        <DialogContent className="sm:max-w-md rounded-[32px] border-none shadow-2xl bg-white">
+        <DialogContent className="sm:max-w-md rounded-[32px] border-none shadow-2xl bg-white max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-purple-800 text-center">
               カスタム項目を追加

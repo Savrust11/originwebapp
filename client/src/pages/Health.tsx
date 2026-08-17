@@ -927,7 +927,7 @@ export default function Health() {
       </div>
 
       <Dialog open={showGrowthForm} onOpenChange={setShowGrowthForm}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-center">
               身体測定を記録
@@ -961,7 +961,7 @@ export default function Health() {
 
       {/* 成長記録 編集ダイアログ */}
       <Dialog open={editGrowthId !== null} onOpenChange={(o) => { if (!o) setEditGrowthId(null); }}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-center">測定記録を編集</DialogTitle>
           </DialogHeader>
@@ -1016,7 +1016,7 @@ export default function Health() {
       </Dialog>
 
       <Dialog open={showTempDialog} onOpenChange={setShowTempDialog}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-center flex items-center justify-center gap-2">
               <Thermometer className="w-5 h-5 text-red-500" />
@@ -1683,7 +1683,7 @@ export default function Health() {
       </Dialog>
 
       <Dialog open={showHealthRecordDialog} onOpenChange={setShowHealthRecordDialog}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-center">
               {healthRecordType === "allergy" ? "アレルギーを追加" :
@@ -1750,7 +1750,7 @@ export default function Health() {
 
       {/* 健康ログ編集ダイアログ（体温・症状） */}
       <Dialog open={!!editingHealthLog} onOpenChange={(open) => { if (!open) setEditingHealthLog(null); }}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-center text-gray-800">
               {editingHealthLog?.type === "temp" ? "体温を編集" : "症状を編集"}

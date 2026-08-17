@@ -75,7 +75,10 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   };
 
   const handleFinishNew = () => {
-    const familyId = `family-${Date.now().toString(36)}`;
+    // familyId doubles as the family's pairing code, so it must be
+    // unguessable (crypto-random, ~80+ bits) — never timestamp-based.
+    const rand = crypto.getRandomValues(new Uint32Array(4));
+    const familyId = `family-${Array.from(rand, (n) => n.toString(36).padStart(6, "0")).join("").slice(0, 16)}`;
     localStorage.setItem("familyId", familyId);
     localStorage.setItem("userType", userType);
     localStorage.setItem("onboarding_done", "true");

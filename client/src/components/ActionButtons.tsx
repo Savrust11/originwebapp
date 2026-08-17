@@ -772,6 +772,85 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
     </div>
   ) : null;
 
+  const sleepDetailSelectorJsx = (
+    <div className="space-y-3">
+      <div className="space-y-2">
+        <p className="text-[11px] font-bold text-indigo-400 flex items-center gap-1">
+          <Moon className="w-3 h-3" />
+          寝かしつけ方法（任意）
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {["抱っこ", "抱っこひも", "添い乳", "添い寝", "なし"].map((m) => (
+            <button
+              key={m}
+              type="button"
+              data-testid={`button-qa-sleep-method-${m}`}
+              onClick={() => {
+                if (m === "なし") {
+                  setSettlingMethod(settlingMethod.includes("なし") ? [] : ["なし"]);
+                } else {
+                  setSettlingMethod(prev =>
+                    prev.includes(m) ? prev.filter(x => x !== m) : [...prev.filter(x => x !== "なし"), m]
+                  );
+                }
+              }}
+              className={cn(
+                "px-3 h-8 rounded-xl text-xs font-bold border-2 transition-colors",
+                settlingMethod.includes(m)
+                  ? "bg-indigo-500 border-indigo-500 text-white"
+                  : "bg-white dark:bg-gray-800 border-indigo-100 dark:border-indigo-800 text-indigo-500"
+              )}
+            >{m}</button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <p className="text-[11px] font-bold text-sky-400 flex items-center gap-1">
+          <Moon className="w-3 h-3" />
+          ねんね場所（任意）
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {["布団", "抱っこ寝", "抱っこひも寝", "ベビーカー", "チャイルドシート"].map((loc) => (
+            <button
+              key={loc}
+              type="button"
+              data-testid={`button-qa-sleep-location-${loc}`}
+              onClick={() => setSleepLocation(sleepLocation === loc ? "" : loc)}
+              className={cn(
+                "px-3 h-8 rounded-xl text-xs font-bold border-2 transition-colors",
+                sleepLocation === loc
+                  ? "bg-sky-500 border-sky-500 text-white"
+                  : "bg-white dark:bg-gray-800 border-sky-100 dark:border-sky-800 text-sky-500"
+              )}
+            >{loc}</button>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-2">
+        <p className="text-[11px] font-bold text-purple-400 flex items-center gap-1">
+          <Timer className="w-3 h-3" />
+          寝かしつけにかかった時間（任意）
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {[5, 10, 15, 30, 45, 60].map((min) => (
+            <button
+              key={min}
+              type="button"
+              data-testid={`button-qa-settling-minutes-${min}`}
+              onClick={() => setSettlingMinutes(settlingMinutes === min ? 0 : min)}
+              className={cn(
+                "px-3 h-8 rounded-xl text-xs font-bold border-2 transition-colors",
+                settlingMinutes === min
+                  ? "bg-purple-500 border-purple-500 text-white"
+                  : "bg-white dark:bg-gray-800 border-purple-100 dark:border-purple-800 text-purple-500"
+              )}
+            >{min}分</button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   const dateTimePickerJsx = (
     <div className="px-1">
       {showDateTimeInput ? (
@@ -1348,6 +1427,7 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
           {activeDialog === "sleep" && sleepStep === "main" ? (
             <div className="space-y-3 py-4">
               {sleepPerformerSelectorJsx}
+              {sleepDetailSelectorJsx}
               {!sleepShowPicker ? (
                 <>
                   {/* 選択画面: 2ボタン */}
@@ -1368,6 +1448,9 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
                             elapsedMinutes: 0,
                             startedAt: startedAtIso,
                             performedBy: sleepPerformers.join("・"),
+                            ...(settlingMethod.length > 0 ? { settlingMethod: settlingMethod.join("・") } : {}),
+                            ...(settlingMinutes > 0 ? { settlingMinutes } : {}),
+                            ...(sleepLocation ? { sleepLocation } : {}),
                           }),
                         });
                         if (!res.ok) throw new Error("Failed");
@@ -1493,6 +1576,9 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
                             startedAt: startedAtIso,
                             childId: activeChildId ?? undefined,
                             performedBy: sleepPerformers.join("・"),
+                            ...(settlingMethod.length > 0 ? { settlingMethod: settlingMethod.join("・") } : {}),
+                            ...(settlingMinutes > 0 ? { settlingMinutes } : {}),
+                            ...(sleepLocation ? { sleepLocation } : {}),
                           });
                           setSleepShowPicker(false);
                           setSleepQuickNoEnd(false);
@@ -1512,6 +1598,9 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
                                 elapsedMinutes: 0,
                                 startedAt: startedAtIso,
                                 performedBy: sleepPerformers.join("・"),
+                                ...(settlingMethod.length > 0 ? { settlingMethod: settlingMethod.join("・") } : {}),
+                                ...(settlingMinutes > 0 ? { settlingMinutes } : {}),
+                                ...(sleepLocation ? { sleepLocation } : {}),
                               }),
                             });
                             if (!res.ok) throw new Error("Failed");
@@ -1601,6 +1690,8 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
               })()}
 
               {sleepPerformerSelectorJsx}
+
+              {sleepDetailSelectorJsx}
 
               {manualSleepError && (
                 <p className="text-xs text-red-500 font-bold text-center">{manualSleepError}</p>
@@ -1752,11 +1843,18 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
                   </div>
                 </div>
 
+                {sleepDetailSelectorJsx}
+
                 <Button
                   data-testid="button-sleep-end"
                   onClick={() => {
                     if (!activeSession?.id) return;
-                    endSleep.mutate({ id: activeSession.id });
+                    endSleep.mutate({
+                      id: activeSession.id,
+                      ...(settlingMethod.length > 0 ? { settlingMethod: settlingMethod.join("・") } : {}),
+                      ...(settlingMinutes > 0 ? { settlingMinutes } : {}),
+                      ...(sleepLocation ? { sleepLocation } : {}),
+                    });
                     setActiveDialog(null);
                   }}
                   disabled={endSleep.isPending}

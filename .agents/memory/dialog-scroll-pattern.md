@@ -11,6 +11,6 @@ description: All form dialogs need max-h + overflow-y-auto or expanding sections
 
 **How to apply:**
 - When adding fields/sections to any dialog, check its `DialogContent` has the scroll classes. The home milk dialog (ActionButtons) is the reference pattern.
-- Several dialogs in Health.tsx / FoodTracker.tsx still lack `max-h` (audited 2026-07-27, deliberately left untouched — verify per-dialog before mass-changing).
+- Health.tsx / FoodTracker.tsx / Dashboard.tsx form dialogs were retrofitted with the scroll classes (2026-07-29). Small confirm/choice modals (delete confirms, blood-type picker, context menus, single-date edits) deliberately left without max-h — they cannot grow.
 - For "〜すると保存できない" reports: first curl the API directly (dev + prod) with the exact payload; if the server is healthy, suspect dialog height/keyboard/reachability on mobile before touching save logic.
 - Adding form content to a dialog (even a small checkbox) can tip a borderline dialog into unreachability — re-check after growing any dialog.

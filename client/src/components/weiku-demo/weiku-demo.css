@@ -1,0 +1,59 @@
+/*
+ * We育 Demo — scoped styles.
+ * Every rule is nested under `.weiku-demo`, so importing this file can NEVER
+ * override the host project's global CSS. It only sets base typography/colors
+ * for the demo subtree and provides fallback values for the brand tokens in
+ * case the host Tailwind theme does not define them.
+ */
+
+.weiku-demo {
+  /* Fallback brand tokens (only apply inside the demo subtree). */
+  --wd-grape-deep: #5b2a86;
+  --wd-grape: #7b3fb2;
+  --wd-grape-light: #9b67c7;
+  --wd-lavender: #dcc8ee;
+  --wd-lavender-pale: #f6f0fa;
+  --wd-white-warm: #fcfafd;
+  --wd-charcoal: #25212b;
+
+  background-color: var(--white-warm, var(--wd-white-warm));
+  color: var(--charcoal, var(--wd-charcoal));
+  font-family: var(--font-zen), var(--font-noto), ui-sans-serif, system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/*
+ * AI PREDICTION section fixes (scoped to .wd-ai-section only):
+ * 1. The host app's global base rule `h1..h6 { color: foreground/90 }` paints
+ *    headings near-black even on the dark grape background — force white here.
+ * 2. A very subtle grape gradient so the section is not flat (per design spec).
+ */
+.weiku-demo .wd-ai-section {
+  background-image: linear-gradient(
+    165deg,
+    #5e2c8b 0%,
+    #532478 55%,
+    #5b2a86 100%
+  );
+}
+
+.weiku-demo .wd-ai-section h2 {
+  color: #ffffff;
+}
+
+.weiku-demo *,
+.weiku-demo *::before,
+.weiku-demo *::after {
+  box-sizing: border-box;
+}
+
+/* Respect users who prefer reduced motion for the demo's carousels/animations. */
+@media (prefers-reduced-motion: reduce) {
+  .weiku-demo * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

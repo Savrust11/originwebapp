@@ -32,3 +32,20 @@ in the diary routes.
 
 **How to apply:** require `familyId` on mutation requests and compare it against the stored
 row in addition to the owner; return 403 if either mismatches.
+
+# familyId is a capability (creation routes)
+
+Joining a family literally = entering the familyId as the pairing code, so the familyId is
+a bearer secret. There is no membership token: creation routes are protected by
+`familyCreateGuard` (server/familyGuard.ts) which (1) requires an explicit familyId —
+never rely on the schema's `"default"` fallback — and (2) rate-limits distinct familyIds
+per IP (env `FAMILY_ENUM_LIMIT`, default 30/10min) to block brute-force enumeration.
+
+**Why:** any token issued on knowledge of familyId adds nothing; sessions break in
+preview/native. Entropy + enumeration limiting is the enforceable boundary.
+
+**How to apply:** new creation-type POST routes must include the creation guard as
+middleware; the URL `:familyId` param is canonical and all supplied sources must match
+(otherwise a pinned body familyId can evade enumeration tracking). familyId generation
+must be crypto-random (never `Date.now()`/`Math.random()`). Test suites that use many
+test familyIds from one IP must raise the enumeration limit env var.

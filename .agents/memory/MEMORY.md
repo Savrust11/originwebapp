@@ -1,8 +1,9 @@
 - [Adding a new log type](new-log-type-checklist.md) — adding a new `type` requires updating 6 separate registries across client+server, or it silently disappears from UI surfaces.
-- [Demo mode (login-free /demo)](demo-mode.md) — patch window.fetch (hooks call fetch directly, not getQueryFn); snapshot/restore real localStorage on enter/exit.
+- [Demo mode (login-free /demo/app)](demo-mode.md) — /demo is the marketing LP; app demo moved to /demo/app; patch window.fetch (hooks call fetch directly); snapshot/restore localStorage on enter/exit.
 - [performedBy multi-performer attribution](performer-attribution.md) — performedBy may be a '・'-joined multi-value string ('papa・mama'); split + includes(), never === in attribution/points logic.
 - [Log update route allowlist](log-update-route.md) — new editable log columns must be added to the /api/logs/:id/update Zod allowlist + payload, not just storage.
 - [Auth identity model & ownership](auth-identity-model.md) — normal ops use client userId(papa/mama)+familyId, NOT sessions; session-gated routes break in preview/native; ownership must check BOTH familyId AND userId (IDOR).
 - [db:push wants to drop the session table](db-push-session-table.md) — never confirm the drop (kills login sessions); add columns via direct ALTER TABLE instead.
 - [Phase-gated record buttons](phase-gated-buttons.md) — a log type missing from the next age phase silently vanishes on the birthday (home + customize); check phases.ts first on "ボタンが消えた" reports.
+- [Server-side SEO injection](server-seo-injection.md) — per-route OG/title/canonical injected via server seo map; req.path is mount-relative in catch-all; SPA fallback files bypass rewrite.
 - [Dialog scroll pattern](dialog-scroll-pattern.md) — form dialogs need max-h-[80vh]+overflow-y-auto or the save button goes off-screen on mobile; curl the API first on "保存できない" reports.

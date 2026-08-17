@@ -8,6 +8,7 @@
     "build": "tsx script/build.ts",
     "start": "NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
+    "test:authz": "node tests/run-authz-tests.mjs",
     "db:push": "drizzle-kit push"
   },
   "dependencies": {

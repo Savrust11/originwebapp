@@ -35,6 +35,7 @@ import LogReview from "./pages/LogReview";
 import DailyStats from "./pages/DailyStats";
 import Diary from "./pages/Diary";
 import NotFound from "./pages/not-found";
+import WeIkuDemo from "./pages/WeIkuDemo";
 
 function ThemeInitializer() {
   useTheme();
@@ -239,6 +240,7 @@ function App() {
     location === "/privacy" || location === "/privacy/" ||
     location === "/terms" || location === "/terms/";
   const isSupportPage = location === "/support" || location === "/support/";
+  const isDemoLpPage = location === "/demo" || location === "/demo/";
 
   useLineLoginCallback();
 
@@ -309,6 +311,18 @@ function App() {
         <TooltipProvider>
           <ThemeInitializer />
           <AdminDashboard />
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
+  }
+
+  if (isDemoLpPage) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <ThemeInitializer />
+          <WeIkuDemo />
           <Toaster />
         </TooltipProvider>
       </QueryClientProvider>

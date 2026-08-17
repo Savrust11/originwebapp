@@ -824,7 +824,7 @@ export default function FoodTracker() {
 
       {/* ─── カスタム食材追加ダイアログ ─── */}
       <Dialog open={addCustomOpen} onOpenChange={setAddCustomOpen}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-center">
               カスタム食材を追加
@@ -876,7 +876,7 @@ export default function FoodTracker() {
 
       {/* ─── カスタム食材編集ダイアログ ─── */}
       <Dialog open={editCustomOpen} onOpenChange={(o) => { if (!o) setEditCustomOpen(false); }}>
-        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none">
+        <DialogContent className="sm:max-w-md rounded-[2.5rem] border-none max-h-[80vh] overflow-y-auto top-[45%] sm:top-[50%]">
           <DialogHeader>
             <DialogTitle className="text-lg font-black text-center">
               食材を編集

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowLeft, Save, Loader2, Users, User, Baby, Cake, Crown, Copy, Check, Smartphone, MessageSquare, Share2, Plus, Palette, Trash2, LayoutGrid, Info, ChevronRight, LogOut, BookOpen, Star, Heart, HandHeart, Scissors, Brush, Bike, Package, Lamp, Pill, Thermometer, BellRing, Sun, Moon, Clock, HelpCircle } from "lucide-react";
+import { ArrowLeft, Save, Loader2, Users, User, Baby, Cake, Crown, Copy, Check, Smartphone, MessageSquare, Share2, Plus, Palette, Trash2, LayoutGrid, Info, ChevronRight, LogOut, BookOpen, Star, Heart, HandHeart, Scissors, Brush, Bike, Package, Lamp, Pill, Thermometer, BellRing, Sun, Moon, Clock, HelpCircle, Syringe } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 
@@ -401,6 +401,91 @@ function FeedingNotificationSection() {
           <p className="text-[10px] text-gray-400 pt-1">
             アプリを開いている間のみ通知されます。
             過去の授乳間隔から次回授乳時刻を予測します。
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
+function VaccineReminderSection() {
+  const [enabled, setEnabled] = useState(localStorage.getItem("vaccineNotifyEnabled") === "true");
+  const [leadDays, setLeadDays] = useState(
+    parseInt(localStorage.getItem("vaccineNotifyDays") || "7", 10)
+  );
+  const [permissionState, setPermissionState] = useState<string>(
+    "Notification" in window ? Notification.permission : "unsupported"
+  );
+  const { toast } = useToast();
+
+  const handleToggle = async (val: boolean) => {
+    if (val && permissionState !== "granted" && "Notification" in window) {
+      const result = await Notification.requestPermission();
+      setPermissionState(result);
+      if (result !== "granted") {
+        toast({ title: "通知の許可が必要です", description: "ブラウザの設定から通知を許可してください(アプリ内カードは許可なしでも表示されます)" });
+      }
+    }
+    setEnabled(val);
+    localStorage.setItem("vaccineNotifyEnabled", val ? "true" : "false");
+    toast({ title: val ? "予防接種リマインドを有効にしました" : "予防接種リマインドをオフにしました" });
+  };
+
+  const handleDaysChange = (val: number) => {
+    setLeadDays(val);
+    localStorage.setItem("vaccineNotifyDays", String(val));
+  };
+
+  const DAY_OPTIONS = [3, 7, 14, 30];
+
+  return (
+    <section className="bg-white/80 backdrop-blur-sm p-6 rounded-[24px] shadow-sm border-2 border-teal-100">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+          <Syringe className="w-5 h-5 text-teal-500" />
+        </div>
+        <div>
+          <p className="text-base font-bold text-gray-700">予防接種リマインド</p>
+          <p className="text-[10px] text-gray-400">接種時期が近づいたらお知らせします</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between py-2">
+        <div>
+          <p className="text-sm font-bold text-gray-700">リマインドを有効にする</p>
+          {permissionState === "denied" && (
+            <p className="text-[10px] text-red-500 mt-0.5">ブラウザ通知はブロックされています。アプリ内のお知らせのみ表示されます。</p>
+          )}
+        </div>
+        <Switch
+          checked={enabled}
+          onCheckedChange={handleToggle}
+          data-testid="switch-vaccine-notify"
+        />
+      </div>
+
+      {enabled && (
+        <div className="mt-3 space-y-2">
+          <p className="text-xs font-bold text-gray-500">何日前からお知らせしますか？</p>
+          <div className="flex flex-wrap gap-2">
+            {DAY_OPTIONS.map((d) => (
+              <button
+                key={d}
+                onClick={() => handleDaysChange(d)}
+                data-testid={`button-vaccine-notify-${d}days`}
+                className={`px-4 py-2 rounded-xl text-sm font-bold border-2 transition-colors ${
+                  leadDays === d
+                    ? "bg-teal-500 border-teal-500 text-white"
+                    : "bg-white border-gray-100 text-gray-600"
+                }`}
+              >
+                {d}日前
+              </button>
+            ))}
+          </div>
+          <p className="text-[10px] text-gray-400 pt-1">
+            標準的な接種スケジュールと接種記録から次の接種時期を計算します。
+            ブラウザ通知はアプリを開いている間のみ表示されます。
           </p>
         </div>
       )}
@@ -1387,6 +1472,8 @@ export default function Settings() {
             <FeatureToggleSection />
 
             <FeedingNotificationSection />
+
+            <VaccineReminderSection />
 
             <FeedbackSection />
 

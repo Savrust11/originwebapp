@@ -1,4 +1,5 @@
 import type { Express, Request, Response } from "express";
+import { randomBytes } from "node:crypto";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import { db } from "./db";
@@ -126,7 +127,7 @@ export async function setupAuth(app: Express) {
         .where(eq(users.lineUserId, lineUserId));
 
       if (!existingUser) {
-        const familyId = `family-${Math.random().toString(36).substring(2, 10)}`;
+        const familyId = `family-${randomBytes(10).toString("hex")}`;
         [existingUser] = await db
           .insert(users)
           .values({
@@ -252,7 +253,7 @@ export async function setupAuth(app: Express) {
         .where(eq(users.lineUserId, lineUserId));
 
       if (!existingUser) {
-        const familyId = `family-${Math.random().toString(36).substring(2, 10)}`;
+        const familyId = `family-${randomBytes(10).toString("hex")}`;
         [existingUser] = await db
           .insert(users)
           .values({

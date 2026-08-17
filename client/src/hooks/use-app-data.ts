@@ -46,10 +46,11 @@ export function useUpdateChild() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...data }: { id: number; name?: string; birthday?: string; gender?: string; color?: string; bloodType?: string; sleepTrainingEnabled?: boolean; rotavirusVaccineType?: string | null }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/children/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
       return res.json();
     },
@@ -63,7 +64,8 @@ export function useDeleteChild() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/children/${id}`, { method: "DELETE" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/children/${id}?familyId=${encodeURIComponent(familyId)}`, { method: "DELETE" });
       return res.json();
     },
     onSuccess: () => {
@@ -185,7 +187,7 @@ export function useCompleteEvent() {
       const res = await fetch(`/api/events/${id}/complete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ completedBy }),
+        body: JSON.stringify({ completedBy, familyId: localStorage.getItem("familyId") || "default" }),
       });
       return res.json();
     },
@@ -205,7 +207,8 @@ export function useDeleteEvent() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/events/${id}`, { method: "DELETE" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/events/${id}?familyId=${encodeURIComponent(familyId)}`, { method: "DELETE" });
       return res.json();
     },
     onSuccess: () => {
@@ -317,7 +320,7 @@ export function useUpdateCoupon() {
       const res = await fetch(`/api/coupons/${data.id}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: data.title, cost: data.cost }),
+        body: JSON.stringify({ title: data.title, cost: data.cost, familyId: localStorage.getItem("familyId") || "default" }),
       });
       return res.json();
     },
@@ -335,7 +338,8 @@ export function useDeleteCoupon() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/coupons/${id}`, { method: "DELETE" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/coupons/${id}?familyId=${encodeURIComponent(familyId)}`, { method: "DELETE" });
       return res.json();
     },
     onSuccess: () => {
@@ -359,7 +363,8 @@ export function useMarkNotificationRead() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/notifications/${id}/read`, { method: "POST" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/notifications/${id}/read?familyId=${encodeURIComponent(familyId)}`, { method: "POST" });
       return res.json();
     },
     onSuccess: () => {
@@ -443,7 +448,8 @@ export function useDeleteSleepRoutine() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/sleep/routines/${id}`, { method: "DELETE" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/sleep/routines/${id}?familyId=${encodeURIComponent(familyId)}`, { method: "DELETE" });
       return res.json();
     },
     onSuccess: () => {
@@ -535,9 +541,14 @@ export function useDeleteSleepSession() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/sleep-sessions/${id}`, {
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/sleep-sessions/${id}?familyId=${encodeURIComponent(familyId)}`, {
         method: "DELETE",
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "削除に失敗しました");
+      }
       return res.json();
     },
     onSuccess: () => {
@@ -598,11 +609,19 @@ export function useEndSleepSession() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   return useMutation({
-    mutationFn: async ({ id, endedAt }: { id: number; endedAt?: string }) => {
+    mutationFn: async ({ id, endedAt, settlingMethod, settlingMinutes, sleepLocation, sleepNote }: { id: number; endedAt?: string; settlingMethod?: string; settlingMinutes?: number; sleepLocation?: string; sleepNote?: string }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/sleep-sessions/${id}/end`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(endedAt ? { endedAt } : {}),
+        body: JSON.stringify({
+          familyId,
+          ...(endedAt ? { endedAt } : {}),
+          ...(settlingMethod ? { settlingMethod } : {}),
+          ...(settlingMinutes && settlingMinutes > 0 ? { settlingMinutes } : {}),
+          ...(sleepLocation ? { sleepLocation } : {}),
+          ...(sleepNote ? { sleepNote } : {}),
+        }),
       });
       if (!res.ok) {
         const err = await res.json();
@@ -627,10 +646,11 @@ export function useUpdateSleepTime() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, startedAt, endedAt }: { id: number; startedAt: string; endedAt?: string }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/sleep-sessions/${id}/update-time`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startedAt, endedAt }),
+        body: JSON.stringify({ startedAt, endedAt, familyId }),
       });
       if (!res.ok) {
         const err = await res.json();
@@ -649,7 +669,7 @@ export function useManualSleepSession() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   return useMutation({
-    mutationFn: async (data: { familyId: string; createdBy: string; childId?: number; durationMin: number; startedAt: string; settlingMethod?: string; sleepLocation?: string; sleepNote?: string; performedBy?: string }) => {
+    mutationFn: async (data: { familyId: string; createdBy: string; childId?: number; durationMin: number; startedAt: string; settlingMethod?: string; settlingMinutes?: number; sleepLocation?: string; sleepNote?: string; performedBy?: string }) => {
       const childId = data.childId || (localStorage.getItem("activeChildId") ? parseInt(localStorage.getItem("activeChildId")!) : undefined);
       const res = await fetch(api.sleepSessions.manual.path, {
         method: "POST",
@@ -757,10 +777,11 @@ export function useUpdateGrowthRecord() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async ({ id, data }: { id: number; data: any }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/growth/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
       if (!res.ok) throw new Error("Failed to update");
       return res.json();
@@ -777,7 +798,8 @@ export function useDeleteGrowthRecord() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/growth/${id}`, { method: "DELETE" });
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/growth/${id}?familyId=${encodeURIComponent(familyId)}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete");
     },
     onSuccess: () => {
@@ -853,7 +875,8 @@ export function useDeleteHealthRecord() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(api.healthRecords.delete.path.replace(":id", String(id)), {
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`${api.healthRecords.delete.path.replace(":id", String(id))}?familyId=${encodeURIComponent(familyId)}`, {
         method: "DELETE",
       });
       return res.json();
@@ -868,10 +891,11 @@ export function useUpdateHealthRecord() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...data }: { id: number; title?: string; detail?: string | null; recordedAt?: string | null }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/health-records/${id}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
       return res.json();
     },
@@ -885,11 +909,16 @@ export function useUpdateLog() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...data }: { id: number; createdAt?: string; message?: string; bodyTemperature?: number | null; symptoms?: string | null; symptomNote?: string | null }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/logs/${id}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "更新に失敗しました");
+      }
       return res.json();
     },
     onSuccess: () => {
@@ -903,9 +932,14 @@ export function useDeleteLog() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/logs/${id}`, {
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/logs/${id}?familyId=${encodeURIComponent(familyId)}`, {
         method: "DELETE",
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "削除に失敗しました");
+      }
       return res.json();
     },
     onSuccess: () => {
@@ -923,11 +957,16 @@ export function useBulkDeleteLogs() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (ids: number[]) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch("/api/logs/bulk-delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ids }),
+        body: JSON.stringify({ ids, familyId }),
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "削除に失敗しました");
+      }
       return res.json();
     },
     onSuccess: (data) => {
@@ -978,10 +1017,11 @@ export function useUpdateVaccinationRecord() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async ({ id, ...data }: { id: number; administeredDate?: string; note?: string | null }) => {
+      const familyId = localStorage.getItem("familyId") || "default";
       const res = await fetch(`/api/vaccination-records/${id}/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, familyId }),
       });
       return res.json();
     },
@@ -1001,7 +1041,8 @@ export function useDeleteVaccinationRecord() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/vaccination-records/${id}`, {
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/vaccination-records/${id}?familyId=${encodeURIComponent(familyId)}`, {
         method: "DELETE",
       });
       return res.json();
@@ -1058,7 +1099,8 @@ export function useDeleteCustomVaccine() {
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (id: number) => {
-      const res = await fetch(`/api/custom-vaccines/${id}`, {
+      const familyId = localStorage.getItem("familyId") || "default";
+      const res = await fetch(`/api/custom-vaccines/${id}?familyId=${encodeURIComponent(familyId)}`, {
         method: "DELETE",
       });
       return res.json();

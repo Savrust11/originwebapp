@@ -17,6 +17,16 @@ export default function DemoBanner() {
       <Eye className="w-3.5 h-3.5 shrink-0" />
       <span>デモモード（閲覧用・記録は保存されません）</span>
       <button
+        onClick={() => {
+          exitDemoMode();
+          window.location.href = "/demo";
+        }}
+        className="ml-1 underline underline-offset-2 text-white/90 hover:text-white"
+        data-testid="link-demo-back-to-lp"
+      >
+        サービス紹介に戻る
+      </button>
+      <button
         onClick={handleExit}
         className="ml-2 flex items-center gap-0.5 rounded-full bg-white/20 px-2 py-0.5 active:scale-95 transition-transform"
         data-testid="button-demo-exit"

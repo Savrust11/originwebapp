@@ -75,6 +75,19 @@ export default {
           foreground: "hsl(var(--sidebar-accent-foreground) / <alpha-value>)",
           border: "var(--sidebar-accent-border)"
         },
+        // We育 demo LP (/demo) brand tokens — used only by
+        // client/src/components/weiku-demo/*. Do not reuse in the main app.
+        "grape-deep": "#5b2a86",
+        grape: "#7b3fb2",
+        "grape-light": "#9b67c7",
+        lavender: "#dcc8ee",
+        "lavender-pale": "#f6f0fa",
+        "white-warm": "#fcfafd",
+        charcoal: "#25212b",
+        "pink-soft": "#f5b6d3",
+        mint: "#a9e5d1",
+        "blue-baby": "#bcd7f5",
+        "yellow-soft": "#f6d98e",
         status: {
           online: "rgb(34 197 94)",
           away: "rgb(245 158 11)",

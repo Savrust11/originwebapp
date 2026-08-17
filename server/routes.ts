@@ -2,6 +2,7 @@ import type { Express } from "express";
 import type { Server } from "http";
 import path from "path";
 import { storage } from "./storage";
+import { familyCreateGuard } from "./familyGuard";
 import { db } from "./db";
 import { api } from "@shared/routes";
 import { logs, settings, feedbacks, invitationCodes, users, foodIngredients, customChildcareItems } from "@shared/schema";
@@ -14,6 +15,83 @@ const DEFAULT_COUPONS = [
   { title: "好きなランチ出前券", cost: 500 },
   { title: "30分のマッサージ券", cost: 200 },
 ];
+
+function extractFamilyId(req: { body?: any; query?: any }): string | null {
+  const fromBody = typeof req.body?.familyId === "string" ? req.body.familyId.trim() : "";
+  if (fromBody) return fromBody;
+  const fromQuery = typeof req.query?.familyId === "string" ? (req.query.familyId as string).trim() : "";
+  if (fromQuery) return fromQuery;
+  return null;
+}
+
+// Ownership guard for per-family rows. Returns the row when the caller's
+// familyId matches; otherwise sends the appropriate error response and
+// returns null.
+async function getOwnedLog(req: any, res: any, id: number) {
+  const familyId = extractFamilyId(req);
+  if (!familyId) {
+    res.status(400).json({ message: "familyId is required" });
+    return null;
+  }
+  const log = await storage.getLogById(id);
+  if (!log) {
+    res.status(404).json({ message: "記録が見つかりません" });
+    return null;
+  }
+  if (log.familyId !== familyId) {
+    res.status(403).json({ message: "この記録を操作する権限がありません" });
+    return null;
+  }
+  return log;
+}
+
+// Generic ownership guard: fetches the row by id, requires familyId from the
+// request (body or query), and rejects with 400/404/403 as appropriate.
+async function getOwnedResource<T extends { familyId: string }>(
+  req: any,
+  res: any,
+  id: number,
+  fetchById: (id: number) => Promise<T | undefined | null>,
+  notFoundMessage = "データが見つかりません",
+): Promise<T | null> {
+  if (isNaN(id)) {
+    res.status(400).json({ message: "Invalid id" });
+    return null;
+  }
+  const familyId = extractFamilyId(req);
+  if (!familyId) {
+    res.status(400).json({ message: "familyId is required" });
+    return null;
+  }
+  const row = await fetchById(id);
+  if (!row) {
+    res.status(404).json({ message: notFoundMessage });
+    return null;
+  }
+  if (row.familyId !== familyId) {
+    res.status(403).json({ message: "このデータを操作する権限がありません" });
+    return null;
+  }
+  return row;
+}
+
+async function getOwnedSleepSession(req: any, res: any, id: number) {
+  const familyId = extractFamilyId(req);
+  if (!familyId) {
+    res.status(400).json({ message: "familyId is required" });
+    return null;
+  }
+  const session = await storage.getSleepSessionById(id);
+  if (!session) {
+    res.status(404).json({ message: "睡眠記録が見つかりません" });
+    return null;
+  }
+  if (session.familyId !== familyId) {
+    res.status(403).json({ message: "この記録を操作する権限がありません" });
+    return null;
+  }
+  return session;
+}
 
 export async function registerRoutes(
   httpServer: Server,
@@ -44,7 +122,7 @@ export async function registerRoutes(
     res.json(childList);
   });
 
-  app.post(api.children.create.path, async (req, res) => {
+  app.post(api.children.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.children.create.input.parse(req.body);
       const existing = await storage.getChildren(input.familyId);
@@ -65,6 +143,7 @@ export async function registerRoutes(
   app.post("/api/children/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getChildById(i), "お子さまが見つかりません"))) return;
       const data = api.children.update.input.parse(req.body);
       const child = await storage.updateChild(id, data);
       res.json(child);
@@ -78,6 +157,7 @@ export async function registerRoutes(
 
   app.delete("/api/children/:id", async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getChildById(i), "お子さまが見つかりません"))) return;
     await storage.deleteChild(id);
     res.json({ success: true });
   });
@@ -109,7 +189,7 @@ export async function registerRoutes(
     res.json({ names, lastLog });
   });
 
-  app.post(api.logs.create.path, async (req, res) => {
+  app.post(api.logs.create.path, familyCreateGuard, async (req, res) => {
     try {
       const customCreatedAt = req.body.createdAt;
       const customHoldEndAt = req.body.holdEndAt;
@@ -162,6 +242,7 @@ export async function registerRoutes(
   app.post("/api/logs/:id/update-time", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedLog(req, res, id))) return;
       const { createdAt } = z.object({ createdAt: z.string() }).parse(req.body);
       const log = await storage.updateLog(id, { createdAt: new Date(createdAt) });
       res.json(log);
@@ -176,6 +257,7 @@ export async function registerRoutes(
   app.post("/api/logs/:id/update", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedLog(req, res, id))) return;
       const schema = z.object({
         createdAt: z.string().optional(),
         message: z.string().optional(),
@@ -235,6 +317,7 @@ export async function registerRoutes(
   app.delete("/api/logs/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedLog(req, res, id))) return;
       await storage.deleteLog(id);
       res.json({ ok: true });
     } catch (err) {
@@ -244,10 +327,22 @@ export async function registerRoutes(
 
   app.post("/api/logs/bulk-delete", async (req, res) => {
     try {
-      const { ids } = z.object({ ids: z.array(z.number().int()) }).parse(req.body);
-      await Promise.all(ids.map((id) => storage.deleteLog(id)));
-      res.json({ ok: true, deleted: ids.length });
+      const { ids, familyId } = z.object({
+        ids: z.array(z.number().int()),
+        familyId: z.string().min(1, "familyId is required"),
+      }).parse(req.body);
+      const found = await Promise.all(ids.map((id) => storage.getLogById(id)));
+      const foreign = found.filter((log) => log && log.familyId !== familyId);
+      if (foreign.length > 0) {
+        return res.status(403).json({ message: "この記録を操作する権限がありません" });
+      }
+      const owned = found.filter((log): log is NonNullable<typeof log> => !!log);
+      await Promise.all(owned.map((log) => storage.deleteLog(log.id)));
+      res.json({ ok: true, deleted: owned.length });
     } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
       throw err;
     }
   });
@@ -255,6 +350,7 @@ export async function registerRoutes(
   app.post("/api/sleep-sessions/:id/update-time", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedSleepSession(req, res, id))) return;
       const schema = z.object({
         startedAt: z.string(),
         endedAt: z.string().optional(),
@@ -284,6 +380,7 @@ export async function registerRoutes(
   app.delete("/api/sleep-sessions/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedSleepSession(req, res, id))) return;
       await storage.deleteSleepSessionWithLog(id);
       res.json({ ok: true });
     } catch (err) {
@@ -291,7 +388,7 @@ export async function registerRoutes(
     }
   });
 
-  app.post("/api/sleep-success", async (req, res) => {
+  app.post("/api/sleep-success", familyCreateGuard, async (req, res) => {
     try {
       const sleepSuccessSchema = z.object({
         familyId: z.string().min(1),
@@ -363,6 +460,7 @@ export async function registerRoutes(
     try {
       const logId = parseInt(req.params.logId);
       if (isNaN(logId)) return res.status(400).json({ message: "Invalid logId" });
+      if (!(await getOwnedLog(req, res, logId))) return;
       const schema = z.object({
         settlingMethod: z.string().optional(),
         sleepLocation: z.string().optional(),
@@ -382,7 +480,7 @@ export async function registerRoutes(
     res.json(settings);
   });
 
-  app.post(api.settings.update.path, async (req, res) => {
+  app.post(api.settings.update.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.settings.update.input.parse(req.body);
       const settings = await storage.updateSettings(input);
@@ -403,7 +501,7 @@ export async function registerRoutes(
     res.json(events);
   });
 
-  app.post(api.events.create.path, async (req, res) => {
+  app.post(api.events.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.events.create.input.parse(req.body);
       const event = await storage.createEvent(input);
@@ -419,6 +517,7 @@ export async function registerRoutes(
   app.post("/api/events/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getEventById(i), "予定が見つかりません"))) return;
       const data = api.events.update.input.parse(req.body);
       const event = await storage.updateEvent(id, data);
       res.json(event);
@@ -433,6 +532,7 @@ export async function registerRoutes(
   app.post("/api/events/:id/complete", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getEventById(i), "予定が見つかりません"))) return;
       const { completedBy } = api.events.complete.input.parse(req.body);
       const event = await storage.completeEvent(id, completedBy);
 
@@ -454,6 +554,7 @@ export async function registerRoutes(
 
   app.delete("/api/events/:id", async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getEventById(i), "予定が見つかりません"))) return;
     await storage.deleteEvent(id);
     res.json({ success: true });
   });
@@ -471,7 +572,7 @@ export async function registerRoutes(
     res.json(couponList);
   });
 
-  app.post(api.coupons.create.path, async (req, res) => {
+  app.post(api.coupons.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.coupons.create.input.parse(req.body);
       const coupon = await storage.createCoupon(input);
@@ -487,6 +588,7 @@ export async function registerRoutes(
   app.post(api.coupons.update.path, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getCouponById(i), "クーポンが見つかりません"))) return;
       const input = api.coupons.update.input.parse(req.body);
       const coupon = await storage.updateCoupon(id, input);
       res.json(coupon);
@@ -500,11 +602,12 @@ export async function registerRoutes(
 
   app.delete("/api/coupons/:id", async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getCouponById(i), "クーポンが見つかりません"))) return;
     await storage.deleteCoupon(id);
     res.json({ success: true });
   });
 
-  app.post(api.coupons.exchange.path, async (req, res) => {
+  app.post(api.coupons.exchange.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.coupons.exchange.input.parse(req.body);
       const { familyId, couponId, ownerId } = input;
@@ -568,6 +671,7 @@ export async function registerRoutes(
     try {
       const id = parseInt(req.params.id);
       const { userId, familyId } = api.coupons.redeem.input.parse(req.body);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getUserCouponById(i), "クーポンが見つかりません"))) return;
       const uc = await storage.redeemCoupon(id);
 
       const partnerUser = userId === "papa" ? "mama" : "papa";
@@ -602,7 +706,7 @@ export async function registerRoutes(
     res.json(checklist || { darkness: false, temperature: false, safety: false, whiteNoise: false });
   });
 
-  app.post(api.sleep.checklist.update.path, async (req, res) => {
+  app.post(api.sleep.checklist.update.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.sleep.checklist.update.input.parse(req.body);
       const checklist = await storage.upsertSleepChecklist(input);
@@ -627,7 +731,7 @@ export async function registerRoutes(
     res.json(routines);
   });
 
-  app.post(api.sleep.routines.create.path, async (req, res) => {
+  app.post(api.sleep.routines.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.sleep.routines.create.input.parse(req.body);
       const routine = await storage.createSleepRoutine(input);
@@ -643,6 +747,7 @@ export async function registerRoutes(
   app.post("/api/sleep/routines/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getSleepRoutineById(i), "ルーティンが見つかりません"))) return;
       const data = api.sleep.routines.update.input.parse(req.body);
       const routine = await storage.updateSleepRoutine(id, data);
       res.json(routine);
@@ -656,6 +761,7 @@ export async function registerRoutes(
 
   app.delete("/api/sleep/routines/:id", async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getSleepRoutineById(i), "ルーティンが見つかりません"))) return;
     await storage.deleteSleepRoutine(id);
     res.json({ success: true });
   });
@@ -665,7 +771,7 @@ export async function registerRoutes(
     res.json(logs);
   });
 
-  app.post(api.sleep.routineLogs.complete.path, async (req, res) => {
+  app.post(api.sleep.routineLogs.complete.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.sleep.routineLogs.complete.input.parse(req.body);
       const { familyId, routineId, date, completedBy } = input;
@@ -737,7 +843,7 @@ export async function registerRoutes(
     res.json(session);
   });
 
-  app.post(api.sleepSessions.start.path, async (req, res) => {
+  app.post(api.sleepSessions.start.path, familyCreateGuard, async (req, res) => {
     try {
       const { familyId, createdBy, childId, startedAt, performedBy } = api.sleepSessions.start.input.parse(req.body);
       const existing = await storage.getActiveSleepSession(familyId, childId);
@@ -757,7 +863,16 @@ export async function registerRoutes(
   app.post("/api/sleep-sessions/:id/end", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const customEndedAt = req.body?.endedAt ? new Date(req.body.endedAt) : undefined;
+      if (!(await getOwnedSleepSession(req, res, id))) return;
+      const endBodySchema = z.object({
+        endedAt: z.string().optional(),
+        settlingMethod: z.string().optional(),
+        settlingMinutes: z.number().int().min(0).optional(),
+        sleepLocation: z.string().optional(),
+        sleepNote: z.string().optional(),
+      });
+      const { endedAt, settlingMethod, settlingMinutes, sleepLocation, sleepNote } = endBodySchema.parse(req.body ?? {});
+      const customEndedAt = endedAt ? new Date(endedAt) : undefined;
       const session = customEndedAt
         ? await storage.endSleepSessionAt(id, customEndedAt)
         : await storage.endSleepSession(id);
@@ -766,6 +881,12 @@ export async function registerRoutes(
       const isLateNight = hour >= 0 && hour < 5;
       const points = isLateNight ? 20 : 10;
 
+      const settlingParts: string[] = [];
+      if (settlingMethod && settlingMethod !== "なし") settlingParts.push(settlingMethod);
+      if (settlingMinutes && settlingMinutes > 0) settlingParts.push(`${settlingMinutes}分`);
+      if (sleepLocation) settlingParts.push(sleepLocation);
+      const settlingStr = settlingParts.length > 0 ? `（${settlingParts.join("・")}）` : "";
+
       await storage.createLog({
         familyId: session.familyId,
         childId: session.childId ?? undefined,
@@ -773,7 +894,11 @@ export async function registerRoutes(
         performedBy: session.performedBy ?? undefined,
         type: "sleep",
         points,
-        message: `${session.durationMin}分のねんねを記録しました！`,
+        message: `${session.durationMin}分のねんねを記録しました！${settlingStr}`,
+        settlingMethod: settlingMethod ?? undefined,
+        settlingMinutes: settlingMinutes ?? undefined,
+        sleepLocation: sleepLocation ?? undefined,
+        sleepNote: sleepNote ?? undefined,
       });
 
       res.json(session);
@@ -782,7 +907,7 @@ export async function registerRoutes(
     }
   });
 
-  app.post(api.sleepSessions.manual.path, async (req, res) => {
+  app.post(api.sleepSessions.manual.path, familyCreateGuard, async (req, res) => {
     try {
       const { familyId, createdBy, childId, durationMin, startedAt, settlingMethod, settlingMinutes, sleepLocation, sleepNote, performedBy } = api.sleepSessions.manual.input.parse(req.body);
       const start = new Date(startedAt);
@@ -831,7 +956,7 @@ export async function registerRoutes(
     res.json(records);
   });
 
-  app.post(api.growth.create.path, async (req, res) => {
+  app.post(api.growth.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.growth.create.input.parse(req.body);
       const record = await storage.createGrowthRecord(input);
@@ -847,6 +972,7 @@ export async function registerRoutes(
   app.patch('/api/growth/:id', async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getGrowthRecordById(i), "測定記録が見つかりません"))) return;
       const { weightGrams, heightCm, measuredAt } = req.body;
       const data: any = {};
       if (weightGrams !== undefined) data.weightGrams = weightGrams;
@@ -862,6 +988,7 @@ export async function registerRoutes(
 
   app.delete('/api/growth/:id', async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getGrowthRecordById(i), "測定記録が見つかりません"))) return;
     await storage.deleteGrowthRecord(id);
     res.status(204).send();
   });
@@ -872,7 +999,7 @@ export async function registerRoutes(
     res.json(completions);
   });
 
-  app.post(api.skills.complete.path, async (req, res) => {
+  app.post(api.skills.complete.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.skills.complete.input.parse(req.body);
       const existing = await storage.getSkillCompletions(input.familyId);
@@ -892,7 +1019,7 @@ export async function registerRoutes(
     }
   });
 
-  app.post(api.skills.uncomplete.path, async (req, res) => {
+  app.post(api.skills.uncomplete.path, familyCreateGuard, async (req, res) => {
     try {
       const { familyId, userId, skillId } = api.skills.uncomplete.input.parse(req.body);
       await storage.deleteSkillCompletion(familyId, userId, skillId);
@@ -913,12 +1040,13 @@ export async function registerRoutes(
 
   app.post("/api/notifications/:id/read", async (req, res) => {
     const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getNotificationById(i), "通知が見つかりません"))) return;
     await storage.markNotificationRead(id);
     res.json({ success: true });
   });
 
   // --- Feedbacks ---
-  app.post(api.feedbacks.create.path, async (req, res) => {
+  app.post(api.feedbacks.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.feedbacks.create.input.parse(req.body);
       const feedback = await storage.createFeedback(input);
@@ -936,7 +1064,7 @@ export async function registerRoutes(
     res.json(messages);
   });
 
-  app.post(api.weBoard.create.path, async (req, res) => {
+  app.post(api.weBoard.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.weBoard.create.input.parse(req.body);
       const msg = await storage.createWeBoardMessage(input);
@@ -954,7 +1082,7 @@ export async function registerRoutes(
     res.json(records);
   });
 
-  app.post(api.healthRecords.create.path, async (req, res) => {
+  app.post(api.healthRecords.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.healthRecords.create.input.parse(req.body);
       const record = await storage.createHealthRecord(input);
@@ -970,6 +1098,7 @@ export async function registerRoutes(
   app.post("/api/health-records/:id/update", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getHealthRecordById(i), "健康記録が見つかりません"))) return;
       const schema = z.object({
         title: z.string().optional(),
         detail: z.string().nullable().optional(),
@@ -987,7 +1116,9 @@ export async function registerRoutes(
   });
 
   app.delete(api.healthRecords.delete.path, async (req, res) => {
-    await storage.deleteHealthRecord(parseInt(req.params.id));
+    const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getHealthRecordById(i), "健康記録が見つかりません"))) return;
+    await storage.deleteHealthRecord(id);
     res.json({ ok: true });
   });
 
@@ -1001,7 +1132,7 @@ export async function registerRoutes(
     res.json(records);
   });
 
-  app.post("/api/vaccination-records", async (req, res) => {
+  app.post("/api/vaccination-records", familyCreateGuard, async (req, res) => {
     try {
       const schema = z.object({
         familyId: z.string(),
@@ -1012,6 +1143,11 @@ export async function registerRoutes(
       });
       const data = schema.parse(req.body);
       const record = await storage.createVaccinationRecord(data as any);
+      // 接種済みになったワクチンのリマインド通知は自動で既読化する
+      await storage.markNotificationsReadByDedupePrefix(
+        data.familyId,
+        `vaccine:${data.childId ?? "none"}:${data.vaccineId}:`,
+      );
       res.json(record);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -1024,6 +1160,7 @@ export async function registerRoutes(
   app.post("/api/vaccination-records/:id/update", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
+      if (!(await getOwnedResource(req, res, id, (i) => storage.getVaccinationRecordById(i), "接種記録が見つかりません"))) return;
       const schema = z.object({
         administeredDate: z.string().optional(),
         note: z.string().nullable().optional(),
@@ -1040,8 +1177,87 @@ export async function registerRoutes(
   });
 
   app.delete("/api/vaccination-records/:id", async (req, res) => {
-    await storage.deleteVaccinationRecord(parseInt(req.params.id));
+    const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getVaccinationRecordById(i), "接種記録が見つかりません"))) return;
+    await storage.deleteVaccinationRecord(id);
     res.json({ ok: true });
+  });
+
+  // 予防接種リマインド通知の同期。クライアントが算出したリマインドを受け取り、
+  // dedupeKey で重複を排除しつつ家族全員(papa/mama)分の通知を作成する。
+  // 同一ワクチンの古い段階(事前→時期→遅れ)の未読通知は自動既読化して一本化する。
+  app.post("/api/vaccine-reminders/sync", familyCreateGuard, async (req, res) => {
+    try {
+      const schema = z.object({
+        familyId: z.string(),
+        childId: z.number().nullable().optional(),
+        reminders: z.array(z.object({
+          vaccineId: z.string().regex(/^[a-z0-9_]{1,40}$/),
+          stage: z.enum(["pre", "due", "overdue"]),
+          message: z.string().max(300),
+        })).max(50),
+      });
+      const data = schema.parse(req.body);
+      // childIdが指定された場合は自分の家族の子どもか検証
+      if (data.childId != null) {
+        const children = await storage.getChildren(data.familyId);
+        if (!children.some((c) => c.id === data.childId)) {
+          return res.status(403).json({ message: "child not in family" });
+        }
+      }
+      const childKey = data.childId ?? "none";
+      const STAGE_ORDER: Record<string, number> = { pre: 0, due: 1, overdue: 2 };
+      const ALL_STAGES = ["pre", "due", "overdue"] as const;
+      const created: Array<{ vaccineId: string; stage: string; message: string }> = [];
+
+      for (const r of data.reminders) {
+        const dedupeKey = `vaccine:${childKey}:${r.vaccineId}:${r.stage}`;
+        const keyFor = (stage: string) => `vaccine:${childKey}:${r.vaccineId}:${stage}`;
+
+        // すでにより進んだ段階の通知が存在する場合は後退させない
+        let regressed = false;
+        for (const s of ALL_STAGES) {
+          if (STAGE_ORDER[s] <= STAGE_ORDER[r.stage]) continue;
+          const existing = await storage.findNotificationByDedupeKey(data.familyId, "papa", keyFor(s))
+            || await storage.findNotificationByDedupeKey(data.familyId, "mama", keyFor(s));
+          if (existing) { regressed = true; break; }
+        }
+        if (regressed) continue;
+
+        // 段階が進んだ場合、同ワクチンのより古い段階の未読通知のみ既読化
+        for (const s of ALL_STAGES) {
+          if (STAGE_ORDER[s] >= STAGE_ORDER[r.stage]) continue;
+          await storage.markNotificationsReadByDedupePrefix(data.familyId, keyFor(s));
+        }
+
+        let isNew = false;
+        for (const targetUser of ["papa", "mama"]) {
+          const existing = await storage.findNotificationByDedupeKey(data.familyId, targetUser, dedupeKey);
+          if (existing) continue;
+          try {
+            await storage.createNotification({
+              familyId: data.familyId,
+              targetUser,
+              message: r.message,
+              type: "vaccine_reminder",
+              childId: data.childId ?? null,
+              dedupeKey,
+            });
+            isNew = true;
+          } catch (e: any) {
+            // 同時実行によるユニーク制約違反(23505)は重複作成防止として無視
+            if (e?.code !== "23505") throw e;
+          }
+        }
+        if (isNew) created.push(r);
+      }
+      res.json({ success: true, created });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      throw err;
+    }
   });
 
   app.get("/api/custom-vaccines/:familyId/:childId", async (req, res) => {
@@ -1054,7 +1270,7 @@ export async function registerRoutes(
     res.json(records);
   });
 
-  app.post("/api/custom-vaccines", async (req, res) => {
+  app.post("/api/custom-vaccines", familyCreateGuard, async (req, res) => {
     try {
       const schema = z.object({
         familyId: z.string(),
@@ -1070,7 +1286,9 @@ export async function registerRoutes(
   });
 
   app.delete("/api/custom-vaccines/:id", async (req, res) => {
-    await storage.deleteCustomVaccine(parseInt(req.params.id));
+    const id = parseInt(req.params.id);
+    if (!(await getOwnedResource(req, res, id, (i) => storage.getCustomVaccineById(i), "カスタムワクチンが見つかりません"))) return;
+    await storage.deleteCustomVaccine(id);
     res.json({ ok: true });
   });
 
@@ -1079,7 +1297,7 @@ export async function registerRoutes(
     res.json(items);
   });
 
-  app.post("/api/families/:familyId/food-ingredients", async (req, res) => {
+  app.post("/api/families/:familyId/food-ingredients", familyCreateGuard, async (req, res) => {
     try {
       const data = {
         ...req.body,
@@ -1092,7 +1310,7 @@ export async function registerRoutes(
     }
   });
 
-  app.post("/api/families/:familyId/food-ingredients/bulk", async (req, res) => {
+  app.post("/api/families/:familyId/food-ingredients/bulk", familyCreateGuard, async (req, res) => {
     try {
       const schema = z.object({
         childId: z.number(),
@@ -1161,7 +1379,7 @@ export async function registerRoutes(
     res.json(items);
   });
 
-  app.post("/api/families/:familyId/custom-childcare-items", async (req, res) => {
+  app.post("/api/families/:familyId/custom-childcare-items", familyCreateGuard, async (req, res) => {
     try {
       const data = {
         ...req.body,
@@ -1203,7 +1421,7 @@ export async function registerRoutes(
     res.json(items);
   });
 
-  app.post("/api/families/:familyId/custom-quick-actions", async (req, res) => {
+  app.post("/api/families/:familyId/custom-quick-actions", familyCreateGuard, async (req, res) => {
     const { label, iconName = "Star", colorScheme = "purple" } = req.body;
     if (!label?.trim()) return res.status(400).json({ error: "label required" });
     const existing = await storage.getCustomQuickActions(req.params.familyId);
@@ -1221,6 +1439,11 @@ export async function registerRoutes(
 
   app.delete("/api/families/:familyId/custom-quick-actions/:id", async (req, res) => {
     const id = parseInt(req.params.id);
+    const existing = await storage.getCustomQuickActionById(id);
+    if (!existing) return res.status(404).json({ error: "Not found" });
+    if (existing.familyId !== req.params.familyId) {
+      return res.status(403).json({ message: "このデータを操作する権限がありません" });
+    }
     await storage.deleteCustomQuickAction(id);
     res.json({ ok: true });
   });
@@ -1338,7 +1561,7 @@ export async function registerRoutes(
     res.json(logs);
   });
 
-  app.post("/api/mama-health-logs", async (req, res) => {
+  app.post("/api/mama-health-logs", familyCreateGuard, async (req, res) => {
     const s = req.session as any;
     if (!s.userId) return res.status(401).json({ message: "Unauthorized" });
     const schema = z.object({
@@ -1369,7 +1592,7 @@ export async function registerRoutes(
     res.json(entries);
   });
 
-  app.post("/api/diaries", async (req, res) => {
+  app.post("/api/diaries", familyCreateGuard, async (req, res) => {
     const s = req.session as any;
     const schema = z.object({
       familyId: z.string().default("default"),

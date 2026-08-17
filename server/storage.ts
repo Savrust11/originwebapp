@@ -28,14 +28,27 @@ import {
   type CustomQuickAction, type InsertCustomQuickAction,
   type MamaHealthLog, type InsertMamaHealthLog,
 } from "@shared/schema";
-import { eq, and, desc, asc, isNull } from "drizzle-orm";
+import { eq, and, desc, asc, isNull, like, ne } from "drizzle-orm";
 
 export interface IStorage {
   getChildren(familyId: string): Promise<Child[]>;
+  getChildById(id: number): Promise<Child | undefined>;
+  getEventById(id: number): Promise<Event | undefined>;
+  getCouponById(id: number): Promise<Coupon | undefined>;
+  getUserCouponById(id: number): Promise<UserCoupon | undefined>;
+  getNotificationById(id: number): Promise<Notification | undefined>;
+  getSleepRoutineById(id: number): Promise<SleepRoutine | undefined>;
+  getGrowthRecordById(id: number): Promise<GrowthRecord | undefined>;
+  getHealthRecordById(id: number): Promise<HealthRecord | undefined>;
+  getVaccinationRecordById(id: number): Promise<VaccinationRecord | undefined>;
+  getCustomVaccineById(id: number): Promise<CustomVaccine | undefined>;
+  getCustomQuickActionById(id: number): Promise<CustomQuickAction | undefined>;
   createChild(data: InsertChild): Promise<Child>;
   updateChild(id: number, data: Partial<InsertChild>): Promise<Child>;
   deleteChild(id: number): Promise<void>;
   getLogs(familyId: string): Promise<Log[]>;
+  getLogById(id: number): Promise<Log | undefined>;
+  getSleepSessionById(id: number): Promise<SleepSession | undefined>;
   createLog(log: InsertLog): Promise<Log>;
   updateLog(id: number, data: { createdAt?: Date; message?: string; bodyTemperature?: number | null; symptoms?: string | null; symptomNote?: string | null; holdEndAt?: Date | null; walkEndAt?: Date | null; [key: string]: any }): Promise<Log>;
   updateLogSleepDetail(id: number, data: { settlingMethod?: string; sleepLocation?: string; sleepNote?: string | null }): Promise<Log>;
@@ -61,6 +74,8 @@ export interface IStorage {
   getNotifications(familyId: string, targetUser: string): Promise<Notification[]>;
   createNotification(notification: InsertNotification): Promise<Notification>;
   markNotificationRead(id: number): Promise<void>;
+  findNotificationByDedupeKey(familyId: string, targetUser: string, dedupeKey: string): Promise<Notification | null>;
+  markNotificationsReadByDedupePrefix(familyId: string, dedupePrefix: string, excludeDedupeKey?: string): Promise<void>;
   getSleepChecklist(familyId: string, date: string): Promise<SleepChecklist | null>;
   upsertSleepChecklist(data: InsertSleepChecklist): Promise<SleepChecklist>;
   getSleepRoutines(familyId: string): Promise<SleepRoutine[]>;
@@ -117,6 +132,61 @@ export class DatabaseStorage implements IStorage {
       .orderBy(asc(children.createdAt));
   }
 
+  async getChildById(id: number): Promise<Child | undefined> {
+    const [row] = await db.select().from(children).where(eq(children.id, id)).limit(1);
+    return row;
+  }
+
+  async getEventById(id: number): Promise<Event | undefined> {
+    const [row] = await db.select().from(events).where(eq(events.id, id)).limit(1);
+    return row;
+  }
+
+  async getCouponById(id: number): Promise<Coupon | undefined> {
+    const [row] = await db.select().from(coupons).where(eq(coupons.id, id)).limit(1);
+    return row;
+  }
+
+  async getUserCouponById(id: number): Promise<UserCoupon | undefined> {
+    const [row] = await db.select().from(userCoupons).where(eq(userCoupons.id, id)).limit(1);
+    return row;
+  }
+
+  async getNotificationById(id: number): Promise<Notification | undefined> {
+    const [row] = await db.select().from(notifications).where(eq(notifications.id, id)).limit(1);
+    return row;
+  }
+
+  async getSleepRoutineById(id: number): Promise<SleepRoutine | undefined> {
+    const [row] = await db.select().from(sleepRoutines).where(eq(sleepRoutines.id, id)).limit(1);
+    return row;
+  }
+
+  async getGrowthRecordById(id: number): Promise<GrowthRecord | undefined> {
+    const [row] = await db.select().from(growthRecords).where(eq(growthRecords.id, id)).limit(1);
+    return row;
+  }
+
+  async getHealthRecordById(id: number): Promise<HealthRecord | undefined> {
+    const [row] = await db.select().from(healthRecords).where(eq(healthRecords.id, id)).limit(1);
+    return row;
+  }
+
+  async getVaccinationRecordById(id: number): Promise<VaccinationRecord | undefined> {
+    const [row] = await db.select().from(vaccinationRecords).where(eq(vaccinationRecords.id, id)).limit(1);
+    return row;
+  }
+
+  async getCustomVaccineById(id: number): Promise<CustomVaccine | undefined> {
+    const [row] = await db.select().from(customVaccines).where(eq(customVaccines.id, id)).limit(1);
+    return row;
+  }
+
+  async getCustomQuickActionById(id: number): Promise<CustomQuickAction | undefined> {
+    const [row] = await db.select().from(customQuickActions).where(eq(customQuickActions.id, id)).limit(1);
+    return row;
+  }
+
   async createChild(data: InsertChild): Promise<Child> {
     const [child] = await db.insert(children).values(data).returning();
     return child;
@@ -138,6 +208,16 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(logs)
       .where(eq(logs.familyId, familyId))
       .orderBy(logs.createdAt);
+  }
+
+  async getLogById(id: number): Promise<Log | undefined> {
+    const [log] = await db.select().from(logs).where(eq(logs.id, id)).limit(1);
+    return log;
+  }
+
+  async getSleepSessionById(id: number): Promise<SleepSession | undefined> {
+    const [session] = await db.select().from(sleepSessions).where(eq(sleepSessions.id, id)).limit(1);
+    return session;
   }
 
   async updateLog(id: number, data: { createdAt?: Date; message?: string; bodyTemperature?: number | null; symptoms?: string | null; symptomNote?: string | null; holdEndAt?: Date | null; walkEndAt?: Date | null; [key: string]: any }): Promise<Log> {
@@ -346,6 +426,31 @@ export class DatabaseStorage implements IStorage {
     await db.update(notifications)
       .set({ read: true })
       .where(eq(notifications.id, id));
+  }
+
+  async findNotificationByDedupeKey(familyId: string, targetUser: string, dedupeKey: string): Promise<Notification | null> {
+    const [row] = await db.select().from(notifications)
+      .where(and(
+        eq(notifications.familyId, familyId),
+        eq(notifications.targetUser, targetUser),
+        eq(notifications.dedupeKey, dedupeKey),
+      ))
+      .limit(1);
+    return row || null;
+  }
+
+  async markNotificationsReadByDedupePrefix(familyId: string, dedupePrefix: string, excludeDedupeKey?: string): Promise<void> {
+    const conditions = [
+      eq(notifications.familyId, familyId),
+      eq(notifications.read, false),
+      like(notifications.dedupeKey, `${dedupePrefix}%`),
+    ];
+    if (excludeDedupeKey) {
+      conditions.push(ne(notifications.dedupeKey, excludeDedupeKey));
+    }
+    await db.update(notifications)
+      .set({ read: true })
+      .where(and(...conditions));
   }
 
   async getSleepChecklist(familyId: string, date: string): Promise<SleepChecklist | null> {

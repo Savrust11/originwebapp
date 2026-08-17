@@ -6,11 +6,12 @@ import { BottomNav } from "@/components/Navigation";
 import { useSettings, useLogs, useEvents, useActiveSleepSession, useSleepSessions, useNotifications, useMarkNotificationRead } from "@/hooks/use-app-data";
 import { useActiveChild } from "@/hooks/use-active-child";
 import { useNextFeedingPrediction, useFeedingNotification } from "@/hooks/use-feeding-notification";
+import { useVaccineReminderSync } from "@/hooks/use-vaccine-reminder";
 import { useState, useEffect, useMemo } from "react";
 import { differenceInDays, differenceInMonths, differenceInMinutes, parseISO, addYears, format, isAfter, isSameDay, startOfDay, addMinutes } from "date-fns";
 import { ja } from "date-fns/locale";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Gem, Moon, Heart, Sprout, TreePine, Apple, Leaf, Zap, ChevronRight, Clock, AlertCircle, Milk, Baby, Sun, Droplets, UtensilsCrossed, MessageCircle, CalendarCheck, CalendarDays, Award, Stethoscope, Users, BellRing, EyeOff, Eye, CircleDot, BookHeart } from "lucide-react";
+import { X, Gem, Moon, Heart, Sprout, TreePine, Apple, Leaf, Zap, ChevronRight, Clock, AlertCircle, Milk, Baby, Sun, Droplets, UtensilsCrossed, MessageCircle, CalendarCheck, CalendarDays, Award, Stethoscope, Users, BellRing, EyeOff, Eye, CircleDot, BookHeart, Syringe } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
@@ -30,6 +31,28 @@ export default function Home() {
   const markRead = useMarkNotificationRead();
   const { children: childrenList, activeChild, activeChildId, switchChild } = useActiveChild(familyId, settings);
   const { data: activeSession } = useActiveSleepSession(familyId, activeChildId);
+
+  const legacyVaccinationLogs = useMemo(
+    () => (allLogs || []).filter((l: any) => l.type === "vaccination" && (!activeChildId || !l.childId || l.childId === activeChildId)),
+    [allLogs, activeChildId]
+  );
+  useVaccineReminderSync({
+    familyId,
+    childId: activeChildId ?? null,
+    birthday: activeChild?.birthday || settings?.babyBirthday,
+    rotaType: (activeChild as any)?.rotavirusVaccineType ?? null,
+    legacyVaccinationLogs,
+  });
+
+  const vaccineNotifs = useMemo(
+    () =>
+      (notifList as any[]).filter((n: any) => {
+        if (n.read || n.type !== "vaccine_reminder") return false;
+        if (activeChildId && n.childId) return n.childId === activeChildId;
+        return true;
+      }),
+    [notifList, activeChildId]
+  );
 
   const logs = useMemo(() => {
     if (!allLogs) return undefined;
@@ -281,6 +304,7 @@ export default function Home() {
           {notifList.filter((n: any) => {
             if (n.read) return false;
             if (n.type === "sleep_success") return false;
+            if (n.type === "vaccine_reminder") return false;
             if (!activeChildId) return true;
             if (n.childId) return n.childId === activeChildId;
             const childSpecificTypes = ["thanks"];
@@ -634,6 +658,40 @@ export default function Home() {
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {vaccineNotifs.length > 0 && (
+          <div className="px-8 pt-2">
+            <div className="bg-teal-50/80 rounded-3xl p-4 border-2 border-teal-100 shadow-sm" data-testid="card-vaccine-reminder">
+              <div className="flex items-center gap-3">
+                <div className="bg-teal-100 p-2.5 rounded-2xl">
+                  <Syringe className="w-5 h-5 text-teal-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-bold text-teal-400 uppercase tracking-wider">Vaccine</p>
+                  <p className="text-base font-black text-teal-800">そろそろ予防接種</p>
+                </div>
+                <button
+                  data-testid="button-dismiss-vaccine-reminder"
+                  onClick={() => vaccineNotifs.forEach((n: any) => markRead.mutate(n.id))}
+                  className="p-1.5 rounded-xl text-teal-300 hover:text-teal-500 hover:bg-teal-100 transition-colors"
+                  aria-label="閉じる"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="mt-3 space-y-1.5">
+                {vaccineNotifs.map((n: any) => (
+                  <p key={n.id} className="text-xs font-bold text-teal-700" data-testid={`text-vaccine-reminder-${n.id}`}>
+                    {n.message}
+                  </p>
+                ))}
+              </div>
+              <Link href="/health">
+                <p className="text-[11px] font-bold text-teal-500 mt-2 text-right">接種記録を見る →</p>
+              </Link>
             </div>
           </div>
         )}
