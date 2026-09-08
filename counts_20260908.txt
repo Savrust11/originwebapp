@@ -1,0 +1,30 @@
+       table_name       | rows  
+------------------------+-------
+ children               |   364
+ coupons                |   731
+ custom_childcare_items |    42
+ custom_quick_actions   |     1
+ custom_vaccines        |     1
+ diary_entries          |     2
+ events                 |    55
+ feedbacks              |   270
+ food_ingredients       |   707
+ growth_records         |   102
+ health_records         |     1
+ invitation_codes       |   252
+ logs                   | 35882
+ mama_health_logs       |     6
+ notifications          |  6298
+ session                |  7920
+ settings               |   313
+ skill_completions      |   171
+ sleep_checklist        |    53
+ sleep_routine_logs     |    86
+ sleep_routines         |   342
+ sleep_sessions         |  7341
+ user_coupons           |    23
+ users                  |   302
+ vaccination_records    |   550
+ we_board               |   177
+(26 rows)
+
