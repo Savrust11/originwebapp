@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useUpdateSettings } from "@/hooks/use-app-data";
+import { trackEvent } from "@/lib/analytics";
 
 const LIFF_ID = import.meta.env.VITE_LIFF_ID;
 
@@ -61,6 +62,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     e.preventDefault();
     if (isLoggingIn) return;
     setIsLoggingIn(true);
+    trackEvent("line_login_started", { entry: "onboarding" });
     if (LIFF_ID) {
       try {
         const liff = (await import("@line/liff")).default;
@@ -91,7 +93,10 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
         currentCaregiver: userType === "papa" ? "パパ" : "ママ",
       },
       {
-        onSettled: () => onComplete(),
+        onSuccess: () => {
+          trackEvent("onboarding_completed", { path: "new", role: userType });
+          onComplete();
+        },
       }
     );
   };
@@ -105,6 +110,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     localStorage.setItem("familyId", code);
     localStorage.setItem("userType", userType);
     localStorage.setItem("onboarding_done", "true");
+    trackEvent("onboarding_completed", { path: "join", role: userType });
     onComplete();
   };
 
@@ -191,6 +197,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
               <div className="w-full space-y-4">
                 <button
                   onClick={() => {
+                    trackEvent("onboarding_path_selected", { path: "join" });
                     setHasCode(true);
                     setStep(2);
                   }}
@@ -209,6 +216,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
 
                 <button
                   onClick={() => {
+                    trackEvent("onboarding_path_selected", { path: "new" });
                     setHasCode(false);
                     setStep(2);
                   }}

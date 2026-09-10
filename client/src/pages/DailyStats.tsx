@@ -185,8 +185,8 @@ function HeatmapRow({ buckets }: { buckets: number[] }) {
 
 export default function DailyStats() {
   const [, setLocation] = useLocation();
-  const { activeChild } = useActiveChild();
   const familyId = localStorage.getItem("familyId") || "default";
+  const { activeChild } = useActiveChild(familyId);
   const { data: logs = [] } = useLogs(familyId);
   const { data: sessions = [] } = useSleepSessions(familyId);
 

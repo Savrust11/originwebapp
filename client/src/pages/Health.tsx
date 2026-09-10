@@ -386,7 +386,7 @@ export default function Health() {
     const validRotaIds = getActiveRotaVaccineIds(newType);
     setSelectedVaccineIds(prev => {
       const next = new Set(prev);
-      for (const id of next) {
+      for (const id of Array.from(next)) {
         if (id.startsWith("rota_") && !validRotaIds.has(id)) {
           next.delete(id);
         }
@@ -1862,7 +1862,7 @@ export default function Health() {
                     ? `症状: ${Array.from(editingSymptoms).map(id => SYMPTOM_CHECKLIST.find(c => c.id === id)?.label || id).join("、")}`
                     : editingHealthLog.message;
                 }
-                updateLog.mutate(payload, {
+                updateLog.mutate(payload as any, {
                   onSuccess: () => {
                     setEditingHealthLog(null);
                     toast({ title: "更新しました", duration: 500 });
@@ -2495,7 +2495,7 @@ function GrowthCurveChart({ sortedGrowth, birthday, gender }: {
       allMonths.add(m);
     });
 
-    const sorted = [...allMonths].sort((a, b) => a - b);
+    const sorted = Array.from(allMonths).sort((a, b) => a - b);
     const dataPoints = sorted.map(m => {
       const std = standardMap.get(m);
       const record = sortedGrowth.find((r: any) => differenceInMonths(parseISO(r.measuredAt), bday) === m);
