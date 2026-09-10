@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { ArrowLeft, Save, Loader2, Users, User, Baby, Cake, Crown, Copy, Check, Smartphone, MessageSquare, Share2, Plus, Palette, Trash2, LayoutGrid, Info, ChevronRight, LogOut, BookOpen, Star, Heart, HandHeart, Scissors, Brush, Bike, Package, Lamp, Pill, Thermometer, BellRing, Sun, Moon, Clock, HelpCircle, Syringe } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
+import { ArrowLeft, Save, Loader2, Users, User, Baby, Cake, Crown, Copy, Check, Smartphone, MessageSquare, Share2, Plus, Palette, Trash2, LayoutGrid, Info, ChevronRight, LogOut, BookOpen, Star, Heart, HandHeart, Scissors, Brush, Bike, Package, Lamp, Pill, Thermometer, BellRing, Sun, Moon, Clock, HelpCircle, Syringe, RefreshCw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,11 +39,34 @@ function PairingSection({ familyId }: { familyId: string }) {
   const [copied, setCopied] = useState(false);
   const [joinMode, setJoinMode] = useState(false);
   const [joinCode, setJoinCode] = useState("");
+  const [showRotateConfirm, setShowRotateConfirm] = useState(false);
+  const [rotatedCode, setRotatedCode] = useState<string | null>(null);
   const { toast } = useToast();
+
+  const rotateMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/family/rotate-code", { familyId });
+      return res.json() as Promise<{ familyId: string }>;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem("familyId", data.familyId);
+      setShowRotateConfirm(false);
+      setRotatedCode(data.familyId);
+    },
+    onError: async (err: any) => {
+      toast({
+        title: "再発行に失敗しました",
+        description: err?.message || "もう一度お試しください",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const displayCode = rotatedCode ?? familyId;
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(familyId);
+      await navigator.clipboard.writeText(displayCode);
       setCopied(true);
       toast({
         title: "コピーしました",
@@ -86,7 +109,7 @@ function PairingSection({ familyId }: { familyId: string }) {
           <Label className="text-xs font-bold text-gray-500 mb-1.5 block">あなたのペアリングコード</Label>
           <div className="flex items-center gap-2">
             <div className="flex-1 bg-gray-50 border-2 border-gray-100 rounded-xl px-4 py-3 font-mono text-lg font-black text-purple-600 tracking-wider select-all" data-testid="text-pairing-code">
-              {familyId}
+              {displayCode}
             </div>
             <Button
               variant="outline"
@@ -139,7 +162,100 @@ function PairingSection({ familyId }: { familyId: string }) {
             </div>
           </div>
         )}
+
+        <div className="pt-3 border-t border-gray-100">
+          {!rotatedCode ? (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setShowRotateConfirm(true)}
+                className="w-full rounded-xl border-2 border-red-100 text-red-600 hover:bg-red-50 hover:text-red-700"
+                data-testid="button-rotate-family-code"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                新しい家族コードを発行する
+              </Button>
+              <p className="text-[10px] text-gray-400 mt-1.5">
+                コードが他人に知られてしまった場合は、新しいコードを発行して守れます
+              </p>
+            </>
+          ) : (
+            <div className="bg-green-50 border-2 border-green-100 rounded-2xl p-4 space-y-2" data-testid="section-rotated-code">
+              <p className="text-sm font-bold text-green-800 flex items-center gap-1.5">
+                <Check className="w-4 h-4" />
+                新しい家族コードを発行しました
+              </p>
+              <p className="text-xs text-green-700 leading-relaxed">
+                古いコードは使えなくなりました。<span className="font-bold">パートナーに新しいコードを共有</span>し、
+                パートナーの端末の設定画面で「パートナーのコードで参加する」から再ペアリングしてもらってください。
+              </p>
+              <Button
+                onClick={handleCopy}
+                className="w-full rounded-xl"
+                data-testid="button-copy-new-code"
+              >
+                <Copy className="w-4 h-4 mr-2" />
+                新しいコードをコピーして共有
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => window.location.reload()}
+                className="w-full rounded-xl border-2"
+                data-testid="button-rotate-done"
+              >
+                OK（画面を更新）
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
+
+      <Dialog open={showRotateConfirm} onOpenChange={setShowRotateConfirm}>
+        <DialogContent className="rounded-3xl max-w-sm mx-auto" aria-describedby="rotate-confirm-desc">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-black text-gray-800 flex items-center gap-2">
+              <RefreshCw className="w-5 h-5 text-red-500" />
+              家族コードを再発行しますか？
+            </DialogTitle>
+            <p id="rotate-confirm-desc" className="sr-only">家族コード再発行の確認</p>
+          </DialogHeader>
+          <div className="space-y-3 py-1">
+            <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 space-y-1.5">
+              <p className="text-xs text-amber-800 leading-relaxed">
+                ・記録データはすべて新しいコードに引き継がれます
+              </p>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                ・<span className="font-bold">今のコードは使えなくなります。</span>パートナーには新しいコードを共有して、再ペアリングしてもらう必要があります
+              </p>
+              <p className="text-xs text-amber-800 leading-relaxed">
+                ・コードを知っている第三者はアクセスできなくなります
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setShowRotateConfirm(false)}
+                className="flex-1 rounded-xl"
+                disabled={rotateMutation.isPending}
+              >
+                キャンセル
+              </Button>
+              <Button
+                onClick={() => rotateMutation.mutate()}
+                disabled={rotateMutation.isPending}
+                className="flex-1 rounded-xl bg-red-500 hover:bg-red-600 text-white"
+                data-testid="button-rotate-confirm"
+              >
+                {rotateMutation.isPending ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "再発行する"
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }
