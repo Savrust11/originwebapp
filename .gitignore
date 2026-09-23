@@ -20,9 +20,11 @@ sedK6SoEg
 # Database dumps — NEVER commit.
 # docs/*.sql migrations stay tracked; only dump-shaped names are blocked.
 *.dump
+*.dump.*
 *.sql.gz
 *backup*.sql
-*_prod_*.sql
+*backup*.dump*
+*_prod_*
 *dump*.sql
 weiku-backup/
 
