@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>はじめの100か月 — 非公開・資料検索の検証</title>
+<style>
+/* FONT */
+*{box-sizing:border-box}body{margin:0;background:#f7f6f2;color:#273c39;font:16px/1.85 "Noto Sans JP",sans-serif}main{max-width:850px;margin:auto;padding:30px 20px 80px}h1{font-size:27px;line-height:1.5}h2{font-size:21px}h3{font-size:18px}p{margin:12px 0}.eyebrow,.label{font-weight:bold;color:#276555;font-size:14px}.intro{color:#53665f}form,#panel,.admin{background:white;border:1px solid #d6e2da;border-radius:14px;padding:24px;margin:22px 0}label{display:block;font-weight:bold}textarea,input{display:block;width:100%;font:inherit;padding:10px;border:1px solid #a8bbb2;border-radius:6px;background:#fff}textarea{min-height:106px}.region{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:15px 0}.region label{font-size:13px}button{font:inherit;color:white;background:#28644f;border:0;border-radius:8px;padding:12px 24px;margin-top:12px;cursor:pointer}.suggestion{font-size:19px;line-height:1.9}.clarification{border-left:4px solid #709b84;padding-left:14px}.limits{font-size:14px;color:#5b655d}.evidence{border-top:1px solid #d6e2da;padding-top:16px;margin-top:20px}summary{cursor:pointer;font-weight:bold;color:#276555}dt{font-weight:bold;font-size:13px}dd{margin:0 0 9px;overflow-wrap:anywhere}blockquote{margin:10px 0;padding:16px;background:#f1f5f0;white-space:pre-line}.required-context{border-left:4px solid #739a80;padding-left:15px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.notice{color:#815521}small{color:#586a61}@media(max-width:560px){main{padding:20px 14px}h1{font-size:23px}form,#panel,.admin{padding:18px}.region{grid-template-columns:1fr}.suggestion{font-size:18px}}
+</style>
+<main>
+<p class="eyebrow">We育 / 非公開の検証用</p>
+<h1>「はじめの100か月」<br>資料から、関わり方を考える</h1>
+<p class="intro">自由入力で資料を検索します。表示は出典に対応するWe育の編集であり、実際のAI回答ではありません。モデルAPI・サーバーへの送信はありません。</p>
+<form id="search-form">
+<label for="question">気になっていること</label>
+<textarea id="question" placeholder="たとえば、帰る時間なのにまだ遊びたがります"></textarea>
+<details><summary>近くの場所も調べたい場合だけ、地域を入力</summary>
+<p><small>一般的な説明には地域の入力は不要です。具体的な制度には収集済みの自治体資料が必要です。予約・空き・預かりを保証しません。</small></p>
+<div class="region"><label>都道府県<input id="prefecture"></label><label>市区町村<input id="municipality"></label><label>行政区<input id="ward"></label></div>
+</details>
+<button type="submit">資料を検索する</button>
+</form>
+<section id="panel" aria-live="polite"><p id="status"></p><div id="answer"></div></section>
+<details class="admin"><summary>管理・検証情報（回答とは別）</summary>
+<p>一時DBの最終実測データをオフラインで再生する検証です。原文照合、取り込み指示、正式採用、公開承認はそれぞれ別です。本番公開や資料採用の承認を推定しません。</p>
+<p>発行年月日は未確定です。PDFファイル名の日付を発行日として扱いません。個別の月齢・診断条件は追加しません。画像、ロゴ、人物発言、署名付きコメント、動画は対象外です。</p>
+<pre id="provenance"></pre>
+</details>
+</main>
+<!-- BUNDLE -->
+</html>

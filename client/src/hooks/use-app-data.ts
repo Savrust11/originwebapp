@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api, buildUrl } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
+import { trackEvent } from "@/lib/analytics";
 import { LOG_TYPE_LABELS } from "@/lib/phases";
 
 export function useChildren(familyId: string) {
@@ -132,6 +133,9 @@ export function useCreateLog() {
       return res.json();
     },
     onSuccess: (data) => {
+      trackEvent("care_record_created", {
+        record_type: typeof data.type === "string" ? data.type : "unknown",
+      });
       queryClient.invalidateQueries({ queryKey: [api.logs.list.path] });
       window.dispatchEvent(new CustomEvent('new-log-pts', { 
         detail: { points: data.points, type: data.type } 
@@ -173,6 +177,7 @@ export function useCreateEvent() {
       return res.json();
     },
     onSuccess: () => {
+      trackEvent("partner_collaboration_completed", { action: "event_created" });
       queryClient.invalidateQueries({ queryKey: [api.events.list.path] });
       toast({ title: "予定を追加しました", className: "bg-purple-50 border-purple-100 text-purple-900" });
     },
@@ -192,6 +197,7 @@ export function useCompleteEvent() {
       return res.json();
     },
     onSuccess: (data) => {
+      trackEvent("partner_collaboration_completed", { action: "event_completed" });
       queryClient.invalidateQueries({ queryKey: [api.events.list.path] });
       queryClient.invalidateQueries({ queryKey: [api.logs.list.path] });
       toast({
@@ -580,7 +586,7 @@ export function useStartSleepSession() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   return useMutation({
-    mutationFn: async (data: { familyId: string; createdBy: string; childId?: number; startedAt?: string; settlingMethod?: string; sleepLocation?: string; sleepNote?: string; performedBy?: string }) => {
+    mutationFn: async (data: { familyId: string; createdBy: string; childId?: number; startedAt?: string; settlingMethod?: string; settlingMinutes?: number; sleepLocation?: string; sleepNote?: string; performedBy?: string }) => {
       const childId = data.childId || (localStorage.getItem("activeChildId") ? parseInt(localStorage.getItem("activeChildId")!) : undefined);
       const res = await fetch(api.sleepSessions.start.path, {
         method: "POST",
@@ -594,8 +600,10 @@ export function useStartSleepSession() {
       return res.json();
     },
     onSuccess: () => {
+      trackEvent("sleep_session_recorded", { mode: "start" });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.active.path] });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.list.path] });
+      queryClient.invalidateQueries({ queryKey: [api.logs.list.path] });
       toast({
         title: "おやすみなさい",
         description: "ねんねタイマーを開始しました",
@@ -630,6 +638,7 @@ export function useEndSleepSession() {
       return res.json();
     },
     onSuccess: (data) => {
+      trackEvent("sleep_session_recorded", { mode: "completed" });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.active.path] });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.list.path] });
       queryClient.invalidateQueries({ queryKey: [api.logs.list.path] });
@@ -683,6 +692,7 @@ export function useManualSleepSession() {
       return res.json();
     },
     onSuccess: (data) => {
+      trackEvent("sleep_session_recorded", { mode: "manual" });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.active.path] });
       queryClient.invalidateQueries({ queryKey: [api.sleepSessions.list.path] });
       queryClient.invalidateQueries({ queryKey: [api.logs.list.path] });

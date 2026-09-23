@@ -1,0 +1,74 @@
+DB拡張について、対象地域と書籍候補を確定します。前の指示に追記して作業を進めてください。
+
+【自治体情報の対象】
+
+東京都、神奈川県、千葉県、大阪府、京都府、および名古屋市です。
+府県名は府県内全体を対象とし、名古屋は名古屋市内とします。
+
+まず全対象地域について、公式の制度案内と、市区町村・施設の詳細ページへの入口を収録してください。その後、個別の利用条件を確認できた支援情報から順次追加します。
+
+調査の入口：
+- 東京都：https://www.fukushi.metro.tokyo.lg.jp/kodomo/kosodate/jouhou
+- 神奈川県：https://www.pref.kanagawa.jp/docs/sy8/kosodateshien.html
+- 千葉県：https://www.pref.chiba.lg.jp/kenshidou/shien/book/kodomo.html
+- 大阪府：https://www.pref.osaka.lg.jp/kenkoufukushi/kosodate/kosodateshien/index.html
+- 名古屋市：https://www.city.nagoya.jp/kodomo/kosodate/1009115/index.html
+- 京都府：https://www.pref.kyoto.jp/kosodate/
+
+上記は収集の入口であり、ページ内の全情報を採用する指定ではありません。
+
+一時預かり、育児相談、地域子育て支援拠点、訪問支援、ファミリー・サポート、利用料支援を優先してください。
+
+府県の制度概要、実施市区町村、施設の利用条件を分けます。市区町村の条件を府県全体に広げず、行政区と市町村も区別してください。
+
+市区町村別に「入口のみ確認」「制度詳細を収録」「施設情報まで確認」「未確認」が分かる一覧を作ってください。数か所の確認を地域全体の網羅と報告しないでください。
+
+料金、対象、申込方法、連絡先は確認日と公式URLを保持します。空き状況や予約成立は保証しません。
+
+【育児書の一次候補】
+
+優先：
+1．How to Talk So Little Kids Will Listen
+Joanna Faber／Julie King
+https://parents.simonandschuster.com/9781501131653
+
+2．The Book You Wish Your Parents Had Read
+Philippa Perry
+https://www.penguinrandomhouse.com/books/552694/the-book-you-wish-your-parents-had-read-by-philippa-perry/
+
+3．Siblings Without Rivalry
+Adele Faber／Elaine Mazlish
+https://www.simonandschuster.com/books/Siblings-Without-Rivalry/Adele-Faber/9781442387522
+※リンク先は音声版。採用候補の本文版・ISBNを別途確認。
+
+追加候補：
+4．子どもへのまなざし／佐々木正美
+https://ndlsearch.ndl.go.jp/books/R100000002-I000002695860
+
+5．子どもの心のコーチング／菅原裕子
+https://www.php.co.jp/books/detail.php?isbn=978-4-569-66893-2
+
+6．Child of Mine: Feeding with Love and Good Sense／Ellyn Satter
+https://www.ipgbook.com/child-of-mine-products-9780923521516.php
+
+この6冊は採用済みではありません。出版社の紹介・書誌情報から選んだ候補です。
+
+各書籍について、版・ISBN、著者の背景、目次、正式な試し読みの有無、0〜6歳に関係する章、利用条件の確認先を整理してください。原著と翻訳版は、版・翻訳・権利を別に確認します。
+
+書籍本文を確認していない内容を、AIの記憶や紹介文から「本に書いてある助言」として作らないでください。科学的説明、著者の実践的提案、体験談・価値観を区別します。
+
+古い本は出版年を保持し、現在の栄養・安全情報や、多様な家族への配慮と食い違う記述がないかを採用箇所ごとに点検します。
+
+本文の利用が確認できない本は候補台帳までとし、購入・契約・出版社への連絡は行いません。書籍が保留でも、自治体情報や利用可能な公式資料の追加は進めてください。
+
+【今回の完了報告】
+
+- 地域ごとの収録範囲と未確認範囲
+- 実際に追加できた支援情報と検索例
+- 6冊の書籍台帳と、優先して本文確認する章
+- 本文利用が可能なもの、許諾確認が必要なもの
+- 次に判断が必要な事項
+
+をまとめてください。
+
+利用可能な情報は検証用データへの追加と一時環境での検索確認まで進めてください。追加モデルAPI送信、実利用者情報の使用、既存DBへの適用、正式な採用・公開承認、本番公開は行いません。

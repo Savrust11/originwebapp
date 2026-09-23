@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "Evidence Noto Sans JP";
+  src: url("./fonts/NotoSansJP-japanese-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Evidence Noto Sans JP";
+  src: url("./fonts/NotoSansJP-japanese-700.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+}
+:root { color: #26383b; background: #f3efe5; font-family: "Evidence Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; background: #f3efe5; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .52; }
+.shell { max-width: 980px; margin: 0 auto; padding: 24px 18px 72px; }
+.mast { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; border-bottom:1px solid #c9d2c3; padding: 6px 0 22px; }
+.brand { font-family: "Evidence Noto Sans JP", sans-serif; letter-spacing: .06em; color:#214a4a; font-size: 29px; margin:0; }
+.eyebrow { color:#61726e; font-size:12px; letter-spacing:.08em; margin: 0 0 5px; }
+.clear { border:0; background:transparent; color:#415a58; padding:8px 0; text-decoration:underline; text-underline-offset:4px; }
+.intro { padding: 40px 0 30px; max-width: 710px; }
+h1 { font-family: "Evidence Noto Sans JP", sans-serif; font-weight:500; color:#263f40; font-size:clamp(30px, 6vw, 52px); line-height:1.2; margin:0 0 15px; letter-spacing:.025em; }
+.lead { line-height:1.85; margin:0; color:#475958; }
+.notice { background:#e3ece3; border-left:4px solid #607e71; padding:13px 15px; font-size:14px; line-height:1.7; margin: 0 0 23px; }
+.notice strong { display:block; color:#304b46; }
+.form, .results { background:#fbf9f2; border:1px solid #d7d8cd; box-shadow: 0 12px 30px rgba(52,75,65,.07); }
+.form { padding:clamp(20px, 4vw, 38px); }
+.step { border:0; padding:0; margin:0 0 30px; min-width:0; }
+.step:last-child{ margin-bottom:0; }
+legend { font-family: "Evidence Noto Sans JP", sans-serif; font-size:21px; color:#314b49; padding:0 0 12px; }
+label { display:block; font-size:14px; font-weight:600; color:#344946; margin-bottom:8px; }
+textarea, input[type="number"] { width:100%; border:1px solid #aebbb1; border-radius:2px; background:#fffdf7; color:#26383b; padding:12px; outline:none; }
+textarea:focus, input:focus { border-color:#355f59; box-shadow:0 0 0 3px rgba(81,120,107,.17); }
+textarea { min-height:120px; resize:vertical; line-height:1.6; }
+.options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+.choice { display:flex; gap:9px; align-items:center; border:1px solid #cad1c8; padding:12px; font-size:14px; font-weight:500; margin:0; background:#f7f6ee; }
+.choice:has(input:checked) { border-color:#315d57; background:#e2eee5; }
+.choice input { accent-color:#315d57; }
+.children { display:grid; gap:12px; }
+.child { padding:15px; border:1px solid #d6ddd3; background:#f3f5ed; }
+.child-head { display:flex; align-items:center; justify-content:space-between; font-family:"Evidence Noto Sans JP", sans-serif; color:#3b514d; margin-bottom:10px; }
+.age-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.hint, .quiet { color:#65736c; font-size:13px; line-height:1.6; margin:8px 0 0; }
+.warn { margin-top:13px; border-left:3px solid #ac7c39; background:#f8eed8; padding:11px 13px; color:#664d27; font-size:14px; line-height:1.6; }
+.check { display:flex; gap:9px; align-items:flex-start; margin:13px 0 0; font-weight:500; line-height:1.55; }
+.check input { margin-top:4px; accent-color:#315d57; }
+.confirmation { background:#e9efe7; border:1px solid #bdcfc0; padding:16px; line-height:1.7; font-size:14px; }
+.confirmation p { margin:0 0 7px; }
+.confirmation p:last-child { margin-bottom:0; }
+.actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.primary, .retry { border:0; background:#315d57; color:#f8f5eb; padding:13px 19px; font-weight:700; }
+.primary:hover, .retry:hover { background:#234943; }
+.status { font-size:14px; color:#556864; }
+.transport { margin:20px 0; padding:17px; background:#f7e7e1; border-left:4px solid #a35d49; line-height:1.65; }
+.results { margin-top:25px; padding:clamp(19px,4vw,34px); }
+.results h2 { font-family:"Evidence Noto Sans JP", sans-serif; font-weight:500; color:#314a48; margin:0 0 8px; font-size:27px; }
+.group { border-top:1px solid #d8ddd3; margin-top:24px; padding-top:22px; }
+.group h3 { font-size:18px; color:#304d49; margin:0 0 12px; }
+.state { display:inline-block; color:#5f5540; background:#f2ead5; padding:4px 8px; font-size:12px; margin:0 0 12px; }
+.state.matched { color:#285148; background:#dfebe2; }.state.unverified { color:#79552c; background:#f5ead2; }.state.no_matching,.state.no_vocabulary,.state.incomplete { color:#6a6059; background:#ece8df; }
+.diagnostic { color:#5c625c; font-size:13px; line-height:1.6; }
+.evidence { margin:15px 0; padding:16px; background:#f4f2e9; border-left:3px solid #72928a; }
+.evidence h4 { margin:0 0 8px; color:#264945; font-size:16px; }.evidence p { margin:6px 0; line-height:1.65; font-size:14px; }
+.evidence a { color:#255e59; overflow-wrap:anywhere; }
+details { margin-top:11px; border-top:1px solid #d7ddd5; padding-top:10px; font-size:14px; line-height:1.65; }
+summary { color:#405d58; cursor:pointer; font-weight:600; }.health { background:#edf1e8; padding:15px; margin-top:16px; }
+.health h4 { margin:0 0 5px; color:#34514c; }.health p { margin:5px 0 12px; font-size:13px; line-height:1.6; }
+.answer-set { display:flex; gap:8px; flex-wrap:wrap; }.answer-set label { margin:0; padding:7px 9px; background:#faf9f2; border:1px solid #cad4ca; font-weight:500; font-size:13px; }
+@media (max-width:620px) { .shell { padding:16px 13px 50px; } .mast { padding-bottom:15px; }.options { grid-template-columns:1fr; }.age-grid { grid-template-columns:1fr; } .brand { font-size:25px; } }

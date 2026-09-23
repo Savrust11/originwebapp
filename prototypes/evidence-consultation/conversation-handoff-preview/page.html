@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"><title>We育｜会話と引き継ぎの見本</title>
+<style>
+@font-face{font-family:Local;src:url(data:font/woff2;base64,FONT_BASE64)}
+*{box-sizing:border-box}body{margin:0;background:#f7f5fa;color:#302b3c;font:15px/1.7 Local,sans-serif}main{max-width:780px;margin:auto;padding:18px 18px 110px}header{display:flex;align-items:center;gap:12px;margin-bottom:10px}h1{font-size:19px;margin:0;color:#66518b}.label{font-size:11px;color:#60586e}nav{display:flex;gap:6px;margin-bottom:16px}button,select,textarea{font:inherit}button{border:1px solid #d4cadd;background:white;color:#514165;border-radius:12px;cursor:pointer;padding:10px 14px;min-height:44px}button:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #8462b2;outline-offset:3px}nav button{flex:1;font-size:12px;padding:8px 4px}nav button[aria-selected=true]{background:#66518b;color:white;border-color:#66518b}h2{font-size:18px;margin:12px 0}h3{font-size:16px}.pair{margin-bottom:20px}.who{font-size:11px;color:#736982;margin:0 0 5px}.bubble{padding:14px 16px;border-radius:15px;background:white;border:1px solid #e6e0ec;margin-bottom:12px}.parent .bubble{background:#eee8f5;margin-left:25px}.bubble p{margin:0}.answer .bubble{border-left:3px solid #9c85b9}.primary{background:#66518b;color:white;border-color:#66518b}button:disabled{opacity:.55;cursor:default}.muted{font-size:12px;color:#665d73}details{margin:18px 0;font-size:13px}summary{cursor:pointer;color:#66518b}#handoff{margin-top:24px;border-top:1px solid #d7cedf;padding-top:12px}label{display:block;font-weight:bold;margin:13px 0 4px}textarea,select{width:100%;padding:11px;border:1px solid #bdb0cc;border-radius:9px;color:#302b3c;background:white}textarea{min-height:92px;resize:vertical}select{font-size:13px}#draft{background:#fff;padding:14px;border:1px solid #d8cce6;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere}#status{font-weight:bold;color:#614480;min-height:28px}.actions{display:flex;gap:8px;flex-wrap:wrap}.footer{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;align-items:center;gap:15px;padding:12px;background:#fff;border-top:1px solid #d6cbe2;z-index:3}.footer button{background:#48345f;color:white;font-weight:bold}.footer span{font-size:11px}#human-note{border-left:3px solid #ad93c9;padding-left:12px} @media(max-width:420px){main{padding:12px 12px 115px}header{display:block}h1{font-size:17px}.label{display:block}.bubble{padding:12px}.footer{gap:8px}.footer button{padding:9px 12px}}
+</style></head><body>
+<main><header><h1>We育 <span style="font-weight:normal">相談の見本</span></h1><span class="label">編集見本・AI未接続<br>担当者未契約・送信なし</span></header>
+<nav role="tablist" aria-label="会話の場面" id="tabs"></nav>
+<section id="panel" role="tabpanel" aria-label="会話"></section>
+<details><summary>根拠を見る</summary><p>この3場面は、架空の本人の発言を受けとめ、状況と希望を整理する編集見本です。育児上の効果を主張するものではありません。睡眠時間・食事や行動への具体策など、一般的な育児事実の説明は含めていません。担当分野は今回指定されたサービス方針に基づく仮想の役割です。臨床的な推奨や、資料の採用・公開承認ではありません。</p></details>
+<div class="actions"><button id="human">途中で人への相談を希望する見本</button></div><p id="human-note" hidden></p>
+<section id="handoff" hidden><h2>引き継ぎ要約を確認・修正</h2><p class="muted" id="guide"></p>
+<div id="fields"></div>
+<label for="recipient">共有先の候補（必須の職種選択ではありません）</label><select id="recipient"></select>
+<label for="availability">提供状態の比較（すべて架空）</label><select id="availability"><option value="uncontracted">未契約の候補</option><option value="absent">担当不在の場合</option><option value="unknown">受付状況未確認の場合</option></select>
+<p id="availability-note"></p>
+<h3>確認する内容（4項目と宛先だけ）</h3><div id="draft" aria-live="polite"></div>
+<p class="muted">相談全文は対象外。ここで確認しても、実際の送信や共有にはなりません。</p>
+<details id="correction"><summary>本人による修正の操作見本</summary><p id="correction-parent"></p><button id="apply-correction">この修正を反映する（見本）</button><p id="correction-answer" role="status"></p></details>
+<button id="confirm" class="primary">宛先と4項目を確認する（送信なし）</button><p id="status" role="status">未確認です。</p>
+</section></main>
+<footer class="footer" title="非公開・保存なし・最大60分で終了"><span>編集見本・AI未接続<br>担当者未契約・送信なし</span><button id="end">見本を終了・入力を破棄</button></footer>
+<script>
+"use strict";
+const scenes=SCENES_JSON,guide=GUIDE_JSON,earlyGuide=EARLY_GUIDE_JSON;
+let selected=0,visible=1,confirmed=false,ended=false;
+const $=id=>document.getElementById(id);
+const node=(tag,text,cls)=>{const el=document.createElement(tag);if(text)el.textContent=text;if(cls)el.className=cls;return el};
+const states=scenes.map(s=>({summary:{...s.summary},recipient:s.recipient,availability:"uncontracted"}));
+const earlyStates=scenes.map(s=>s.earlySummaries.map(x=>({summary:{...x.summary},recipient:x.recipient,availability:"uncontracted"})));
+let partial=false;
+const currentState=()=>partial?earlyStates[selected][visible-1]:states[selected];
+function invalidate(){confirmed=false;$("status").textContent="未確認です。変更後は宛先と4項目を再確認してください。";$("confirm").disabled=false}
+function updateDraft(){
+ const state=currentState();
+ $("draft").textContent="宛先候補："+state.recipient+"\n提供状態："+$("availability").selectedOptions[0].textContent+"\n\n"+Object.entries(state.summary).map(([k,v])=>k+"："+v).join("\n\n");
+ $("availability-note").textContent={uncontracted:"架空・未契約です。相談受付・予約・送信はできません。",absent:"担当不在を想定した表示例です。対応日時や予約は確定していません。実在担当者の表示ではありません。",unknown:"受付状況が未確認の場合の表示例です。相談可能とは案内しません。実在担当者の表示ではありません。"}[state.availability];
+}
+function showHandoff(isPartial=false){
+ partial=isPartial;
+ const state=currentState();
+ $("handoff").hidden=false;
+ $("guide").textContent=(partial?earlyGuide+" ":"")+guide;
+ $("fields").replaceChildren();
+ for(const [key,value] of Object.entries(state.summary)){
+  const label=node("label",key),input=node("textarea");input.id="field-"+key;label.htmlFor=input.id;input.value=value;input.maxLength=1200;
+  input.addEventListener("input",()=>{currentState().summary[key]=input.value;invalidate();updateDraft()});
+  $("fields").append(label,input);
+ }
+ $("recipient").replaceChildren();
+ const proposed=scenes[selected].proposedAt!==null&&visible>=scenes[selected].proposedAt;
+ const recipients=[...(proposed?[scenes[selected].recipient]:[]),"宛先はまだ決めない","本人が希望する別の人・職種（未確認／送信なし）"];
+ for(const text of recipients){const option=node("option",text);option.value=text;$("recipient").append(option)}
+ $("recipient").value=state.recipient;$("availability").value=state.availability;
+ const canCorrect=visible===scenes[selected].turns.length;
+ $("correction").hidden=!canCorrect;
+ $("correction-parent").textContent=canCorrect?"本人の修正発言見本："+scenes[selected].correction.parent:"";
+ $("correction-answer").textContent="";$("correction").open=false;invalidate();updateDraft();
+}
+function render(){
+ partial=false;
+ $("tabs").replaceChildren();scenes.forEach((s,i)=>{
+  const button=node("button",s.title);button.type="button";button.setAttribute("role","tab");button.setAttribute("aria-selected",String(i===selected));button.tabIndex=i===selected?0:-1;
+  button.onclick=()=>{selected=i;visible=1;render();buttonFor(i).focus()};
+  button.onkeydown=e=>{if(["ArrowRight","ArrowLeft","Home","End"].includes(e.key)){e.preventDefault();selected=e.key==="Home"?0:e.key==="End"?2:(selected+(e.key==="ArrowRight"?1:2))%3;visible=1;render();buttonFor(selected).focus()}};
+  $("tabs").append(button);
+ });
+ $("panel").replaceChildren(node("h2",scenes[selected].title));
+ scenes[selected].turns.slice(0,visible).forEach(([parent,answer])=>{
+  const pair=node("div",null,"pair");
+  for(const [text,role,label] of [[parent,"parent","保護者の発言見本"],[answer,"answer","回答の文章見本"]]){
+   const article=node("article",null,role),bubble=node("div",null,"bubble");bubble.append(node("p",text));article.append(node("p",label,"who"),bubble);pair.append(article)
+  }$("panel").append(pair);
+ });
+ const next=node("button",visible===scenes[selected].turns.length?"編集見本の続きは未作成・ここまで":"次の会話見本を見る","primary");next.id="next";next.disabled=visible===scenes[selected].turns.length;
+ next.onclick=()=>{visible++;render();if(!$("handoff").hidden){$("handoff").scrollIntoView({block:"start"})}else{const latest=document.querySelector(".pair:last-of-type");if(latest)latest.scrollIntoView({block:"start"})}};
+ $("panel").append(next,node("p",visible+" / "+scenes[selected].turns.length+" 往復","muted"));
+ $("handoff").hidden=true;$("human-note").hidden=true;
+ if(scenes[selected].handoffAt!==null&&visible>=scenes[selected].handoffAt)showHandoff();
+}
+function buttonFor(i){return $("tabs").children[i]}
+$("guide").textContent=guide;
+$("recipient").onchange=()=>{currentState().recipient=$("recipient").value;invalidate();updateDraft()};
+$("availability").onchange=()=>{currentState().availability=$("availability").value;invalidate();updateDraft()};
+$("apply-correction").onclick=()=>{const c=scenes[selected].correction;currentState().summary[c.field]=c.text;$("field-"+c.field).value=c.text;invalidate();updateDraft();$("correction-answer").textContent=c.answer};
+$("confirm").onclick=()=>{confirmed=true;$("status").textContent="宛先と4項目を見本として確認しました。送信・共有・予約は行っていません。";$("confirm").disabled=true};
+$("human").onclick=()=>{$("human-note").hidden=false;$("human-note").textContent=earlyGuide;showHandoff(true);$("handoff").scrollIntoView({block:"start"})};
+function end(reason){
+ if(ended)return;ended=true;clearTimeout(expiry);[...states,...earlyStates.flat()].forEach(s=>{s.summary={};s.recipient=""});document.querySelectorAll("textarea").forEach(x=>x.value="");document.querySelector("main").replaceChildren(node("h1","見本を終了しました"),node("p","入力を破棄しました。送信・共有・保存はしていません。"));document.querySelector("footer").remove();
+ if(typeof window.endEditorialPreview==="function")window.endEditorialPreview(reason);
+}
+$("end").onclick=()=>end("button");
+const expiry=setTimeout(()=>end("ttl"),3600000);
+render();
+</script></body></html>

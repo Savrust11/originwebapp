@@ -1,0 +1,276 @@
+{
+  "format": "We育・候補取り込み用中間データ v1（既存DBの投入形式ではない）",
+  "source": {
+    "candidate_source_id": "CFA100-HOGOSHA",
+    "title": "「はじめの100か月」みんなの応援アクション 保護者のみなさんへ",
+    "publisher": "こども家庭庁",
+    "language": "ja",
+    "landing_url": "https://www.cfa.go.jp/policies/kodomo_sodachi/hogosha",
+    "pdf_url": "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/a2efa835-e2ed-4f13-a29b-331d865b1b1f/e4f327bc/20250403_policies_kodomo_sodachi_hogosha_02.pdf",
+    "retrieved_date": "2026-09-20",
+    "sha256": "d31c44086fca24088fc2a17fd944e45879d35e9c3c3b9ab06bed63badc02d1d9",
+    "pdf_pages": 10,
+    "edition": "2026-09-20取得版。PDF内に刊行日・版番号の記載を確認できず。",
+    "production_period": "令和6年度制作（公式進捗資料による）。PDFパスの日付を刊行日として転用しない。",
+    "production_evidence_url": "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/37e94e1a-afa9-47f8-9162-1cdb8187ea17/2c60d1b3/20260227_councils_shingikai_kodomo_sodachi_37e94e1a_03.pdf"
+  },
+  "rights": {
+    "basis": "PDL1.0（別の権利表記のないこども家庭庁本文に適用）",
+    "policy_url": "https://www.cfa.go.jp/copyright-policy",
+    "license_url": "https://www.digital.go.jp/resources/open_data/public_data_license_v1.0",
+    "checked_date": "2026-09-20",
+    "selection": "一般説明の本文のみ。選定箇所に個別の別規約表示は見当たらなかった。第三者権利不存在の保証ではない。",
+    "excluded": [
+      "写真",
+      "イラスト",
+      "ロゴ",
+      "QRコード画像",
+      "音楽・動画",
+      "保護者・子どもの発言",
+      "専門家の署名付きコメント",
+      "監修者・アーティストのプロフィール"
+    ],
+    "attribution": "こども家庭庁「『はじめの100か月』みんなの応援アクション 保護者のみなさんへ」をもとにWe育が編集。原資料：公式掲載ページ。",
+    "provider_endorsement": false
+  },
+  "state": {
+    "user_direction": "このハンドブックから取り入れる（2026-09-20）",
+    "selection_prepared": true,
+    "database_imported": false,
+    "search_verified": false,
+    "publication_approved": false,
+    "external_model_sent": false
+  },
+  "sections": [
+    {
+      "candidate_section_id": "CFA100-S01",
+      "title": "時間感覚の違い",
+      "printed_page": 2,
+      "pdf_page": 3,
+      "heading": "「こども時間」と「おとな時間」",
+      "original_text": "こどもにはこどもの、おとなにはおとなの「時間」があります。\nこどもにとってはあっという間に感じる遊びの時間も、おとなにとっては長い待ち時間になることも。\nお互いにこの「時間」の流れの違いから、「なんでだろう」と気持ちがすれ違ってしまうこともあります。\nそんな時は、一息ついて「こども時間」を思い出してみませんか。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "c68d3c4b760fa5bd6fdae0848773cf015e6716526547a1b042ede4244f6cdfbd",
+      "editorial_summary": "子どもと大人で時間の感じ方が違うことを踏まえ、いったん一息ついて場面を見直す。",
+      "editorial_example_not_model_output": "急いでいるのに遊びが終わらないと、焦りますね。子どもと大人では時間の感じ方が違うことがあります。まず一息ついて、今どんな遊びに夢中なのか見てみるのも一つです。どの場面で止まっていますか？",
+      "search_keywords": [
+        "支度",
+        "片付け",
+        "切り替え",
+        "急かす",
+        "帰りたがらない"
+      ],
+      "use_limits": [
+        "その子が動かない原因を時間感覚だけで確定しない",
+        "常に待つことや遅刻を勧めない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S02",
+      "title": "思い・願いの受け止め",
+      "printed_page": 3,
+      "pdf_page": 4,
+      "heading": "こどもの思いや願いを大切に",
+      "original_text": "こどもは、言葉だけでなく、表情やしぐさなど、様々な形で「思い」や「願い」を表現します。\nできることから一歩ずつ、こどもの気持ちによりそうことで、こどもとおとなの「時間」が近づいていきます。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "5a912ad82334e93e7c825a52e5197722d18d2cdd473828e367664992ad7b08ee",
+      "editorial_summary": "言葉だけでなく表情やしぐさにも目を向け、できるところから寄り添う。",
+      "editorial_example_not_model_output": "言葉でうまく伝えられないときも、表情やしぐさに気持ちが表れることがあります。まずそこに目を向けてみましょう。そのとき、どんな様子でしたか？",
+      "search_keywords": [
+        "気持ち",
+        "言葉にできない",
+        "イヤイヤ",
+        "表情",
+        "しぐさ"
+      ],
+      "use_limits": [
+        "表情から内心や診断を確定しない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S03",
+      "title": "忙しい親の負担",
+      "printed_page": 3,
+      "pdf_page": 4,
+      "heading": "「おとな時間」って？",
+      "original_text": "仕事や家事で毎日慌ただしいと、こどもとゆっくり関わることが難しく、どうしても「おとな時間」が中心になってしまうこともあります。\nでも完璧じゃなくても大丈夫！\nこどもはおとなの努力をちゃんと受け取っています。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "05e16c1d32cd86f4f8c8aa74fbb461051bfe76e4f17106bcf3f4688029b674bf",
+      "editorial_summary": "仕事や家事で余裕がなくなることを責めず、完璧を求めない説明に使う。",
+      "editorial_example_not_model_output": "仕事や家事が重なると、ゆっくり関わるのが難しい日もあります。毎回完璧に対応しようとしなくて大丈夫です。今いちばん負担になっている時間帯はいつですか？",
+      "search_keywords": [
+        "余裕がない",
+        "忙しい",
+        "自分を責める",
+        "うまく関われない"
+      ],
+      "use_limits": [
+        "特定の子が必ず気持ちを理解していると断定しない",
+        "危険な行為を容認する説明に使わない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S04",
+      "title": "不安・失敗時にそばにいる",
+      "printed_page": 5,
+      "pdf_page": 6,
+      "heading": "おとなはこどもの「安心」の土台に",
+      "original_text": "こどもが怖くて不安な時や失敗してしまった時などに、身近なおとながよりそうことで、こどもは安心することができます。\nその繰り返しがこどもの心に「安心」の土台を築き、こどもの「挑戦」を支えていきます。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "0ead8e0bc55c1a01441e533e1466db7c51216a7d06ae20d75dd7b814570167b2",
+      "editorial_summary": "怖がる場面や失敗した場面では、身近な大人が寄り添うという選択肢を示す。",
+      "editorial_example_not_model_output": "怖がったり失敗してしまったときは、まずそばで寄り添う方法があります。すぐに挑戦し直させるより、安心できる関わりから考えてみましょう。どんな場面で不安そうになりますか？",
+      "search_keywords": [
+        "怖がる",
+        "失敗",
+        "不安",
+        "挑戦できない"
+      ],
+      "use_limits": [
+        "寄り添えば必ず挑戦するという効果保証をしない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S05",
+      "title": "挑戦を見守る",
+      "printed_page": 5,
+      "pdf_page": 6,
+      "heading": "こどもの「挑戦」を見守ること",
+      "original_text": "こどもが何かに「挑戦」する時、おとなとしてはつい心配して助けたり、代わりにやってあげたりしたくなることもあります。ですが、こどもが自分から「挑戦」しようとしている時は、そばで見守り、応援することも大切です。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "dea3487644a0e35fe3d92c955726fc015dc78970b31196a43dd706a48be8b430",
+      "editorial_summary": "本人が挑戦しようとしている場面では、すぐ代わるほかに、助けられる距離で見守る選択肢を示す。",
+      "editorial_example_not_model_output": "自分でやろうとしているなら、すぐ代わりにする前に、助けられる距離で少し見守る方法もあります。今、何を自分でやろうとしていますか？",
+      "search_keywords": [
+        "手を出しすぎる",
+        "自分でやりたい",
+        "見守る",
+        "先回り"
+      ],
+      "use_limits": [
+        "安全を確認せず放置を勧めない",
+        "困っていても助けないという指示にしない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null,
+      "required_context": {
+        "printed_page": 4,
+        "pdf_page": 5,
+        "original_text": "いざとなったら助けられる距離感で、こどもが体験していることを感じとり、見守ることが大切です。",
+        "reason": "そばで見守ることを放置へ変えないため"
+      }
+    },
+    {
+      "candidate_section_id": "CFA100-S06",
+      "title": "遊びを大切にする",
+      "printed_page": 5,
+      "pdf_page": 6,
+      "heading": "こどもの「遊び」を大切に",
+      "original_text": "乳幼児期のこどもの生活の中心は、「遊び」です。\nこの「遊び」を通して、こどもは色々なことに興味を持ち、心と体を動かして夢中になって遊ぶことで、学びながらすくすくと成長していきます。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "3a7836ebb49849cb23787d5e546e7260deaa3e13ef73fa70fc6af1259b2fbb95",
+      "editorial_summary": "遊び自体を大切な時間と説明する。特定教材や達成目標はこの本文から追加しない。",
+      "editorial_example_not_model_output": "遊びは、子どもが興味を広げ、心と体を動かしながら学ぶ時間でもあります。何かを教えることだけを目標にせず、今夢中になっている遊びに目を向けてみましょう。最近はどんな遊びが好きですか？",
+      "search_keywords": [
+        "遊び",
+        "何を教える",
+        "学び",
+        "夢中"
+      ],
+      "use_limits": [
+        "特定の遊びの効果や発達到達時期を保証しない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S07",
+      "title": "親も周囲に相談する",
+      "printed_page": 6,
+      "pdf_page": 7,
+      "heading": "親だって「はじめの100か月」",
+      "original_text": "こどものおともだちとの関係性や、遊び方を見守っている中で、気がかりなことが発生！\nそんな時は、先輩のパパ・ママがこどもや周りの保護者、先生とどんなふうに関わっているのか見てみませんか。\n他のパパ・ママや専門家に、親としての悩みや不安を相談してみるのもおすすめです。\n親にとっても「はじめの100か月」。\nわからないことや、心配事があって当然です。\n抱え込まずに周囲の人に相談しながら、こどもとともに成長していきましょう！",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "957c3989a38bc227b4c301145a749b82542bce30f2a3c5935ed34ede7a9bffe6",
+      "editorial_summary": "親自身にも悩みや不安があることを認め、周囲の保護者や専門家に相談する選択肢を示す。",
+      "editorial_example_not_model_output": "子育てで分からないことや心配事があるのは当然です。一人で抱えず、身近な保護者や相談担当者と一緒に考える方法もあります。今はここで整理したいですか、それとも人に相談したいですか？",
+      "search_keywords": [
+        "相談したい",
+        "一人で抱える",
+        "心配",
+        "頼れる人がいない"
+      ],
+      "use_limits": [
+        "実在しない担当者の受付や予約を約束しない",
+        "人への引き継ぎを毎回強制しない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    },
+    {
+      "candidate_section_id": "CFA100-S08",
+      "title": "地域子育て支援拠点",
+      "printed_page": 7,
+      "pdf_page": 8,
+      "heading": "地域子育て支援拠点の4つの主な役割",
+      "original_text": "交流の場\n主に就園前のこどもが、保護者と一緒に遊びにいける場所です。こどもが、他のこどもや職員と遊んだり、保護者同士で交流したり、ホッと一息つくことができます。\n相談・助言の場\n保護者の子育てに関する相談への対応や、サポートを行っています。一定の知識と経験をもつ職員から、個別の相談だけでなく、日常的な交流の中で、こどもや子育てに関して助言をもらうことができます。\n情報収集の場\n地域の情報ステーションとして、子育てに関するサポート情報を得ることができます。保育園や、こどもの遊び場、地域の行事に関する情報など、いろいろな子育ての情報を紹介しています。\n学びの場\n専門家による子育てに関する講座や講習会、当事者同士の座談会などを行っています。日頃の子育ての疑問や不安を解消し、自分なりの子育てに自信が持てるよう、学びの場として活用することもできます。",
+      "transcription": "画像PDFを目視転記。改行と見出し括弧を正規化。原画像との再照合を登録時に行う。",
+      "original_text_sha256": "9aa450256919a8208e92a9ebfbb62701ce5c3f92723103c896a440e932830cd6",
+      "editorial_summary": "親子での交流、相談、情報収集、学びの場として紹介する。預かりサービスと区別する。",
+      "editorial_example_not_model_output": "親子で出かけて、遊んだり子育ての相談をしたりできる「地域子育て支援拠点」という場があります。近くの場所を探したい場合は、市区町村を教えてください。",
+      "search_keywords": [
+        "地域の相談",
+        "親子の居場所",
+        "孤立",
+        "支援拠点",
+        "話し相手"
+      ],
+      "use_limits": [
+        "預かり・料金・空き・受付時間・利用資格を本文だけで保証しない",
+        "既存の自治体情報と重複する場合は別の効果根拠として数えない"
+      ],
+      "age": {
+        "status": "原文表現を保持",
+        "value": "幼児期までのこどもと保護者。資料全体の説明は妊娠期から小学校1年生まで。区分ごとの数値年齢は設定しない。"
+      },
+      "evidence_type": "公的機関の育児実践ガイダンス",
+      "scientific_certainty_grade": null
+    }
+  ]
+}

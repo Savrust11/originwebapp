@@ -1,8 +1,11 @@
 // API authorization tests for non-log resources (children, events, coupons,
 // health/vaccination/growth records, sleep routines, custom vaccines,
-// notifications, custom quick actions). Run with the dev server up:
-//   node tests/resource-authz.test.mjs
-const BASE = process.env.BASE_URL || "http://127.0.0.1:5000";
+// notifications, custom quick actions).
+import "./safety/require-managed.mjs";
+import { getManagedTestContext } from "./safety/require-managed.mjs";
+
+const BASE = getManagedTestContext().baseURL;
+if (!BASE) throw new Error("managed authorization server is unavailable");
 
 let failures = 0;
 function check(name, cond, extra = "") {

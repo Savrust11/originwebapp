@@ -72,7 +72,7 @@
     .site-header .container {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       height: 60px;
     }
     .logo {
@@ -101,25 +101,10 @@
       color: var(--grape);
       opacity: 0.75;
     }
-    .header-link {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--grape);
-      text-decoration: none;
-      padding: 8px 18px;
-      border: 1.5px solid rgba(123, 79, 158, 0.35);
-      border-radius: 999px;
-      transition: background-color 0.2s, color 0.2s;
-      white-space: nowrap;
-    }
-    .header-link:hover {
-      background: var(--grape);
-      color: #fff;
-    }
-
     /* ===== Hero ===== */
     .hero {
       padding: 128px 0 72px;
+      overflow: hidden;
       position: relative;
     }
     .hero::before {
@@ -173,13 +158,13 @@
     }
 
     /* ===== Store badges ===== */
-    .store-badges {
+    .weiku-store-badges {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      align-items: center;
     }
-    .store-badge {
-      position: relative;
+    .weiku-store-badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -189,36 +174,26 @@
       border-radius: 14px;
       padding: 10px 20px 10px 16px;
       min-width: 168px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(255,255,255,0.18);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
     }
-    .store-badge:hover {
+    .weiku-store-badge:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(52, 40, 60, 0.25);
+      opacity: 0.94;
     }
-    .store-badge svg { width: 26px; height: 26px; flex: none; }
-    .store-badge .badge-text { line-height: 1.25; }
-    .store-badge .badge-text small {
+    .weiku-store-badge__icon { width: 26px; height: 26px; flex: none; }
+    .weiku-store-badge__text { display: flex; flex-direction: column; line-height: 1.25; }
+    .weiku-store-badge__label {
       display: block;
       font-size: 0.62rem;
       opacity: 0.8;
       letter-spacing: 0.04em;
     }
-    .store-badge .badge-text strong {
+    .weiku-store-badge__name {
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: 0.02em;
-    }
-    .store-badge .coming-soon {
-      position: absolute;
-      top: -9px; right: -6px;
-      background: var(--peach);
-      color: #fff;
-      font-size: 0.62rem;
-      font-weight: 700;
-      padding: 2px 10px;
-      border-radius: 999px;
-      letter-spacing: 0.05em;
-      box-shadow: 0 2px 6px rgba(255, 142, 127, 0.4);
     }
 
     /* ===== Hero visual ===== */
@@ -678,6 +653,7 @@
     .cta-card::before {
       content: "";
       position: absolute;
+      pointer-events: none;
       top: -70px; right: -50px;
       width: 240px; height: 240px;
       border-radius: 50%;
@@ -686,6 +662,7 @@
     .cta-card::after {
       content: "";
       position: absolute;
+      pointer-events: none;
       bottom: -90px; left: -60px;
       width: 280px; height: 280px;
       border-radius: 50%;
@@ -703,9 +680,9 @@
       margin-bottom: 30px;
       position: relative;
     }
-    .cta-card .store-badges { justify-content: center; position: relative; }
-    .cta-card .store-badge { background: #fff; color: var(--plum); }
-    .cta-card .store-badge:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+    .cta-card .weiku-store-badges { justify-content: center; position: relative; z-index: 1; }
+    .cta-card .weiku-store-badge { background: #fff; color: var(--plum); }
+    .cta-card .weiku-store-badge:hover { box-shadow: 0 8px 24px rgba(52, 40, 60, 0.3); }
 
     /* ===== Footer ===== */
     .site-footer {
@@ -793,7 +770,6 @@
         <span class="logo-mark" aria-hidden="true">🍇</span>
         We育<small>ウィーイク</small>
       </a>
-      <a class="header-link" href="https://we-iku.com/">アプリを開く</a>
     </div>
   </header>
 
@@ -805,16 +781,14 @@
           <div class="fade-up">
             <h1>育児を、<span class="accent">ふたり</span>で<br />シェアする。</h1>
             <p class="hero-lead">産前産後ケアホテル『ぶどうの木』が贈る、0〜6歳の育児記録アプリ。授乳・ねんね・名もなき育児まで、ふたりの毎日をそっと支えます。</p>
-            <div class="store-badges">
-              <a class="store-badge" href="#" aria-label="App Storeで入手（近日公開）">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-                <span class="badge-text"><small>Download on the</small><strong>App Store</strong></span>
-                <span class="coming-soon">近日公開</span>
+            <div class="weiku-store-badges">
+              <a class="weiku-store-badge" href="https://apps.apple.com/jp/app/we育/id6769981853" target="_blank" rel="noopener noreferrer" aria-label="App Store で We育 をダウンロード">
+                <svg class="weiku-store-badge__icon" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.564 12.727c-.026-2.636 2.155-3.9 2.253-3.962-1.226-1.794-3.133-2.04-3.813-2.069-1.625-.164-3.17.957-3.993.957-.822 0-2.093-.933-3.44-.908-1.77.026-3.4 1.03-4.31 2.615-1.838 3.187-.47 7.906 1.318 10.494.874 1.267 1.916 2.69 3.283 2.64 1.318-.053 1.814-.853 3.407-.853 1.593 0 2.04.853 3.434.827 1.418-.026 2.317-1.293 3.183-2.567 1.003-1.472 1.416-2.898 1.44-2.972-.031-.014-2.766-1.062-2.79-4.213-.026-2.635.001 0-.001 0zM14.99 4.86c.726-.88 1.216-2.104 1.082-3.323-1.046.043-2.313.696-3.063 1.576-.673.78-1.262 2.025-1.104 3.221 1.167.091 2.359-.594 3.085-1.474z"/></svg>
+                <span class="weiku-store-badge__text"><span class="weiku-store-badge__label">Download on the</span><span class="weiku-store-badge__name">App Store</span></span>
               </a>
-              <a class="store-badge" href="#" aria-label="Google Playで入手（近日公開）">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.61 1.81c-.36.19-.61.55-.61 1.02v18.34c0 .47.25.83.61 1.02l10.55-10.19L3.61 1.81zm11.42 11.06l2.78 2.68-3.57 2.06-8.09 4.66 8.88-9.4zm4.72-2.85 2.61 1.5c.85.5.85 1.46 0 1.96l-2.61 1.5-3.06-2.48 3.06-2.48zm-4.72-.36L5.29 1.05l8.09 4.66 3.57 2.06-1.92 1.89z"/></svg>
-                <span class="badge-text"><small>GET IT ON</small><strong>Google Play</strong></span>
-                <span class="coming-soon">近日公開</span>
+              <a class="weiku-store-badge" href="https://play.google.com/store/apps/details?id=com.weyuapp.app" target="_blank" rel="noopener noreferrer" aria-label="Google Play で We育 をダウンロード">
+                <svg class="weiku-store-badge__icon" viewBox="0 0 512 512" width="24" height="24" aria-hidden="true"><path fill="#00d1ff" d="M48 59.5c-4 4.3-6.3 10.9-6.3 19.6v354.2c0 8.7 2.3 15.3 6.5 19.4l1.2 1.1 198.4-198.4v-4.7L49.2 58.3z"/><path fill="#ffce00" d="M314 322.5l-66.2-66.3v-4.7l66.3-66.3 1.5.9 78.4 44.5c22.4 12.7 22.4 33.5 0 46.3l-78.4 44.6z"/><path fill="#ff3a44" d="M315.5 321.6L247.8 254 48 453.8c7.4 7.8 19.6 8.8 33.3 1L315.5 321.6"/><path fill="#00f076" d="M315.5 186.4L81.3 53.4C67.6 45.6 55.4 46.6 48 54.4L247.8 254z"/></svg>
+                <span class="weiku-store-badge__text"><span class="weiku-store-badge__label">GET IT ON</span><span class="weiku-store-badge__name">Google Play</span></span>
               </a>
             </div>
             <p class="hero-note">🍇 基本機能はすべて無料。プレミアムは月500円。</p>
@@ -1020,16 +994,14 @@
         <div class="cta-card">
           <h2>今日から、ふたりで。</h2>
           <p>育児のがんばりが、ちゃんと見える毎日へ。</p>
-          <div class="store-badges">
-            <a class="store-badge" href="#" aria-label="App Storeで入手（近日公開）">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-              <span class="badge-text"><small>Download on the</small><strong>App Store</strong></span>
-              <span class="coming-soon">近日公開</span>
+          <div class="weiku-store-badges">
+            <a class="weiku-store-badge" href="https://apps.apple.com/jp/app/we育/id6769981853" target="_blank" rel="noopener noreferrer" aria-label="App Store で We育 をダウンロード">
+              <svg class="weiku-store-badge__icon" viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M17.564 12.727c-.026-2.636 2.155-3.9 2.253-3.962-1.226-1.794-3.133-2.04-3.813-2.069-1.625-.164-3.17.957-3.993.957-.822 0-2.093-.933-3.44-.908-1.77.026-3.4 1.03-4.31 2.615-1.838 3.187-.47 7.906 1.318 10.494.874 1.267 1.916 2.69 3.283 2.64 1.318-.053 1.814-.853 3.407-.853 1.593 0 2.04.853 3.434.827 1.418-.026 2.317-1.293 3.183-2.567 1.003-1.472 1.416-2.898 1.44-2.972-.031-.014-2.766-1.062-2.79-4.213-.026-2.635.001 0-.001 0zM14.99 4.86c.726-.88 1.216-2.104 1.082-3.323-1.046.043-2.313.696-3.063 1.576-.673.78-1.262 2.025-1.104 3.221 1.167.091 2.359-.594 3.085-1.474z"/></svg>
+              <span class="weiku-store-badge__text"><span class="weiku-store-badge__label">Download on the</span><span class="weiku-store-badge__name">App Store</span></span>
             </a>
-            <a class="store-badge" href="#" aria-label="Google Playで入手（近日公開）">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.61 1.81c-.36.19-.61.55-.61 1.02v18.34c0 .47.25.83.61 1.02l10.55-10.19L3.61 1.81zm11.42 11.06l2.78 2.68-3.57 2.06-8.09 4.66 8.88-9.4zm4.72-2.85 2.61 1.5c.85.5.85 1.46 0 1.96l-2.61 1.5-3.06-2.48 3.06-2.48zm-4.72-.36L5.29 1.05l8.09 4.66 3.57 2.06-1.92 1.89z"/></svg>
-              <span class="badge-text"><small>GET IT ON</small><strong>Google Play</strong></span>
-              <span class="coming-soon">近日公開</span>
+            <a class="weiku-store-badge" href="https://play.google.com/store/apps/details?id=com.weyuapp.app" target="_blank" rel="noopener noreferrer" aria-label="Google Play で We育 をダウンロード">
+              <svg class="weiku-store-badge__icon" viewBox="0 0 512 512" width="24" height="24" aria-hidden="true"><path fill="#00d1ff" d="M48 59.5c-4 4.3-6.3 10.9-6.3 19.6v354.2c0 8.7 2.3 15.3 6.5 19.4l1.2 1.1 198.4-198.4v-4.7L49.2 58.3z"/><path fill="#ffce00" d="M314 322.5l-66.2-66.3v-4.7l66.3-66.3 1.5.9 78.4 44.5c22.4 12.7 22.4 33.5 0 46.3l-78.4 44.6z"/><path fill="#ff3a44" d="M315.5 321.6L247.8 254 48 453.8c7.4 7.8 19.6 8.8 33.3 1L315.5 321.6"/><path fill="#00f076" d="M315.5 186.4L81.3 53.4C67.6 45.6 55.4 46.6 48 54.4L247.8 254z"/></svg>
+              <span class="weiku-store-badge__text"><span class="weiku-store-badge__label">GET IT ON</span><span class="weiku-store-badge__name">Google Play</span></span>
             </a>
           </div>
         </div>
@@ -1041,7 +1013,6 @@
     <div class="container">
       <p class="footer-logo">We育<span style="font-size:0.8rem;font-weight:700;opacity:0.7;">（ウィーイク）</span></p>
       <nav class="footer-links" aria-label="フッターリンク">
-        <a href="https://we-iku.com/">アプリを開く</a>
         <a href="https://we-iku.com/support">サポート</a>
         <a href="https://we-iku.com/privacy">プライバシーポリシー</a>
         <a href="https://we-iku.com/terms">利用規約</a>

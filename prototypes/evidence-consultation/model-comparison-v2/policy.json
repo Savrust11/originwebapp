@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "authorization": "Current explicit repair-and-continue instruction, within existing $1 and cumulative 43 limits; no renewed permission or extra API probes. Maximum 21 new sends, 42 total.",
+  "A": "Demonstrated required-setting contradictions stop new sends. Known actual-model/default-tier token arithmetic is retained separately.",
+  "B": "Unusable pricing, usage, control evidence, transport or reservation/budget evidence stops. Retain at least the unresolved reservation; never double-count an entire reservation plus known actual cost.",
+  "C": "Extra response/output/usage metadata without known contradiction is recorded metadata-unresolved and is not a global stop or a claim that metadata is harmless.",
+  "fairnessPolicyChange": "Supersedes old resume preflight ONLY for this successor. Native temperature/top_p mismatch or uncertainty excludes that pair, not unrelated cases. Body completion and blind content grading remain independent. No automatic fair-success from unknown metadata.",
+  "fairness": "Require same observed temperature and top_p or both unset, two eligible completed answers and two fresh hash-bound reviews. Pair eligibility describes those frozen checks, not blanket clearance of unknown supplemental metadata: preserve metadataState/allMetadataResolved alongside nativeSampling. C is not converted into a claim of harmlessness or complete fairness. H06 is reference-only by independent memo; no backfilled completion.",
+  "quality": "Technical-invalid, incomplete, schema-invalid, per-case bad answers and native-sampling mismatch are case failures, not global stops. Every attempt still requires a fresh review before next. Explicit reviewer decision stop is honored.",
+  "privacy": "No raw response envelopes, ciphertext, provider errors, headers or credentials logged. Exact safely screened field paths only in segregated private diagnostics; unknown values have type/hash/length only. Status remains model/cost-blind until unmask.",
+  "requests": "Frozen request serialization exactly reused, with model the sole difference per pair. No regeneration, retry, fallback, truncation, token counting, entitlement probes, extra API calls or response reuse in input.",
+  "accounting": "Opening known 6004300 plus Q10 unresolved 551250 centiMicroUSD. H06 3416400 replaces its old 10398500 reservation only in an append-only successor correction referencing old ledger and memo. Completion not inferred from price.",
+  "evidenceBoundary": "AI-only evaluation; not clinical quality, source adoption, applicability, production publication or invoice reconciliation."
+}

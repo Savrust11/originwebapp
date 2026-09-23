@@ -1,10 +1,11 @@
 "use client"
 
 import { motion, useReducedMotion } from "framer-motion"
-import { Sparkles, ArrowRight } from "lucide-react"
+import { Sparkles } from "lucide-react"
 import { Eyebrow } from "./eyebrow"
 import { ScreenCarousel } from "./screen-carousel"
 import { tourScreens } from "./screens-data"
+import { StoreBadges } from "./store-badges"
 
 const floatingLabels = [
   { text: "AI予測", className: "left-0 top-16 bg-white text-grape", delay: 0.2 },
@@ -23,7 +24,7 @@ export function Hero() {
         <div className="absolute bottom-0 left-1/3 size-72 rounded-full bg-pink-soft/25 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 lg:grid-cols-2 lg:gap-8 lg:px-8 lg:pb-28">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 lg:grid-cols-2 lg:items-start lg:gap-8 lg:px-8 lg:pb-20">
         {/* left */}
         <div className="max-w-xl">
           <Eyebrow>
@@ -44,17 +45,13 @@ export function Hero() {
             We育は、赤ちゃんの次の授乳・睡眠タイミングをAIで予測し、日々の育児を家族で共有。これまで見えなかった頑張りを、行動・感謝・休息につなげるチーム育児アプリです。
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="/demo/app"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-grape px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-grape/25 transition-transform hover:-translate-y-0.5 hover:bg-grape-deep"
-            >
-              実際の画面を体験する
-              <ArrowRight className="size-4" />
-            </a>
+          <div className="mt-8">
+            <StoreBadges />
+          </div>
+          <div className="mt-5">
             <a
               href="#features"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-grape/25 bg-white px-7 py-3.5 text-base font-bold text-grape transition-colors hover:bg-lavender-pale"
+              className="inline-flex items-center justify-center rounded-full px-2 py-2 text-sm font-bold text-grape underline decoration-grape/30 underline-offset-4 transition-colors hover:text-grape-deep hover:decoration-grape"
             >
               機能を見る
             </a>
@@ -67,7 +64,7 @@ export function Hero() {
         </div>
 
         {/* right: phone carousel with floating labels */}
-        <div className="relative mx-auto w-full max-w-[19rem] sm:max-w-sm">
+        <div className="relative mx-auto w-full max-w-[19rem] sm:max-w-sm lg:max-w-[18rem]">
           {/* stacked ghost phones for depth */}
           <div
             aria-hidden

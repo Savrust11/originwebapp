@@ -1,0 +1,405 @@
+{
+  "title": "We育 優先4資料 原文確認・採用範囲 v0.2",
+  "checked_at": "2026-09-17",
+  "reviewer": {
+    "type": "AI_assisted_editorial_review",
+    "name": "Codex",
+    "human_adoption_approval": null
+  },
+  "status": "section_selection_complete_not_import_ready",
+  "scope": "原文の関連箇所・方法・限界・版・利用条件を確認して初期採用範囲を選定。全文の全記述や全原著を検証したものではない。",
+  "important": "11件は論理的な適用区分。E02-S01/S02の原文は共有する。資料の断片だけで検索させずrequired_contextも渡す。",
+  "sources": [
+    {
+      "id": "E01",
+      "title": "授乳・離乳の支援ガイド",
+      "authors": [
+        "「授乳・離乳の支援ガイド」改定に関する研究会"
+      ],
+      "issuing_context": "厚生労働省の改定研究会作成／現在の掲載先はこども家庭庁",
+      "language": "ja",
+      "publication_date": "2019-03",
+      "date_precision": "month",
+      "revision_date": null,
+      "url": "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/6790a829-15c7-49d3-9156-9e40e8d9c20c/b0946e59/20230401_policies_boshihoken_junyuu_01.pdf",
+      "landing": "https://www.cfa.go.jp/policies/boshihoken/junyuu",
+      "kind": "研究を参照した公的支援ガイド。個々の文を同じ確実性の科学的結論として扱わない",
+      "rights_url": "https://www.cfa.go.jp/copyright-policy",
+      "license": "PDL1.0を基本とする。指定した文章部分を対象とし、第三者素材・図表・ロゴを除く",
+      "certainty": "採用箇所の統一的なGRADE等級は確認できず。未評価として保持",
+      "excluded": "実践事例、古い参考資料、図表、栄養量の一律指定、アレルギー予防・治療の個別助言は今回の採用外。離乳の進行各段階と食品・調理の節は次回の点検対象。",
+      "update_check": "公式掲載ページが案内する2019年3月版を確認。別の後継指針を網羅的に調査したものではない。"
+    },
+    {
+      "id": "E02",
+      "title": "健康づくりのための睡眠ガイド2023",
+      "authors": [
+        "健康づくりのための睡眠指針の改訂に関する検討会"
+      ],
+      "issuing_context": "厚生労働省",
+      "language": "ja",
+      "publication_date": "2024-02",
+      "date_precision": "month",
+      "revision_date": "2024-09-18",
+      "url": "https://www.mhlw.go.jp/content/001305530.pdf",
+      "landing": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kenkou_iryou/kenkou/suimin/index.html",
+      "kind": "公的睡眠ガイド。推奨とその引用研究を区別",
+      "rights_url": "https://www.mhlw.go.jp/chosakuken/",
+      "license": "PDL1.0に準拠。今回の対象は本文のみ。図表・キャラクター等は除く",
+      "certainty": "引用5は研究の検討と合意形成による推奨。昼寝を含む24時間合計であることを原文で照合。GRADEの高確実性へ変換しない。",
+      "excluded": "昼寝の一律中止、夜泣きへの待機介入、乳児の安全な睡眠の段落、疾病診断、妊娠・更年期・思春期の説明は今回の採用外。安全な睡眠が不要という意味ではなく、別の専用根拠と照合する。",
+      "update_check": "公式ページの2024年9月18日一部修正リンクの実際の接続先を確定。表紙は令和6年2月。版名2023、公表年月、修正日を別保存。"
+    },
+    {
+      "id": "E03",
+      "title": "Parenting interventions to promote early child development in the first three years of life: A global systematic review and meta-analysis",
+      "authors": [
+        "Joshua Jeong",
+        "Emily E. Franchett",
+        "Clariana V. Ramos de Oliveira",
+        "Karima Rehmani",
+        "Aisha K. Yousafzai"
+      ],
+      "journal": "PLOS Medicine 18(5): e1003602",
+      "language": "en",
+      "publication_date": "2021-05-10",
+      "date_precision": "day",
+      "revision_date": null,
+      "url": "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1003602",
+      "landing": "https://doi.org/10.1371/journal.pmed.1003602",
+      "kind": "系統的レビュー・メタ解析",
+      "rights_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license": "記事のCopyright欄とリンク先でCC BY 4.0確認。著者・出典・ライセンス・変更表示を保持",
+      "certainty": "CochraneのRCTバイアス評価を使用。アウトカム全体のGRADE等級として転用不可",
+      "excluded": "AI相談の効果、特定の声かけの効果、個別発達診断への使用は不可。0〜6歳全体へ外挿しない。",
+      "update_check": "出版社の本文ページとDOIによる訂正・撤回検索で、当該論文への告知は見つからなかった。不存在を保証しない。収載全試験の訂正・撤回は未点検。検索終了2020-11-15。"
+    },
+    {
+      "id": "E04",
+      "title": "Effect of parent-focused interventions for screen use on developmental outcomes in young children: a systematic review and meta-analysis",
+      "authors": [
+        "Amanda Machell",
+        "Carrie Ewin",
+        "Sharon Horwood",
+        "Katherine L. Downing",
+        "Kylie D. Hesketh"
+      ],
+      "journal": "International Journal of Behavioral Nutrition and Physical Activity 23:71",
+      "language": "en",
+      "publication_date": "2026-05-20",
+      "date_precision": "day",
+      "version_of_record_date": "2026-07-16",
+      "revision_date": null,
+      "url": "https://link.springer.com/article/10.1186/s12966-026-01919-8",
+      "landing": "https://doi.org/10.1186/s12966-026-01919-8",
+      "kind": "系統的レビュー・メタ解析",
+      "rights_url": "https://link.springer.com/article/10.1186/s12966-026-01919-8",
+      "license": "Rights and permissions欄でCC BY 4.0確認。第三者素材は注記に従う。今回図表は取り込まない",
+      "certainty": "JBIのRCT評価を使用。GRADE等級は付与しない。研究数だけで高確実性としない",
+      "excluded": "一律のスクリーン時間上限、発達障害の原因・治療、睡眠改善の保証、個別の介入手順の自動推奨には使わない。",
+      "update_check": "PublishedとVersion of recordを区別して保存。後者を改訂日と断定しない。出版社表示とDOI検索で訂正・撤回告知を見つけず。全原著の点検は未実施。検索終了2025-03。"
+    }
+  ],
+  "units": [
+    {
+      "id": "E01-S01",
+      "source_id": "E01",
+      "label": "授乳方法の選択と支援姿勢",
+      "selection_status": "selected_for_extraction",
+      "locator": "Ⅱ−1／1、印刷p.15。本文第4〜6段落（ミルク選択への配慮から支援の基本まで）。統計説明・法令脚注は含めない",
+      "pdf_pages_1based": [
+        20
+      ],
+      "population": "授乳中の子どもと養育者。月齢の数値限定なし",
+      "applicability_condition": "授乳方法の選択に関する相談。乳汁量や発育不良の診断には使用しない",
+      "required_context": "同節p.15〜16の個別評価が必要との説明を参照情報として保持",
+      "allowed_role": "支援方針。効果量の根拠ではない",
+      "search_terms_ja_en": [
+        "授乳",
+        "母乳",
+        "育児用ミルク",
+        "feeding choice"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E01-S02",
+      "source_id": "E01",
+      "label": "離乳と授乳終了の区別",
+      "selection_status": "selected_for_extraction",
+      "locator": "Ⅱ−1／2／(4)、印刷p.19の段落全体。次の(5)は含めない",
+      "pdf_pages_1based": [
+        24
+      ],
+      "population": "離乳への移行中の子どもと養育者",
+      "applicability_condition": "暦年齢だけで授乳終了を決めない",
+      "required_context": "E01-S04と相互参照。前後の異なる論点を混ぜない",
+      "allowed_role": "一般情報",
+      "search_terms_ja_en": [
+        "卒乳",
+        "断乳",
+        "離乳",
+        "weaning"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E01-S03",
+      "source_id": "E01",
+      "label": "離乳開始の目安",
+      "selection_status": "selected_for_extraction",
+      "locator": "Ⅱ−2／2／(1)、印刷p.30の節全体と脚注15〜17。次の(2)は別扱い",
+      "pdf_pages_1based": [
+        35
+      ],
+      "population": "離乳開始を検討する子ども",
+      "applicability_condition": "本文の5〜6か月頃は発達状況と併せた目安。数値だけで適合確定しない",
+      "required_context": "Ⅱ−2／1、印刷p.29の個人差・状態に合わせる説明。脚注を切り離さない",
+      "allowed_role": "一般情報。医療上の個別食事指示は除外",
+      "search_terms_ja_en": [
+        "離乳食",
+        "開始",
+        "月齢",
+        "complementary feeding"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E01-S04",
+      "source_id": "E01",
+      "label": "離乳完了の意味",
+      "selection_status": "selected_for_extraction",
+      "locator": "Ⅱ−2／2／(3)、印刷p.31の節全体",
+      "pdf_pages_1based": [
+        36
+      ],
+      "population": "離乳完了を検討する子ども",
+      "applicability_condition": "本文の12〜18か月頃は目安。摂食状態を無視しない",
+      "required_context": "Ⅱ−2／1、印刷p.29。E01-S02とも関連付ける",
+      "allowed_role": "一般情報。摂食障害等の個別判定は除外",
+      "search_terms_ja_en": [
+        "離乳完了",
+        "授乳",
+        "幼児食",
+        "weaning completion"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E02-S01",
+      "source_id": "E02",
+      "label": "1〜2歳の睡眠時間の参考",
+      "selection_status": "selected_for_extraction",
+      "locator": "こども版／1／睡眠時間の目安、印刷p.15の最初の箇条書き。本文はE02-S02と共有し重複原文にしない",
+      "pdf_pages_1based": [
+        17
+      ],
+      "population": "1〜2歳",
+      "applicability_condition": "米国睡眠医学会の推奨を紹介する記述。乳児や保護者へ流用しない",
+      "required_context": "引用文献5（印刷p.17／PDF19ページ目）を保持。AASMの2016年原文で昼寝を含む24時間合計と照合済み。原文を書き換えず出典付き注記として付ける。",
+      "allowed_role": "参考情報。睡眠障害の診断には使用しない",
+      "search_terms_ja_en": [
+        "睡眠",
+        "睡眠時間",
+        "幼児",
+        "sleep duration"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published",
+      "verification_reference": "https://aasm.org/resources/pdf/pediatricsleepdurationconsensus.pdf"
+    },
+    {
+      "id": "E02-S02",
+      "source_id": "E02",
+      "label": "3〜5歳の睡眠時間の参考",
+      "selection_status": "selected_for_extraction",
+      "locator": "E02-S01と同じ箇条書きの3〜5歳部分。原文は共有、適用条件を分ける",
+      "pdf_pages_1based": [
+        17
+      ],
+      "population": "3〜5歳",
+      "applicability_condition": "6歳以上・乳児へそのまま拡張しない",
+      "required_context": "引用文献5（印刷p.17／PDF19ページ目）を保持。AASMの2016年原文で昼寝を含む24時間合計と照合済み。原文を書き換えず出典付き注記として付ける。",
+      "allowed_role": "参考情報。昼寝禁止の根拠にしない",
+      "search_terms_ja_en": [
+        "睡眠",
+        "睡眠時間",
+        "preschool",
+        "sleep duration"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published",
+      "verification_reference": "https://aasm.org/resources/pdf/pediatricsleepdurationconsensus.pdf"
+    },
+    {
+      "id": "E02-S03",
+      "source_id": "E02",
+      "label": "養育者の睡眠確保",
+      "selection_status": "selected_for_extraction",
+      "locator": "子育て期の睡眠と健康への影響、印刷p.39の最初の箇条書きのみ",
+      "pdf_pages_1based": [
+        41
+      ],
+      "population": "新生児を養育する保護者",
+      "applicability_condition": "相談対象は保護者。子どもの必要睡眠時間と混同しない",
+      "required_context": "引用9を保持。次の箇条書きの夜泣きへの待機介入は取り込まない",
+      "allowed_role": "保護者への一般的支援",
+      "search_terms_ja_en": [
+        "寝不足",
+        "授乳",
+        "夜泣き",
+        "保護者",
+        "caregiver sleep"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E03-S01",
+      "source_id": "E03",
+      "label": "養育支援と親子の関わりの研究結果",
+      "selection_status": "selected_for_extraction",
+      "locator": "Resultsの養育アウトカム節のうち、親子相互作用を扱う段落（Fig 10直前）の全文",
+      "pdf_pages_1based": null,
+      "population": "研究採択は平均年齢36か月以下等。個々の参加者全員の年齢範囲ではない",
+      "applicability_condition": "診断済み疾患・障害の対象集団は除外。日本で同じ効果が出ると判定しない",
+      "required_context": "Methodsの採択・除外条件、Resultsのバイアス評価、Discussionの限界を必須で関連付ける",
+      "allowed_role": "研究背景。個別の声かけを処方する資料ではない",
+      "search_terms_ja_en": [
+        "親子の関わり",
+        "養育支援",
+        "parent–child interactions",
+        "parenting interventions"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E03-S02",
+      "source_id": "E03",
+      "label": "保護者の抑うつについての効果の限界",
+      "selection_status": "selected_for_extraction",
+      "locator": "同じ養育アウトカム節の抑うつ症状の段落（Fig 11直前）の全文",
+      "pdf_pages_1based": null,
+      "population": "E03-S01と同じ研究採択条件",
+      "applicability_condition": "精神疾患の診断・治療の根拠にしない。有意差なしを効果ゼロの証明としない",
+      "required_context": "E03-S01と同じ方法・限界を必須で関連付ける",
+      "allowed_role": "過大な効能説明を防ぐ研究背景",
+      "search_terms_ja_en": [
+        "保護者",
+        "抑うつ",
+        "parental depressive symptoms"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E04-S01",
+      "source_id": "E04",
+      "label": "スクリーン利用への介入の研究結果",
+      "selection_status": "selected_for_extraction",
+      "locator": "Resultsのスクリーン利用に対する介入効果の節全体。次の実行可能性の節までの本文（図画像は含めない）",
+      "pdf_pages_1based": null,
+      "population": "研究の採択条件は開始時平均年齢6歳未満。全員6歳未満とは限らない",
+      "applicability_condition": "疾患等の除外条件を保持。家庭での保護者向け介入が対象",
+      "required_context": "Methodsの適格基準・プロトコル変更、Resultsの対象研究特性、Discussionの方法上の限界と限界節を必須関連付け",
+      "allowed_role": "研究背景。毎日何分までという上限設定には使わない",
+      "search_terms_ja_en": [
+        "動画",
+        "スマホ",
+        "スクリーン時間",
+        "screen use",
+        "screen time"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    },
+    {
+      "id": "E04-S02",
+      "source_id": "E04",
+      "label": "スクリーン利用と睡眠の研究の限界",
+      "selection_status": "selected_for_extraction",
+      "locator": "Resultsの睡眠特性に対する介入効果の節全体",
+      "pdf_pages_1based": null,
+      "population": "E04-S01と同じ採択条件。睡眠アウトカムの研究群は別に扱う",
+      "applicability_condition": "改善の保証や睡眠治療には使わない",
+      "required_context": "E04-S01と同じ方法・限界を必須関連付け。睡眠節の結果を一部だけ取り出さない",
+      "allowed_role": "不確実性を説明する研究背景",
+      "search_terms_ja_en": [
+        "睡眠",
+        "動画",
+        "寝る前",
+        "sleep characteristics",
+        "screen use"
+      ],
+      "original_text": null,
+      "translation": null,
+      "certainty_grade": null,
+      "japan_applicability": "not_automatically_established",
+      "human_approval": null,
+      "publication_status": "not_published"
+    }
+  ],
+  "global_rules": [
+    "original_textは未収録。要約やlocatorを原文欄へ入れない",
+    "今回の選定は内容編集上の判断であり、本番公開承認ではない",
+    "元ページと取得日時、抽出後の本文ハッシュ、ライセンス表示を取得時に記録する。今回ハッシュは作成していない",
+    "年齢不明や条件未確認は適合済みにしない。研究の平均年齢を上下限へ変換しない",
+    "統計的有意差、バイアス評価、GRADE、推奨の強さは別の情報",
+    "日本語訳は未作成。検索語は編集上の候補であり翻訳の正確性を保証するものではない",
+    "語句検索だけでなく必須文脈を一緒に取り出す仕組みが必要",
+    "既存DB登録・公開・権限変更は行っていない"
+  ],
+  "next_step": "指定箇所の原文抽出と出典照合を一時作業ファイルで実施し、現行スキーマに変換する。既存DBにはまだ投入しない。",
+  "reference_checks": [
+    {
+      "source_id": "E02-reference-5",
+      "url": "https://aasm.org/resources/pdf/pediatricsleepdurationconsensus.pdf",
+      "purpose": "睡眠時間の単位・昼寝の扱いと推奨の性質の照合のみ。独立した全文取り込み対象へ追加していない。"
+    }
+  ]
+}

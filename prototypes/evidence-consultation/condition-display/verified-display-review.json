@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "checkedBy": "agent-source-comparison-not-clinical-review",
+  "scope": "explicit-offline-condition-and-editorial-example-source-comparison",
+  "catalogSha256": "479331096620f6eaf8c617b7577695603c512c8d64c27951135174149df18c00",
+  "cases": {
+    "Q05": {
+      "bodySha256": "10a7191b0992fc4d0b10bd73308ee1b379c4fa337791bd21206f697f7b5c6926",
+      "blocksSha256": "3a795ae721696c42ce62a43119f99d90a0bbd30ed8b8585d06c190d7446396de",
+      "verdict": "pass"
+    },
+    "Q06": {
+      "bodySha256": "33be992c4092ed51e782672aae0db38b4a953b8509637e1ca96c57b01a24402c",
+      "blocksSha256": "829fedea0edf48f687495041ba8a1c99df8a60423529dfcde64f8f100606dd4c",
+      "verdict": "pass"
+    },
+    "Q07": {
+      "bodySha256": "cc1438a3592e712d834a5e7406d16b3a04a4b88d7c1266997e415a6e4c11e0a1",
+      "blocksSha256": "67d2ab7b3a59f616f0dd9b9baaae1eee0ddaad89caccc771822cbbd1b8facfc0",
+      "verdict": "pass"
+    },
+    "Q08": {
+      "bodySha256": "db9921fec4450f9c42b8818eb6b6256794a09801d7202a4e52623850c88add5c",
+      "blocksSha256": "7500af0d0e634a68ff2f474a8b51c184e6e82c00c4f2ff2ee782c138ffa49ca9",
+      "verdict": "pass"
+    },
+    "Q09": {
+      "bodySha256": "f57c9c3055800595607f9d0b8a92289a3d9de742c43d9e6964a32370e13369dd",
+      "blocksSha256": "992b8546a09eae257c0d35d7dcfe253df9944d4e65ffd6d9db8c13a9e62892a9",
+      "verdict": "pass"
+    },
+    "Q10": {
+      "bodySha256": "22da7513d4d0e33cce7be039f49e4d03555d4e32477ba36a1aa13b73b3a4f8d2",
+      "blocksSha256": "fed5011db29e00e02dd2ebf842b038161610f3422e667935bc54da5902f7a42b",
+      "verdict": "pass"
+    },
+    "Q11": {
+      "bodySha256": "0bc48e749928ed3d7ee9559f11d15bf4f78c6fbb8723524b4b3b3a735269f49c",
+      "blocksSha256": "6d8277c9e4c8cff4f2047068f2a7e74ac38f235f5663a5fbe5f6decb95e00a00",
+      "verdict": "pass"
+    }
+  },
+  "finding": "原文・版・引用箇所と構造化条件、短い編集例を照合。臨床・採用・公開承認ではない。変更時は別の意味照合が必要。"
+}

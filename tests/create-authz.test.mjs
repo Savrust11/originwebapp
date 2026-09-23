@@ -8,12 +8,15 @@
 //     per window (enumeration guard, FAMILY_ENUM_LIMIT) -> 429, while
 //     already-used familyIds keep working.
 //
-// Part 1 runs against BASE_URL (shared runner server). Part 2 spawns its own
-// server with FAMILY_ENUM_LIMIT=5 so the limit is testable and doesn't
-// interfere with other suites.
-import { spawn } from "node:child_process";
+// Part 1 runs against the server owned by the managed runner. Part 2 spawns
+// its own server with FAMILY_ENUM_LIMIT=5 so the limit is testable and
+// doesn't interfere with other suites.
+import "./safety/require-managed.mjs";
+import { getManagedTestContext, getManagedTestEnvironment } from "./safety/require-managed.mjs";
+import { spawnManagedServer } from "./safety/managed-server.mjs";
 
-const BASE = process.env.BASE_URL || "http://127.0.0.1:5000";
+const BASE = getManagedTestContext().baseURL;
+if (!BASE) throw new Error("managed authorization server is unavailable");
 
 let failures = 0;
 function check(name, cond, extra = "") {
@@ -68,12 +71,10 @@ r = await api(BASE, "POST", `/api/logs?familyId=${FAMILY}-other`, { familyId: FA
 check("body/query familyId mismatch -> 403", r.status === 403, `got ${r.status}`);
 
 // --- 2. familyId enumeration guard (own server, FAMILY_ENUM_LIMIT=5) ---
-const port = 5900 + Math.floor(Math.random() * 90);
-const base2 = `http://127.0.0.1:${port}`;
-const server = spawn("npx", ["tsx", "server/index.ts"], {
-  env: { ...process.env, NODE_ENV: "development", PORT: String(port), FAMILY_ENUM_LIMIT: "5" },
-  stdio: ["ignore", "ignore", "inherit"],
-});
+const secondary = await spawnManagedServer(
+  getManagedTestEnvironment({ FAMILY_ENUM_LIMIT: "5" }),
+);
+const base2 = secondary.baseURL;
 try {
   const deadline = Date.now() + 60000;
   let ready = false;
@@ -110,7 +111,7 @@ try {
   r = await api(base2, "POST", `/api/families/enum-authz-param2-${Date.now()}/food-ingredients`, { name: "x", category: "その他" });
   check("unseen :familyId param counts toward enumeration limit -> 429", r.status === 429, `got ${r.status}`);
 } finally {
-  server.kill("SIGTERM");
+  await secondary.stop();
 }
 
 if (failures > 0) {

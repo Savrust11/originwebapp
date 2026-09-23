@@ -1,6 +1,6 @@
-import { ArrowRight } from "lucide-react"
 import { Reveal } from "./reveal"
 import { PhoneMockup } from "./phone-mockup"
+import { StoreBadges } from "./store-badges"
 
 const stack = [
   { src: "/weiku-demo/ai-predict.png", alt: "AI予測画面", className: "left-0 top-6 z-10 rotate-[-8deg]" },
@@ -32,14 +32,8 @@ export function FinalCta() {
               記録、AI予測、共有、行動、感謝。育児に必要なものを、一つの場所に。
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/demo/app"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-bold text-grape-deep shadow-lg transition-transform hover:-translate-y-0.5"
-              >
-                実際の画面を体験する
-                <ArrowRight className="size-4" />
-              </a>
+            <div className="mt-9">
+              <StoreBadges />
             </div>
           </Reveal>
         </div>

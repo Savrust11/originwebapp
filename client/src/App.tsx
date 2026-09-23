@@ -10,6 +10,7 @@ import { Grape } from "lucide-react";
 import { useTheme } from "@/hooks/use-theme";
 import { FloatingBreastTimer } from "@/components/FloatingBreastTimer";
 import DemoBanner from "@/components/DemoBanner";
+import FamilyIdMigrationBanner from "@/components/FamilyIdMigrationBanner";
 
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
@@ -36,6 +37,10 @@ import DailyStats from "./pages/DailyStats";
 import Diary from "./pages/Diary";
 import NotFound from "./pages/not-found";
 import WeIkuDemo from "./pages/WeIkuDemo";
+import SupporterPortal from "./pages/SupporterPortal";
+import SupporterManage from "./pages/SupporterManage";
+import SupporterDevelopment from "./pages/SupporterDevelopment";
+import Consultations from "./pages/Consultations";
 
 function ThemeInitializer() {
   useTheme();
@@ -66,6 +71,11 @@ function Router() {
       <Route path="/log-review" component={LogReview} />
       <Route path="/daily-stats" component={DailyStats} />
       <Route path="/diary" component={Diary} />
+      <Route path="/consultations/:id" component={Consultations} />
+      <Route path="/consultations" component={Consultations} />
+      <Route path="/supporter/development" component={SupporterDevelopment} />
+      <Route path="/supporter" component={SupporterPortal} />
+      <Route path="/supporter/manage" component={SupporterManage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -241,6 +251,10 @@ function App() {
     location === "/terms" || location === "/terms/";
   const isSupportPage = location === "/support" || location === "/support/";
   const isDemoLpPage = location === "/demo" || location === "/demo/";
+  const isSupporterPage = location === "/supporter" || location === "/supporter/" ||
+    location === "/supporter/manage" || location === "/supporter/manage/" ||
+    location === "/supporter/development" || location === "/supporter/development/";
+  const isConsultationsPage = location === "/consultations" || location === "/consultations/" || location.startsWith("/consultations/");
 
   useLineLoginCallback();
 
@@ -329,7 +343,7 @@ function App() {
     );
   }
 
-  if (isTipsPage || isLegalPage || isSupportPage) {
+  if (isTipsPage || isLegalPage || isSupportPage || isSupporterPage || isConsultationsPage) {
     return (
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
@@ -359,6 +373,7 @@ function App() {
         )}
         <FloatingBreastTimer />
         <DemoBanner />
+        {!showOnboarding && !needsInvitation && <FamilyIdMigrationBanner />}
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>

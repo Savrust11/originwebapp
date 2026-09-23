@@ -1,7 +1,12 @@
-import { pgTable, text, serial, integer, boolean, timestamp, date, real, varchar, numeric, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, date, real, varchar, numeric, jsonb, uniqueIndex, check, uuid } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// Kept in a dedicated module because the evidence catalog is independent from
+// family records; re-exporting it lets the ephemeral Drizzle schema generator
+// include the additive tables.
+export * from "./evidence-schema";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -13,6 +18,34 @@ export const users = pgTable("users", {
   invitationVerified: boolean("invitation_verified").notNull().default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// Private consultations deliberately belong to the persisted numeric account,
+// never to a family ID or client-supplied role. These tables are additive and
+// are only queried when the separately gated feature is enabled.
+export const consultations = pgTable("consultations", {
+  id: uuid("id").primaryKey(),
+  ownerUserId: integer("owner_user_id").notNull().references(() => users.id, { onDelete: "restrict" }),
+  title: varchar("title", { length: 120 }).notNull(),
+  requestId: uuid("request_id").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("consultations_owner_request_unique").on(table.ownerUserId, table.requestId),
+]);
+
+export const consultationMessages = pgTable("consultation_messages", {
+  id: uuid("id").primaryKey(),
+  consultationId: uuid("consultation_id").notNull()
+    .references(() => consultations.id, { onDelete: "cascade" }),
+  content: text("content").notNull(),
+  authorType: text("author_type").notNull().default("user"),
+  requestId: uuid("request_id").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("consultation_messages_consultation_request_unique")
+    .on(table.consultationId, table.requestId),
+  check("consultation_messages_author_type_check", sql`${table.authorType} = 'user'`),
+]);
 
 export const invitationCodes = pgTable("invitation_codes", {
   id: serial("id").primaryKey(),
@@ -70,6 +103,7 @@ export const logs = pgTable("logs", {
   medicineName: text("medicine_name"),
   medicineDose: text("medicine_dose"),
   performedBy: text("performed_by"),
+  sleepSessionId: integer("sleep_session_id"),
   settlingMethod: text("settling_method"),
   settlingMinutes: integer("settling_minutes"),
   sleepLocation: text("sleep_location"),
@@ -81,7 +115,88 @@ export const logs = pgTable("logs", {
   excludeFromInterval: boolean("exclude_from_interval").default(false),
   holdEndAt: timestamp("hold_end_at"),
   walkEndAt: timestamp("walk_end_at"),
+  // Supporter attribution is deliberately separate from userId/performedBy.
+  // userId remains populated for legacy compatibility; these columns are the
+  // authoritative attribution for supporter-created care records.
+  actorAccountId: integer("actor_account_id"),
+  supporterAccountId: integer("supporter_account_id"),
+  supporterGrantId: integer("supporter_grant_id"),
+  careSource: text("care_source"),
+  recorderDisplayName: text("recorder_display_name"),
+  deletedAt: timestamp("deleted_at"),
   createdAt: timestamp("created_at").defaultNow(),
+});
+
+// A provider-neutral account. inviteAddress/publicCode are routing identifiers,
+// not credentials or bearer tokens. An account can exist before an external
+// identity is bound, hence userId is intentionally nullable.
+export const supporterAccounts = pgTable("supporter_accounts", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").unique().references(() => users.id, { onDelete: "restrict" }),
+  inviteAddress: text("invite_address").notNull().unique(),
+  publicCode: varchar("public_code", { length: 80 }).notNull().unique(),
+  displayName: text("display_name").notNull().default("ぶどうの木"),
+  kind: text("kind").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  check("supporter_accounts_kind_check", sql`${table.kind} IN ('facility', 'relative', 'sitter')`),
+]);
+
+// This is the only authority used for a parent role when supporter access is
+// enabled. users.familyId and client-held role/family values are not authority.
+export const parentAccess = pgTable("parent_access", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id, { onDelete: "restrict" }),
+  familyId: text("family_id").notNull(),
+  role: text("role").notNull(),
+  verifiedAt: timestamp("verified_at").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("parent_access_user_family_unique").on(table.userId, table.familyId),
+  check("parent_access_role_check", sql`${table.role} IN ('papa', 'mama')`),
+]);
+
+export const supporterGrants = pgTable("supporter_grants", {
+  id: serial("id").primaryKey(),
+  familyId: text("family_id").notNull(),
+  childId: integer("child_id").notNull().references(() => children.id, { onDelete: "restrict" }),
+  supporterAccountId: integer("supporter_account_id").notNull().references(() => supporterAccounts.id, { onDelete: "restrict" }),
+  invitedByUserId: integer("invited_by_user_id").notNull().references(() => users.id, { onDelete: "restrict" }),
+  startsAt: timestamp("starts_at").notNull(),
+  endsAt: timestamp("ends_at").notNull(),
+  acceptedAt: timestamp("accepted_at"),
+  revokedAt: timestamp("revoked_at"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  check("supporter_grants_valid_period", sql`${table.startsAt} < ${table.endsAt}`),
+]);
+
+// Request records make retries durable. Fingerprint mismatches on a repeated
+// requestId are rejected rather than silently applying a different operation.
+export const supporterIdempotency = pgTable("supporter_idempotency", {
+  id: serial("id").primaryKey(),
+  supporterAccountId: integer("supporter_account_id").notNull().references(() => supporterAccounts.id, { onDelete: "restrict" }),
+  action: text("action").notNull(),
+  requestId: varchar("request_id", { length: 128 }).notNull(),
+  payloadFingerprint: varchar("payload_fingerprint", { length: 128 }).notNull(),
+  response: jsonb("response").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("supporter_idempotency_account_action_request_unique")
+    .on(table.supporterAccountId, table.action, table.requestId),
+]);
+
+export const supporterAuditLogs = pgTable("supporter_audit_logs", {
+  id: serial("id").primaryKey(),
+  actorAccountId: integer("actor_account_id").references(() => users.id, { onDelete: "restrict" }),
+  supporterAccountId: integer("supporter_account_id").references(() => supporterAccounts.id, { onDelete: "restrict" }),
+  supporterGrantId: integer("supporter_grant_id").references(() => supporterGrants.id, { onDelete: "restrict" }),
+  action: text("action").notNull(),
+  requestId: varchar("request_id", { length: 128 }),
+  before: jsonb("before"),
+  after: jsonb("after"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
 export const settings = pgTable("settings", {
@@ -272,6 +387,10 @@ export type Child = typeof children.$inferSelect;
 export type InsertChild = z.infer<typeof insertChildSchema>;
 export type Log = typeof logs.$inferSelect;
 export type InsertLog = z.infer<typeof insertLogSchema>;
+export type SupporterAccount = typeof supporterAccounts.$inferSelect;
+export type ParentAccess = typeof parentAccess.$inferSelect;
+export type SupporterGrant = typeof supporterGrants.$inferSelect;
+export type SupporterAuditLog = typeof supporterAuditLogs.$inferSelect;
 export type Setting = typeof settings.$inferSelect;
 export type InsertSetting = z.infer<typeof insertSettingSchema>;
 export type Event = typeof events.$inferSelect;
@@ -387,6 +506,12 @@ export const insertCustomQuickActionSchema = createInsertSchema(customQuickActio
 export type CustomQuickAction = typeof customQuickActions.$inferSelect;
 export type InsertCustomQuickAction = z.infer<typeof insertCustomQuickActionSchema>;
 
+export const familyIdMigrations = pgTable("family_id_migrations", {
+  id: serial("id").primaryKey(),
+  oldFamilyId: text("old_family_id").notNull().unique(),
+  newFamilyId: text("new_family_id").notNull(),
+  migratedAt: timestamp("migrated_at").defaultNow().notNull(),
+});
 export const mamaHealthLogs = pgTable("mama_health_logs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
@@ -406,3 +531,5 @@ export const mamaHealthLogs = pgTable("mama_health_logs", {
 export const insertMamaHealthLogSchema = createInsertSchema(mamaHealthLogs).omit({ id: true, loggedAt: true });
 export type MamaHealthLog = typeof mamaHealthLogs.$inferSelect;
 export type InsertMamaHealthLog = z.infer<typeof insertMamaHealthLogSchema>;
+
+export type FamilyIdMigration = typeof familyIdMigrations.$inferSelect;

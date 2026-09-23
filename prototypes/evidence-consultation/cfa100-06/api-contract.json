@@ -1,0 +1,17 @@
+{
+  "format": "cfa100-06.private-editorial.v1",
+  "rendererModule": "../renderer.mjs",
+  "rendererExport": "renderEvidence",
+  "rendererInput": {"results": "measured source-bound result[]", "diagnostics": "search diagnostics or null", "question": "free input", "region": "optional structured locality"},
+  "rendererOutput": {"status": "ready|incomplete|blocked|no_match", "label": "We育編集見本（実AI回答ではありません）", "suggestion": "short source-backed editorial text", "clarification": "at most one question or null", "evidence": "source binding[]", "limitations": "string[]"},
+  "controllerModule": "../controller.mjs",
+  "controllerExport": "createController",
+  "controllerFactory": "{search, resolveRegion, onChange}; same setInput/submit/getState/dispose as repair05; state.presentation is renderEvidence output",
+  "bindings": "evidence-work/cfa100-06/validation/source-bindings.json",
+  "fixture": "evidence-work/cfa100-06/validation/dictionary-fixture.json",
+  "fixtureSearchModule": "prototypes/evidence-consultation/cfa100-06/fixture-search.mjs",
+  "fixtureSearchExport": "createFixtureSearch",
+  "fixtureSearchFactory": "{fixture,bindings}; returns async ({question,region,geography,signal}) => {results,diagnostics}",
+  "commonFactHtml": "../common-fact-display.mjs exports factHtml; checked body extraction from unchanged existing fact-display-pilot/render.mjs",
+  "notes": "Free input must use measured repaired retrieval, never case-ID/full-question lookup. Draft isolated data only. No model API. General S08 does not require region; local details require existing locality records."
+}

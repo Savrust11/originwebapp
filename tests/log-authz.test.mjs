@@ -1,6 +1,9 @@
 // API authorization tests for log/sleep-session mutation routes.
-// Run with the dev server up:  node tests/log-authz.test.mjs
-const BASE = process.env.BASE_URL || "http://127.0.0.1:5000";
+import "./safety/require-managed.mjs";
+import { getManagedTestContext } from "./safety/require-managed.mjs";
+
+const BASE = getManagedTestContext().baseURL;
+if (!BASE) throw new Error("managed authorization server is unavailable");
 
 let failures = 0;
 function check(name, cond, extra = "") {

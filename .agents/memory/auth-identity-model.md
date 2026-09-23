@@ -15,10 +15,13 @@ native app being migrated to, there is no LINE auth, so `req.session.userId` is 
 Any endpoint gated behind `req.session.userId` returns 401 there and the feature silently
 breaks (this is exactly what made 育児日記 save fail with "保存に失敗しました").
 
-**How to apply:** new per-user endpoints should resolve identity from
-`req.body.userId / req.query.userId` (falling back to `req.session.userId` if you want to
-honor a real session), not require a session. On the client, send `userId: userType` and
-`familyId` with the request. Validate the owner field as `z.enum(["papa","mama"])`.
+**How to apply:** This describes the legacy family-record interface only, not a
+secure identity mechanism for new private data. Preserve compatibility when
+maintaining those legacy routes, but do not reuse their client-provided identity
+for private consultations. The user explicitly requires consultations to use a
+server-verified login session and a current persisted numeric account ID.
+If a preview/native session is unavailable, consultations must refuse access;
+never fall back to family codes or papa/mama values to make the feature work.
 
 # Ownership / IDOR rule
 
@@ -49,3 +52,7 @@ middleware; the URL `:familyId` param is canonical and all supplied sources must
 (otherwise a pinned body familyId can evade enumeration tracking). familyId generation
 must be crypto-random (never `Date.now()`/`Math.random()`). Test suites that use many
 test familyIds from one IP must raise the enumeration limit env var.
+
+## Family code rotation
+- POST /api/family/rotate-code reassigns every familyId row (23 tables, see storage.rotateFamilyId) to a fresh crypto ID in one transaction. settings.family_id (unique) is the family anchor.
+- **Gotcha:** storage.getSettings auto-creates a settings row for unknown IDs — use a direct db.select when checking family existence, or you enable ID probing/side effects.

@@ -10,7 +10,11 @@
 //     window) and the rotated family's data is reachable under the new ID.
 //  4. Rotation is idempotent: rotating the same old ID again returns the same
 //     new ID instead of splitting the family.
-const BASE = process.env.BASE_URL || "http://127.0.0.1:5000";
+import "./safety/require-managed.mjs";
+import { getManagedTestContext } from "./safety/require-managed.mjs";
+
+const BASE = getManagedTestContext().baseURL;
+if (!BASE) throw new Error("managed authorization server is unavailable");
 
 let failures = 0;
 function check(name, cond, extra = "") {

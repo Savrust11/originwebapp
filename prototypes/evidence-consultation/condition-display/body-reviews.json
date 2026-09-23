@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "scope": "body-support-and-contradiction-not-historical-regrading",
+  "cases": {
+    "Q05": {
+      "responseFileSha256": "9e7ced63504cf89258fa4f655604135fba41106f22aee3c559857ede0115dbe4",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "pass",
+      "unsupportedClaims": [],
+      "contradictions": [],
+      "findings": [
+        "1歳8か月を1〜2歳児に対応させたことと11〜14時間という値は、選定原文に支持される。",
+        "夜間のみか昼寝を含む24時間合計かは提示原文から区別できないとしており、24時間合計を原文の結論として断定していない。",
+        "本文の支持・矛盾だけを判定した。アプリ表示による補完、資料採用、公開承認、臨床的又は人による承認を確立せず、過去のstop判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "11〜14時間が米国睡眠医学会（AASM）の推奨として日本語ガイドに紹介されているという帰属"
+      ],
+      "historicalVerdict": "stop"
+    },
+    "Q06": {
+      "responseFileSha256": "c95b5749ef9b2701794803ba4083563559dada4f7ab1a9e2fee484e5af7e13d0",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "fail",
+      "unsupportedClaims": [
+        "「3〜5歳児の睡眠時間の合計の目安」という「合計」の修飾は、引用されたE02-F-S01-S02-SHAREDにはなく、その原文IDでは直接支持できない。"
+      ],
+      "contradictions": [],
+      "findings": [
+        "4歳2か月を3〜5歳児に対応させたこと、10〜13時間という値、昼寝禁止を導けないという差し控えは選定原文と整合する。",
+        "「合計」は昼寝を含む24時間合計とまでは断定しておらず、直後には昼寝の扱いが不明と限定するが、局所的な記述自体の根拠不足は解消されない。",
+        "本文の支持・矛盾だけを判定した。条件カードによる補完、資料採用、公開承認、臨床的又は人による承認を確立せず、保存済みの過去判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "10〜13時間が米国睡眠医学会（AASM）の推奨として日本語ガイドに紹介されているという帰属"
+      ],
+      "historicalVerdict": "fail"
+    },
+    "Q07": {
+      "responseFileSha256": "1c528ce0b906c0f0e5f9f00e890cd3a919b33ca4460d5f609274c37a06ca71a4",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "pass",
+      "unsupportedClaims": [],
+      "contradictions": [],
+      "findings": [
+        "新生児の断続的な睡眠、授乳と夜泣きへの対応による養育者の睡眠分断、養育者の睡眠確保の重要性という三点を原文どおり保持している。",
+        "具体的な睡眠確保方法、夜泣き対応、子どもの必要睡眠時間又は個別状態を追加していない。",
+        "本文の支持・矛盾だけを判定したもので、資料採用、公開承認、臨床的又は人による承認を確立せず、保存済みの過去判定を再採点しない。"
+      ],
+      "omittedConditions": [],
+      "historicalVerdict": "pass"
+    },
+    "Q08": {
+      "responseFileSha256": "1fecff47d12176387069c73bc846e359cc53396891179d1182ce4cd15d61419c",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "pass",
+      "unsupportedClaims": [],
+      "contradictions": [],
+      "findings": [
+        "27研究・27効果量、SMD 0.39、95% CI 0.24〜0.53、P<0.001という効果記述は正確で、大きな異質性と親子相互作用に関する小標本バイアスも保持している。",
+        "平均36か月超という採択基準を集団平均の条件として扱い、個々の参加児の年齢範囲又は架空の親子への効果保証へ変えていない。",
+        "本文の支持・矛盾だけならpassだが、必須科学文脈の省略は下記に残す。条件カードによる補完、資料採用、公開承認、臨床的又は人による承認を確立せず、過去のfail判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "親子相互作用の統合結果のI²=93%および異質性検定P<0.001という数値",
+        "病気又は障害と診断された子ども又は親の集団を除外したという適格性条件",
+        "33か国で実施された研究背景と、それが日本での適用を確立しないという限定"
+      ],
+      "historicalVerdict": "fail"
+    },
+    "Q09": {
+      "responseFileSha256": "b000cfd5e9db115da44556f71d5c835f54c1836d07e4ba7f2ebba7e2e11e9d4b",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "fail",
+      "unsupportedClaims": [
+        "「5研究中2研究（41%）」は英語断片の表面形を直訳しているが、2/5は40%であり、24研究中の比率として読むべき41%との関係を誤解させる人数表現になっている。"
+      ],
+      "contradictions": [
+        "「5研究中2研究」と「41%」は算術的に一致せず、同じ回答が述べる抑うつ症状アウトカム24研究という母数とも整合する説明がない。"
+      ],
+      "findings": [
+        "24研究・25効果量、SMD −0.07、95% CI −0.16〜0.02、P=0.08、I²=76%は正確で、統計的非有意を効果ゼロの証明へ変えていない。",
+        "異質性、測定特性、バイアスリスク、多重性および個人への効果保証不能は適切に保持している。",
+        "本文の支持・矛盾だけを判定した。条件カードによる補完、資料採用、公開承認、臨床的又は人による承認を確立せず、過去のfail判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "平均年齢が36か月を超える子ども集団を除外したという適格性条件",
+        "病気又は障害と診断された子ども又は親の集団を除外したという適格性条件"
+      ],
+      "historicalVerdict": "fail"
+    },
+    "Q10": {
+      "responseFileSha256": "0d3fcbf6dbc7d9e85e2e0f5f405223b645210623f1deef3b7c0ee82582cdeb0e",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "fail",
+      "unsupportedClaims": [
+        "「4歳0か月の子どもが研究対象の年齢範囲に近い」という個人年齢範囲の推論は、平均年齢6歳未満という研究採択条件だけからは支持できない。"
+      ],
+      "contradictions": [],
+      "findings": [
+        "6研究・計1,106人、平均差38分/日、I²=96.56%を正しく述べ、38分を個人の上限、目標又は保証された減少量へ変えていない。",
+        "平均年齢による採択と個人年齢範囲の違い、および5.8歳・6.1歳から5.95歳を算出して研究を残した経緯は、問題の一文を除けば正確に説明している。",
+        "本文の支持・矛盾だけを判定した。条件カードによる補完、資料採用、公開承認、臨床的又は人による承認を確立せず、過去のfail判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "統合効果Cohen's d=−0.92および95% CI −1.66〜−0.18",
+        "成長、発達又は行動に影響し得る診断済み医学的状態のある子どもを除外したという適格性条件",
+        "研究地域、標本規模および親報告・客観測定の内訳を含む収録済み研究特性"
+      ],
+      "historicalVerdict": "fail"
+    },
+    "Q11": {
+      "responseFileSha256": "7532ab69e0c376bc6ae8aed5a580e833ca9d2eb5a2d0b56f5c356ecdf4a014f8",
+      "reviewedBy": "agent-source-comparison-not-clinical-review",
+      "bodyVerdict": "pass",
+      "unsupportedClaims": [],
+      "contradictions": [],
+      "findings": [
+        "5研究の睡眠結果がメタ解析できず混在したこと、3介入での一部改善、就寝前スクリーン時間が減っても睡眠指標が改善しなかった介入、および睡眠問題とスクリーン時間の双方に効果がなかった別介入を保持している。",
+        "非改善結果を落とさず、スクリーン時間を減らせば架空児の睡眠が必ず改善するという保証又は個別治療へ変えていない。",
+        "「確 solid な結論」は日英混在の編集品質上の瑕疵だが、少数研究と異質性のため確固たる結論が難しいという内容自体は原文に支持され、独立のunsupported claimとはしない。",
+        "本文の支持・矛盾だけならpassだが、必須科学文脈の省略は下記に残す。条件カードによる補完、資料採用、公開承認、臨床的又は人による承認を確立せず、過去のfail判定を再採点しない。"
+      ],
+      "omittedConditions": [
+        "成長、発達又は行動に影響し得る診断済み医学的状態のある子どもを除外したという適格性条件",
+        "教育場面のスクリーン使用介入を除外したという適格性条件",
+        "個人年齢6歳未満から平均年齢6歳未満へ採択条件を変更し、5.8歳・6.1歳の群平均から5.95歳として研究を残したプロトコル変更文脈"
+      ],
+      "historicalVerdict": "fail"
+    }
+  }
+}

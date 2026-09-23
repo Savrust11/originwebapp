@@ -1719,8 +1719,12 @@ export function QuickActions({ defaultDate }: { defaultDate?: Date } = {}) {
                       startSleep.mutate({
                         familyId,
                         createdBy: userId,
+                        childId: activeChildId ?? undefined,
                         startedAt: start.toISOString(),
                         performedBy: sleepPerformers.join("・"),
+                        ...(settlingMethod.length > 0 ? { settlingMethod: settlingMethod.join("・") } : {}),
+                        ...(settlingMinutes > 0 ? { settlingMinutes } : {}),
+                        ...(sleepLocation ? { sleepLocation } : {}),
                       });
                     } else {
                       const end = manualEndTime ? new Date(manualEndTime) : null;

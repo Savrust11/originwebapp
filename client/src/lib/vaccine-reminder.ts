@@ -26,10 +26,10 @@ export function getVaccineTargetDate(
   administeredByVaccineId: Map<string, string>,
 ): string {
   const standard = getStandardScheduleDate(vaccine.id, birthday);
-  // 最短間隔の起点は previousDoseId（直前の回とは限らない: 例 hepB_3 は hepB_1 起点）
-  if (!vaccine.previousDoseId || !vaccine.minIntervalDays) return standard;
+  const intervalBaseDoseId = vaccine.intervalBaseDoseId ?? vaccine.previousDoseId;
+  if (!intervalBaseDoseId || !vaccine.minIntervalDays) return standard;
 
-  const prevDate = administeredByVaccineId.get(vaccine.previousDoseId);
+  const prevDate = administeredByVaccineId.get(intervalBaseDoseId);
   if (!prevDate) return standard;
 
   const recommended = format(addDays(parseISO(prevDate), vaccine.minIntervalDays), "yyyy-MM-dd");

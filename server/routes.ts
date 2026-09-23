@@ -1,8 +1,15 @@
 import type { Express } from "express";
 import type { Server } from "http";
 import path from "path";
+import { randomBytes } from "crypto";
 import { storage } from "./storage";
 import { familyCreateGuard } from "./familyGuard";
+import { registerFamilyIdMigrationRoutes } from "./familyIdMigration";
+import { isVerifiedAdminRequest, registerSupporterRoutes } from "./supporter";
+import { registerSupporterDevelopmentRoutes } from "./supporter-development";
+import { registerSupporterProvisioningRoutes } from "./supporter-provisioning";
+import { registerConsultationRoutes } from "./consultations";
+import { registerEvidenceRoutes } from "./evidence/routes";
 import { db } from "./db";
 import { api } from "@shared/routes";
 import { logs, settings, feedbacks, invitationCodes, users, foodIngredients, customChildcareItems } from "@shared/schema";
@@ -15,6 +22,13 @@ const DEFAULT_COUPONS = [
   { title: "好きなランチ出前券", cost: 500 },
   { title: "30分のマッサージ券", cost: 200 },
 ];
+
+// Account identifiers and audit linkage are internal. Parent screens need the
+// recorded display name/care source, not the supporter's authentication identity.
+function parentLogDto<T extends Record<string, any>>(log: T) {
+  const { actorAccountId, supporterAccountId, supporterGrantId, deletedAt, ...visible } = log;
+  return visible;
+}
 
 function extractFamilyId(req: { body?: any; query?: any }): string | null {
   const fromBody = typeof req.body?.familyId === "string" ? req.body.familyId.trim() : "";
@@ -40,6 +54,10 @@ async function getOwnedLog(req: any, res: any, id: number) {
   }
   if (log.familyId !== familyId) {
     res.status(403).json({ message: "この記録を操作する権限がありません" });
+    return null;
+  }
+  if (log.supporterAccountId || log.careSource === "supporter") {
+    res.status(403).json({ message: "サポーターの記録は履歴を残す専用画面から訂正・削除してください。" });
     return null;
   }
   return log;
@@ -90,6 +108,11 @@ async function getOwnedSleepSession(req: any, res: any, id: number) {
     res.status(403).json({ message: "この記録を操作する権限がありません" });
     return null;
   }
+  const linkedLog = await storage.getLatestSleepLog(session.familyId, session.id);
+  if (linkedLog?.careSource === "supporter" || linkedLog?.supporterAccountId) {
+    res.status(403).json({ message: "サポーターの睡眠記録は専用画面から訂正・削除してください。" });
+    return null;
+  }
   return session;
 }
 
@@ -97,6 +120,14 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  registerSupporterDevelopmentRoutes(app);
+  registerSupporterRoutes(app);
+  registerSupporterProvisioningRoutes(app);
+  registerConsultationRoutes(app);
+  registerEvidenceRoutes(app);
+
+  // Legacy familyId detection / secure rotation (see server/familyIdMigration.ts)
+  registerFamilyIdMigrationRoutes(app);
 
   // --- Static marketing page (/about) ---
   // Served independently from the SPA bundle so it stays fast and
@@ -125,7 +156,7 @@ export async function registerRoutes(
   app.post(api.children.create.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.children.create.input.parse(req.body);
-      const existing = await storage.getChildren(input.familyId);
+      const existing = await storage.getChildren(input.familyId!);
       const duplicate = existing.find((c) => c.name === input.name);
       if (duplicate) {
         return res.status(200).json(duplicate);
@@ -164,16 +195,16 @@ export async function registerRoutes(
 
   app.get(api.logs.list.path, async (req, res) => {
     const logs = await storage.getLogs(req.params.familyId);
-    res.json(logs);
+    res.json(logs.map(parentLogDto));
   });
 
   app.get("/api/families/:familyId/medicine-names", async (req, res) => {
     const logs = await storage.getLogs(req.params.familyId);
-    const names = [...new Set(
+    const names = Array.from(new Set(
       logs
         .filter((l: any) => l.type === "medicine" && l.medicineName)
         .map((l: any) => l.medicineName as string)
-    )];
+    ));
     res.json(names);
   });
 
@@ -182,15 +213,22 @@ export async function registerRoutes(
     const caregiverLogs = logs
       .filter((l: any) => l.type === "caregiver_medicine")
       .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-    const names = [...new Set(
+    const names = Array.from(new Set(
       caregiverLogs.filter((l: any) => l.medicineName).map((l: any) => l.medicineName as string)
-    )];
-    const lastLog = caregiverLogs[0] || null;
+    ));
+    const lastLog = caregiverLogs[0] ? parentLogDto(caregiverLogs[0]) : null;
     res.json({ names, lastLog });
   });
 
   app.post(api.logs.create.path, familyCreateGuard, async (req, res) => {
     try {
+      const protectedFields = [
+        "actorAccountId", "supporterAccountId", "supporterGrantId",
+        "careSource", "recorderDisplayName", "deletedAt",
+      ];
+      if (protectedFields.some((field) => Object.prototype.hasOwnProperty.call(req.body, field))) {
+        return res.status(400).json({ message: "記録者・権限情報はサーバー側で設定します。" });
+      }
       const customCreatedAt = req.body.createdAt;
       const customHoldEndAt = req.body.holdEndAt;
       const customWalkEndAt = req.body.walkEndAt;
@@ -198,7 +236,11 @@ export async function registerRoutes(
       delete bodyForParsing.holdEndAt;
       delete bodyForParsing.walkEndAt;
       const input = api.logs.create.input.parse(bodyForParsing);
-      let log = await storage.createLog(input);
+      const actorAccountId = (req.session as any)?.userId;
+      let log = await storage.createLog({
+        ...input,
+        ...(typeof actorAccountId === "number" ? { actorAccountId } : {}),
+      });
 
       if (customCreatedAt) {
         log = await storage.updateLog(log.id, { createdAt: new Date(customCreatedAt) });
@@ -337,6 +379,9 @@ export async function registerRoutes(
         return res.status(403).json({ message: "この記録を操作する権限がありません" });
       }
       const owned = found.filter((log): log is NonNullable<typeof log> => !!log);
+      if (owned.some((log) => log.supporterAccountId || log.careSource === "supporter")) {
+        return res.status(403).json({ message: "サポーターの記録は一括削除できません。専用画面から操作してください。" });
+      }
       await Promise.all(owned.map((log) => storage.deleteLog(log.id)));
       res.json({ ok: true, deleted: owned.length });
     } catch (err) {
@@ -406,7 +451,7 @@ export async function registerRoutes(
       const userLabel = userId === "papa" ? "パパ" : "ママ";
       const partnerUser = userId === "papa" ? "mama" : "papa";
 
-      const existing = await storage.getActiveSleepSession(familyId, childId);
+      const existing = await storage.getActiveSleepSession(familyId, childId ?? undefined);
       if (existing) {
         return res.status(400).json({ message: "既に睡眠セッションが進行中です" });
       }
@@ -439,6 +484,7 @@ export async function registerRoutes(
         userId,
         type: "sleep",
         message: `入眠を記録しました${settlingStr}`,
+        sleepSessionId: session.id,
         performedBy: performedBy ?? undefined,
         settlingMethod: settlingMethod ?? undefined,
         settlingMinutes: settlingMinutes ?? undefined,
@@ -493,6 +539,53 @@ export async function registerRoutes(
         });
       }
       throw err;
+    }
+  });
+
+  // --- Family code rotation ---
+  // Issues a fresh crypto-random familyId and reassigns every row of the
+  // family to it. The old code becomes an ordinary unknown ID afterwards.
+  app.post("/api/family/rotate-code", async (req, res) => {
+    try {
+      const { familyId } = z.object({
+        familyId: z.string().trim().min(1, "familyId is required").max(64),
+      }).parse(req.body);
+
+      if (familyId === "default") {
+        return res.status(400).json({
+          message: "共有の初期コードは再発行できません。先に設定を保存して独自の家族IDを作成してください",
+        });
+      }
+
+      // Only rotate families that actually exist (settings row is the
+      // family anchor). Direct query — storage.getSettings would
+      // auto-create a row for unknown IDs.
+      const [existing] = await db.select().from(settings)
+        .where(eq(settings.familyId, familyId)).limit(1);
+      if (!existing) {
+        return res.status(404).json({ message: "この家族コードは見つかりません" });
+      }
+
+      // Generate a collision-free new code (settings.family_id is unique).
+      let newFamilyId = "";
+      for (let attempt = 0; attempt < 5; attempt++) {
+        const candidate = `family-${randomBytes(10).toString("hex")}`;
+        const [clash] = await db.select().from(settings)
+          .where(eq(settings.familyId, candidate)).limit(1);
+        if (!clash) { newFamilyId = candidate; break; }
+      }
+      if (!newFamilyId) {
+        return res.status(500).json({ message: "新しい家族コードの生成に失敗しました" });
+      }
+
+      await storage.rotateFamilyId(familyId, newFamilyId);
+      res.json({ familyId: newFamilyId });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({ message: err.errors[0].message });
+      }
+      console.error("Family code rotation error:", err);
+      res.status(500).json({ message: "家族コードの再発行に失敗しました" });
     }
   });
 
@@ -845,12 +938,55 @@ export async function registerRoutes(
 
   app.post(api.sleepSessions.start.path, familyCreateGuard, async (req, res) => {
     try {
-      const { familyId, createdBy, childId, startedAt, performedBy } = api.sleepSessions.start.input.parse(req.body);
+      const {
+        familyId,
+        createdBy,
+        childId,
+        startedAt,
+        settlingMethod,
+        settlingMinutes,
+        sleepLocation,
+        sleepNote,
+        performedBy,
+      } = api.sleepSessions.start.input.parse(req.body);
       const existing = await storage.getActiveSleepSession(familyId, childId);
       if (existing) {
         return res.status(400).json({ message: "既に睡眠セッションが進行中です" });
       }
       const session = await storage.startSleepSession({ familyId, createdBy, childId: childId ?? null, startedAt: startedAt ? new Date(startedAt) : new Date(), performedBy: performedBy ?? null });
+
+      // Starting a timer without any settling details is intentionally still
+      // just a timer start.  If details were supplied, keep a linked start
+      // log so the eventual wake-up can inherit them without timestamp
+      // matching.
+      const hasMeaningfulMetadata =
+        settlingMinutes !== undefined
+        || (settlingMethod !== undefined && settlingMethod.trim().length > 0)
+        || (sleepLocation !== undefined && sleepLocation.trim().length > 0)
+        || (sleepNote !== undefined && sleepNote.trim().length > 0);
+      if (hasMeaningfulMetadata) {
+        const settlingParts: string[] = [];
+        if (settlingMethod && settlingMethod !== "なし") settlingParts.push(settlingMethod);
+        if (settlingMinutes !== undefined && settlingMinutes > 0) settlingParts.push(`${settlingMinutes}分`);
+        if (sleepLocation) settlingParts.push(sleepLocation);
+        const settlingStr = settlingParts.length > 0 ? `（${settlingParts.join("・")}）` : "";
+
+        await storage.createLog({
+          familyId,
+          childId: childId ?? undefined,
+          userId: createdBy,
+          performedBy: performedBy ?? undefined,
+          type: "sleep",
+          message: `入眠を記録しました${settlingStr}`,
+          sleepSessionId: session.id,
+          settlingMethod: settlingMethod ?? undefined,
+          settlingMinutes: settlingMinutes ?? undefined,
+          sleepLocation: sleepLocation ?? undefined,
+          sleepNote: sleepNote ?? undefined,
+          createdAt: startedAt ? new Date(startedAt) : new Date(),
+        });
+      }
+
       res.status(201).json(session);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -863,7 +999,13 @@ export async function registerRoutes(
   app.post("/api/sleep-sessions/:id/end", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      if (!(await getOwnedSleepSession(req, res, id))) return;
+      const ownedSession = await getOwnedSleepSession(req, res, id);
+      if (!ownedSession) return;
+      // Ending an already completed session is idempotent.  In particular,
+      // do not append another sleep log when a partner taps wake twice.
+      if (ownedSession.endedAt) {
+        return res.json(ownedSession);
+      }
       const endBodySchema = z.object({
         endedAt: z.string().optional(),
         settlingMethod: z.string().optional(),
@@ -872,6 +1014,21 @@ export async function registerRoutes(
         sleepNote: z.string().optional(),
       });
       const { endedAt, settlingMethod, settlingMinutes, sleepLocation, sleepNote } = endBodySchema.parse(req.body ?? {});
+      const linkedLog = await storage.getLatestSleepLog(ownedSession.familyId, ownedSession.id);
+      const requestBody = req.body ?? {};
+      const hasField = (field: string) => Object.prototype.hasOwnProperty.call(requestBody, field);
+      const effectiveSettlingMethod = hasField("settlingMethod")
+        ? settlingMethod
+        : linkedLog?.settlingMethod ?? undefined;
+      const effectiveSettlingMinutes = hasField("settlingMinutes")
+        ? settlingMinutes
+        : linkedLog?.settlingMinutes ?? undefined;
+      const effectiveSleepLocation = hasField("sleepLocation")
+        ? sleepLocation
+        : linkedLog?.sleepLocation ?? undefined;
+      const effectiveSleepNote = hasField("sleepNote")
+        ? sleepNote
+        : linkedLog?.sleepNote ?? undefined;
       const customEndedAt = endedAt ? new Date(endedAt) : undefined;
       const session = customEndedAt
         ? await storage.endSleepSessionAt(id, customEndedAt)
@@ -882,9 +1039,9 @@ export async function registerRoutes(
       const points = isLateNight ? 20 : 10;
 
       const settlingParts: string[] = [];
-      if (settlingMethod && settlingMethod !== "なし") settlingParts.push(settlingMethod);
-      if (settlingMinutes && settlingMinutes > 0) settlingParts.push(`${settlingMinutes}分`);
-      if (sleepLocation) settlingParts.push(sleepLocation);
+      if (effectiveSettlingMethod && effectiveSettlingMethod !== "なし") settlingParts.push(effectiveSettlingMethod);
+      if (effectiveSettlingMinutes !== undefined && effectiveSettlingMinutes > 0) settlingParts.push(`${effectiveSettlingMinutes}分`);
+      if (effectiveSleepLocation) settlingParts.push(effectiveSleepLocation);
       const settlingStr = settlingParts.length > 0 ? `（${settlingParts.join("・")}）` : "";
 
       await storage.createLog({
@@ -895,10 +1052,11 @@ export async function registerRoutes(
         type: "sleep",
         points,
         message: `${session.durationMin}分のねんねを記録しました！${settlingStr}`,
-        settlingMethod: settlingMethod ?? undefined,
-        settlingMinutes: settlingMinutes ?? undefined,
-        sleepLocation: sleepLocation ?? undefined,
-        sleepNote: sleepNote ?? undefined,
+        sleepSessionId: session.id,
+        settlingMethod: effectiveSettlingMethod,
+        settlingMinutes: effectiveSettlingMinutes,
+        sleepLocation: effectiveSleepLocation,
+        sleepNote: effectiveSleepNote,
       });
 
       res.json(session);
@@ -935,6 +1093,7 @@ export async function registerRoutes(
         performedBy: performedBy ?? undefined,
         type: "sleep",
         message: `${durationMin}分のねんねを記録しました${settlingStr}（手入力）`,
+        sleepSessionId: session.id,
         settlingMethod: settlingMethod ?? undefined,
         settlingMinutes: settlingMinutes ?? undefined,
         sleepLocation: sleepLocation ?? undefined,
@@ -1002,7 +1161,7 @@ export async function registerRoutes(
   app.post(api.skills.complete.path, familyCreateGuard, async (req, res) => {
     try {
       const input = api.skills.complete.input.parse(req.body);
-      const existing = await storage.getSkillCompletions(input.familyId);
+      const existing = await storage.getSkillCompletions(input.familyId!);
       const alreadyDone = existing.some(
         (c) => c.userId === input.userId && c.skillId === input.skillId
       );
@@ -1449,8 +1608,7 @@ export async function registerRoutes(
   });
 
   app.post("/api/admin/generate-codes", async (req, res) => {
-    const adminKey = req.headers["x-admin-key"];
-    if (!process.env.ADMIN_KEY || adminKey !== process.env.ADMIN_KEY.trim()) {
+    if (!isVerifiedAdminRequest(req)) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
@@ -1477,8 +1635,7 @@ export async function registerRoutes(
   });
 
   app.get("/api/admin/invitation-codes", async (req, res) => {
-    const adminKey = req.headers["x-admin-key"];
-    if (!process.env.ADMIN_KEY || adminKey !== process.env.ADMIN_KEY.trim()) {
+    if (!isVerifiedAdminRequest(req)) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
@@ -1495,8 +1652,7 @@ export async function registerRoutes(
   });
 
   app.get("/api/admin/users", async (req, res) => {
-    const adminKey = req.headers["x-admin-key"];
-    if (!process.env.ADMIN_KEY || adminKey !== process.env.ADMIN_KEY.trim()) {
+    if (!isVerifiedAdminRequest(req)) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
@@ -1512,7 +1668,10 @@ export async function registerRoutes(
     }
   });
 
-  app.get("/api/admin/stats", async (_req, res) => {
+  app.get("/api/admin/stats", async (req, res) => {
+    if (!isVerifiedAdminRequest(req)) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
     try {
       const totalFamilies = await db.select({ count: sql<number>`count(*)` }).from(settings);
       const totalLogs = await db.select({ count: sql<number>`count(*)` }).from(logs);
@@ -1655,7 +1814,10 @@ export async function registerRoutes(
     res.json({ success: true });
   });
 
-  app.get("/api/admin/feedbacks", async (_req, res) => {
+  app.get("/api/admin/feedbacks", async (req, res) => {
+    if (!isVerifiedAdminRequest(req)) {
+      return res.status(403).json({ message: "Unauthorized" });
+    }
     try {
       const allFeedbacks = await db
         .select()

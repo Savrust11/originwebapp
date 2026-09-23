@@ -6,6 +6,8 @@ import { db } from "./db";
 import { users, invitationCodes } from "@shared/schema";
 import { eq, and } from "drizzle-orm";
 import { pool } from "./db";
+import { supporterLegacyGuard } from "./supporter";
+import { requireSessionSecret } from "./session-security.mjs";
 
 const LINE_CHANNEL_ID = process.env.LINE_CHANNEL_ID!;
 const LINE_CHANNEL_SECRET = process.env.LINE_CHANNEL_SECRET!;
@@ -17,6 +19,7 @@ function getBaseUrl(req: Request): string {
 }
 
 export async function setupAuth(app: Express) {
+  const sessionSecret = requireSessionSecret(process.env);
   const PgStore = connectPgSimple(session);
 
   await pool.query(`
@@ -36,7 +39,7 @@ export async function setupAuth(app: Express) {
         tableName: "session",
         createTableIfMissing: false,
       }),
-      secret: process.env.SESSION_SECRET || "we-iku-session-secret",
+      secret: sessionSecret,
       resave: true,
       saveUninitialized: true,
       cookie: {
@@ -47,6 +50,10 @@ export async function setupAuth(app: Express) {
       },
     })
   );
+
+  // Run after session resolution, before every auth/data endpoint. A supporter
+  // must not become a parent by calling the legacy family/role mutation APIs.
+  app.use(supporterLegacyGuard);
 
   app.get("/api/auth/line", (req: Request, res: Response) => {
     const baseUrl = getBaseUrl(req);
@@ -304,24 +311,33 @@ export async function setupAuth(app: Express) {
 
   app.get("/api/auth/me", async (req: Request, res: Response) => {
     const s = req.session as any;
-    if (s.userId) {
-      let invitationVerified = s.invitationVerified ?? false;
-      if (!invitationVerified) {
-        const [user] = await db.select().from(users).where(eq(users.id, s.userId));
-        if (user) {
-          invitationVerified = user.invitationVerified;
-          s.invitationVerified = invitationVerified;
-        }
+    res.setHeader("Cache-Control", "private, no-store");
+    const fixtureAllowed = process.env.NODE_ENV === "development"
+      && process.env.SUPPORTER_DEV_FIXTURES_ENABLED === "true"
+      && process.env.SUPPORTER_ACCESS_ENABLED === "true";
+    const fixtureDatabaseAllowed = !s.supporterDevFixture || fixtureAllowed
+      && (await pool.query("SELECT current_database() = $1 AS permitted", [
+        process.env.SUPPORTER_DEV_DATABASE_NAME || "",
+      ])).rows[0]?.permitted === true;
+    const id = typeof s.userId === "number" || typeof s.userId === "string" && /^\d+$/.test(s.userId)
+      ? Number(s.userId) : NaN;
+    if (Number.isSafeInteger(id) && id > 0 && fixtureDatabaseAllowed) {
+      const [user] = await db.select().from(users).where(eq(users.id, id)).limit(1);
+      if (!user) {
+        s.destroy(() => {});
+        return res.json({ authenticated: false });
       }
+      // Every provider converges on the same persisted user. Do not return
+      // stale family/role snapshots from a previous session or account change.
       res.json({
         authenticated: true,
-        userId: s.userId,
-        lineUserId: s.lineUserId,
-        familyId: s.familyId,
-        role: s.role,
-        displayName: s.displayName,
-        pictureUrl: s.pictureUrl,
-        invitationVerified,
+        userId: user.id,
+        lineUserId: user.lineUserId,
+        familyId: user.familyId,
+        role: user.role,
+        displayName: user.displayName,
+        pictureUrl: user.pictureUrl,
+        invitationVerified: user.invitationVerified,
       });
     } else {
       res.json({ authenticated: false });

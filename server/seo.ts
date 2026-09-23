@@ -25,12 +25,14 @@ const PAGE_META: Record<string, PageMeta> = {
     description:
       "We育（ウィーイク）の使い方やよくあるご質問、お問い合わせ窓口のご案内です。困ったときはこちらからご連絡ください。",
     url: "https://we-iku.com/support",
+    image: "https://we-iku.com/og-support.png",
   },
   "/tips": {
     title: "育児のヒント集｜We育（ウィーイク）",
     description:
       "授乳・ねんね・離乳食など、毎日の育児に役立つヒントをまとめました。We育（ウィーイク）がふたりの育児をサポートします。",
     url: "https://we-iku.com/tips",
+    image: "https://we-iku.com/og-tips.png",
   },
   "/legal": {
     title: "利用規約・プライバシーポリシー｜We育（ウィーイク）",

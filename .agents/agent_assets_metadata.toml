@@ -6,3 +6,1040 @@ id = "UYzF5zKu4qoE1qFpDt3O-"
 uri = "file://manual.md"
 type = "text"
 title = "We育 アプリ説明書（目次更新）"
+logical_id = "8c4fc421-9a38-4ba9-b711-93ab18d1e329"
+
+[[outputs]]
+id = "a2u0_GxyZKK2cUUOM5EsT"
+uri = "file://docs/supporter-se-handoff.md"
+type = "text"
+title = "サポーター機能・SE引き渡し手順"
+description = "認証コードの照合結果、開発環境の操作方法、取り込むコード・DB定義・設定、本アプリ反映後の確認項目。"
+logical_id = "b5e816fc-a5d3-4fd5-9cf0-ed2bb4742602"
+content_hash = "sha256:791d7689172b71b28cf0ffdc4774dc6d4f1752c1974cff0c1e21c3bff8705d47"
+size = 9987
+mtime_ms = 1789537588986
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b5e816fc-a5d3-4fd5-9cf0-ed2bb4742602/d90a0d72-6050-4dfa-8366-e9fe915719e6"
+storage_version_token = "1789538263516099"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "Wyv5-z8S9P0A0CcNyQ5Ru"
+uri = "file://docs/test-safety-step1.md"
+type = "text"
+title = "ステップ1：テスト安全対策の記録"
+description = "修正内容、変更ファイル一覧、接続なしの検証結果、管理画面で必要な確認と未実施事項。"
+logical_id = "a276dcdf-eb82-449a-9fdb-ae397490a700"
+content_hash = "sha256:f2ab922a431228cf5ef840667d46a3db47905a6f166d40e0321636d3def14410"
+size = 6964
+mtime_ms = 1789600678013
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/a276dcdf-eb82-449a-9fdb-ae397490a700/d89ae405-0c5a-4c2d-aa72-6cfa3208f73f"
+storage_version_token = "1789600698933179"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "UPIA2HPkM_Rtm4K3xG1rG"
+uri = "file://docs/ephemeral-test-environment.md"
+type = "text"
+title = "一時DBテストの手順と実行結果"
+description = "既存DBに接続しない仕組み、実行方法、テスト・型チェック・ビルドの結果、後片付けと未検証範囲。"
+logical_id = "f35b982d-c934-42aa-943b-2b987ed909cd"
+content_hash = "sha256:d979daecb1f1c677bb06e7d80b1971eeb1bd153bc646eae0c6c85b0bdf452f26"
+size = 5550
+mtime_ms = 1789607471602
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/f35b982d-c934-42aa-943b-2b987ed909cd/b0034cc1-0912-4a77-ae94-07d0731f8f05"
+storage_version_token = "1789607498184251"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "_3FEK4YQ8muL2i8sSnHSh"
+uri = "file://screenshots/consultations-list.png"
+type = "image"
+title = "相談一覧（架空データ）"
+description = "一時環境で確認したスマートフォン向けの相談一覧です。実在の利用者のデータは含みません。"
+logical_id = "fb060ade-18fd-4132-bb29-f30203b0de2e"
+content_hash = "sha256:7ba2c1141eb8b568dd731b5b621c88df7e87c2c9b42ea20cff07ac82157aca32"
+size = 58323
+mtime_ms = 1789608649135
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/fb060ade-18fd-4132-bb29-f30203b0de2e/c8fbb67b-3871-459d-82fb-7e0f8d378e2b"
+storage_version_token = "1789608751597781"
+content_type = "image/png"
+
+[[outputs]]
+id = "z8UTxhk-v727Z14EVxMgY"
+uri = "file://screenshots/consultations-detail.png"
+type = "image"
+title = "相談画面（架空データ）"
+description = "文章の保存画面です。AI回答はまだ利用できないことを明示しています。"
+logical_id = "be8cbcf8-a0ae-4ba5-ac88-84e2fd381ac8"
+content_hash = "sha256:eb842a84a0f5479c87fcd7a2ccb79760389e11d3879e0a7d188b8fc83f9c23d3"
+size = 53406
+mtime_ms = 1789608648003
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/be8cbcf8-a0ae-4ba5-ac88-84e2fd381ac8/816ad524-0eb8-43bf-9861-41add326a6a8"
+storage_version_token = "1789608753330999"
+content_type = "image/png"
+
+[[outputs]]
+id = "5EEN1tXTTkOevYCeFGU1y"
+uri = "file://evidence-work/v0.2/review.html"
+type = "html"
+title = "原文と実際の検索結果の確認"
+description = "指定8質問について、返った原文・出典・条件・必須文脈を読める確認用ファイルです。AI回答や採用承認ではありません。"
+logical_id = "08964207-7abf-47ce-a630-28348bc6dd26"
+content_hash = "sha256:92f284306701f088b0fb4c340c9659afb9ae600b68c8a65868d9d1c7f186d233"
+size = 107542
+mtime_ms = 1789654335166
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/08964207-7abf-47ce-a630-28348bc6dd26/abb94af1-34a2-42df-a959-4684507fa48d"
+storage_version_token = "1789654410585678"
+content_type = "text/html"
+
+[[outputs]]
+id = "hfWOA52pTlhSahRli02oz"
+uri = "file://evidence-work/v0.2/weiku-priority-sources-v0.2.zip"
+type = "unspecified"
+title = "原文・照合記録・検索結果の一式"
+description = "4資料11区分のJSON、出典・利用条件・ハッシュ、確認記録、全13件の検索結果、元のv0.2指定書を含む14ファイルです。"
+logical_id = "4b74e5e8-848e-42ca-84d7-68dc352ff004"
+content_hash = "sha256:be2b3a1e6d4cd32515d8596065022899c9ad11573ffb03a95b2b164bdc3055af"
+size = 101761
+mtime_ms = 1789654396158
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/4b74e5e8-848e-42ca-84d7-68dc352ff004/d2609cc0-1921-42a4-8af2-d90585ffd3d7"
+storage_version_token = "1789654412499537"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "8QefGyHt6lABV7Bqk668-"
+uri = "file://evidence-work/consultation-prototype/screen-examples.html"
+type = "html"
+title = "非公開試作：架空相談の画面例"
+description = "入力画面、2歳・6歳・保護者の比較、発達障害を含む相談の追加確認を、実際の一時環境の画面画像で説明しています。"
+logical_id = "019cceb2-98b9-4200-ba44-ecf1ec01e53d"
+content_hash = "sha256:55dd43b8b637316fee051683d2cdbf764db029fa09d7d9491a46b9567b89ed24"
+size = 1904532
+mtime_ms = 1789656784020
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/019cceb2-98b9-4200-ba44-ecf1ec01e53d/0da3cd13-f479-404e-bb1e-215da6347f3d"
+storage_version_token = "1789656834181894"
+content_type = "text/html"
+
+[[outputs]]
+id = "btmaZWSnkIBaVUeSpuydL"
+uri = "file://evidence-work/consultation-prototype/consultation-prototype-review.zip"
+type = "unspecified"
+title = "画面例・検証結果・未解決事項の記録"
+description = "画面画像4枚、検証結果、専用の起動手順、公開時の競合問題の再現手順、出典・利用条件を含む確認用一式です。"
+logical_id = "c3b7ffad-646b-41d7-8775-0a0bebcc2f72"
+content_hash = "sha256:a7d7f37dd90856da894511c5420514558ad8d1d534b1793d6c20102ea9b822ad"
+size = 2771344
+mtime_ms = 1789656784212
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/c3b7ffad-646b-41d7-8775-0a0bebcc2f72/dce44a29-a08d-41ca-bf7c-f1e6ace9d3ff"
+storage_version_token = "1789656838179029"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "jgyZBnUdQQnJ8Y4CZ2cDn"
+uri = "file://evidence-work/consultation-prototype/answer-offline-review.html"
+type = "html"
+title = "非公開AI相談試作：通信なしの画面・検証結果"
+description = "実際の未接続画面、確認できた動作、実モデルで未確認の点、送信予定項目と料金候補をまとめています。AI回答の見本ではありません。"
+logical_id = "e1c8f0a4-7565-48b1-9c63-252b4ed8fe2f"
+content_hash = "sha256:15cc9ee2bbb567e99b7085e3fe2c4e0fec7ae5797f22b83baf936ed278510696"
+size = 1511868
+mtime_ms = 1789659432088
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/e1c8f0a4-7565-48b1-9c63-252b4ed8fe2f/c4860d3e-ae69-4439-ad87-58f51695980b"
+storage_version_token = "1789659465005276"
+content_type = "text/html"
+
+[[outputs]]
+id = "D91hKooFdtFVxmMCIe5Mn"
+uri = "file://evidence-work/consultation-prototype/answer-offline-review.zip"
+type = "unspecified"
+title = "画面画像・検証記録・接続準備資料"
+description = "デスクトップ／モバイル画像、13件の検証記録、処理の説明、費用見積もり、出典・利用条件、公開前の未解決事項を収録しています。"
+logical_id = "afeea0f2-ad08-42ba-bae8-0915c48a9bbd"
+content_hash = "sha256:e8f6611a2b8cfd66736e383b588a2709fd833c63b1be223204619160b158fd01"
+size = 2188848
+mtime_ms = 1789659432336
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/afeea0f2-ad08-42ba-bae8-0915c48a9bbd/bf795f7d-1829-4c4f-bfb2-f888114709c7"
+storage_version_token = "1789659468599980"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "pyqQKeg4pq81SnuLs-goi"
+uri = "file://evidence-work/model-evaluation/preparation-review.html"
+type = "html"
+title = "Luna接続準備・架空20問と事前評価基準"
+description = "接続方法、正式モデルID、保存・学習条件、費用、20問それぞれの許容内容・禁止内容・出典・停止条件。未接続・未実行です。"
+logical_id = "77c38541-88f6-406a-a41a-777f99eae742"
+content_hash = "sha256:be252676948163d2d2e4eca4cae5a4d42c0ae4df540217832de57726db98f3ee"
+size = 101565
+mtime_ms = 1789690636929
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/77c38541-88f6-406a-a41a-777f99eae742/5ea458dd-442e-4003-8caa-57068794b02d"
+storage_version_token = "1789690666202880"
+content_type = "text/html"
+
+[[outputs]]
+id = "RQec6LXcVrDrkdAtbVQMu"
+uri = "file://evidence-work/model-evaluation/evaluation-excel.csv"
+type = "table"
+title = "20問の評価表（未記入・Excel用）"
+description = "生成前に固定した出典と合否条件を含む20行。モデル回答・実測・採点欄はすべて未記入です。"
+logical_id = "53208077-762f-47e1-8ae4-76fa4b1913a0"
+content_hash = "sha256:2d6d437fd434e94dba95cf0d7cb7a5b20e56905b727d904c429f5f2714ede34b"
+size = 4992
+mtime_ms = 1789690636861
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/53208077-762f-47e1-8ae4-76fa4b1913a0/408d0903-b82e-4d8d-9818-ccc1b1e0f1bd"
+storage_version_token = "1789690667720417"
+content_type = "text/csv"
+
+[[outputs]]
+id = "rHAf8XNTeVnac66SZdSCU"
+uri = "file://evidence-work/model-evaluation/preparation-package.zip"
+type = "unspecified"
+title = "検証準備一式"
+description = "接続手順、構造化20問、評価CSV、費用記録ひな型、未承認の実行計画、32件の通信なし検証結果と改変確認用チェックサム。"
+logical_id = "00b5ce7f-576e-4f2c-beb2-1bc92b1a4806"
+content_hash = "sha256:a01e737c0fba3a93da124dce2132bdecbab368f813f4a677e18571304a26ec73"
+size = 72607
+mtime_ms = 1789690636937
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/00b5ce7f-576e-4f2c-beb2-1bc92b1a4806/26810502-21f1-4230-8df4-642606eb1cd0"
+storage_version_token = "1789690669325219"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "U5CO4aUP0Shd-LsPy0_rm"
+uri = "file://evidence-work/model-evaluation/revised-send-plan.md"
+type = "text"
+title = "検証結果と修正した送信計画"
+description = "通常経路20問の実測結果、ローカル計数、累計通信枠、資料読解の実送信を保留する具体的な理由をまとめました。"
+logical_id = "e9c43542-873d-4750-bd92-ff5b66540afc"
+content_hash = "sha256:867200398175ae8bbf59352002f5efb6a5dc04858121b50b32475223eef604a6"
+size = 9217
+mtime_ms = 1789698165779
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/e9c43542-873d-4750-bd92-ff5b66540afc/ee41c53c-5ea6-4727-b69f-5d51d51d4b6e"
+storage_version_token = "1789698251498339"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "TeUpYXlNN7pdtest2Zn_Y"
+uri = "file://evidence-work/model-evaluation/isolated-reading-results.html"
+type = "html"
+title = "隔離読解試験：回答・原文対照レポート"
+description = "Q01〜Q05の回答全文と送信原文、利用量・計算費用、条件や例外の省略、Q05で停止した出典帰属の問題を並べて確認できます。Q06〜Q11は未送信です。"
+logical_id = "71528fd6-4bc8-4a0c-b8e9-5e325e57d5e1"
+content_hash = "sha256:a96b1e2f4cd8287471cf5c9d31f6b5648b12f6d0cd573bd117ac2510ce2fcf32"
+size = 114511
+mtime_ms = 1789699342613
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/71528fd6-4bc8-4a0c-b8e9-5e325e57d5e1/298b1b33-4160-447c-bc47-6a369cdd3d37"
+storage_version_token = "1789699390223166"
+content_type = "text/html"
+
+[[outputs]]
+id = "EMcYvGB8_zHKrQLBcyANn"
+uri = "file://evidence-work/model-evaluation/revised-reading-results.html"
+type = "html"
+title = "Q05修正前後：回答・原文・引用・費用の比較"
+description = "資料の役割分離と説明ごとの引用対応、新Q05の実回答、原文との意味照合による停止理由、未送信のQ06〜Q11、累計7通信・$0.008109を収録しています。"
+logical_id = "c520ee6b-5d59-402c-b747-5cb52334cbde"
+content_hash = "sha256:ad4741bde999b888eb62ac2b03398d9427942b8421291264496e031bd8919d3c"
+size = 302192
+mtime_ms = 1789701064746
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/c520ee6b-5d59-402c-b747-5cb52334cbde/aab6c6b7-a5f7-4464-9af5-af737e229b79"
+storage_version_token = "1789701131131373"
+content_type = "text/html"
+
+[[outputs]]
+id = "7XFtYDj03EbME0oYGheaN"
+uri = "file://evidence-work/model-evaluation/independent-reading-results.html"
+type = "html"
+title = "Q05帰属表示とQ06〜Q11の独立評価結果"
+description = "ケース別の合否、モデル生回答と原文の対照、アプリ側の帰属表示、未解決事項、利用量・費用を収録。Q05の未合格を保持し、累計13通信・計算費用$0.017093です。"
+logical_id = "86a401b0-529f-471d-b27f-2894a0dec13b"
+content_hash = "sha256:ecf878b8ddd10d51ea1968e73dd8f2b64546981e28460eabe0c86885f2d201a2"
+size = 605864
+mtime_ms = 1789702535114
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/86a401b0-529f-471d-b27f-2894a0dec13b/65aa2054-5e0a-4764-9065-052dab7d3d81"
+storage_version_token = "1789702605672797"
+content_type = "text/html"
+
+[[outputs]]
+id = "-25u7wOeCBWKolca2tnga"
+uri = "file://evidence-work/condition-display-offline/conditions-and-body.html"
+type = "html"
+title = "本文・対象条件・限界の表示例と保存済み回答の検証"
+description = "Q05〜Q11の架空画面例、確認済み条件の隣接表示、個別助言の停止動作、過去判定を保持した検証、今後の3分類評価基準案。追加API送信なし。"
+logical_id = "e95cc232-eddf-4d70-aea1-911b4f008004"
+content_hash = "sha256:05013b6bc04f9eccb536fcab288f14e40bc3dba404a28e2e0152ba3686e8ebbe"
+size = 452560
+mtime_ms = 1789710940406
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/e95cc232-eddf-4d70-aea1-911b4f008004/1efc87a9-8648-472b-ba55-14657d5f04d9"
+storage_version_token = "1789711257587528"
+content_type = "text/html"
+
+[[outputs]]
+id = "Be_jBXfYRnkN4f0IFgK2y"
+uri = "file://evidence-work/general-audience-evaluation/general-audience-six-01/general-audience-results.html"
+type = "html"
+title = "一般向け表示方式・6ケース再評価結果"
+description = "生回答、アプリ補完、対応原文、本文・表示・画面全体の独立判定、再発と新規問題を掲載。AIによる原文照合。累計19通信・計算費用$0.025879、20回目は未使用。"
+logical_id = "573b7939-2c7b-49f8-b57e-b69aeb18dbb7"
+content_hash = "sha256:fea4d89d8b1fb24e7f570116fa429d72d1f067dd932160631e0f84b2c0903ad7"
+size = 1401835
+mtime_ms = 1789719874970
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/573b7939-2c7b-49f8-b57e-b69aeb18dbb7/760c3cec-4466-4bd5-bd5a-265b89524b6e"
+storage_version_token = "1789720006357519"
+content_type = "text/html"
+
+[[outputs]]
+id = "Soi4krvs7n6a8owN00Mx_"
+uri = "file://evidence-work/model-comparison-preparation/reading-comparison-01/comparison-preparation.html"
+type = "html"
+title = "別モデル比較・実行前計画（追加API送信なし）"
+description = "Q05の次回基準、Q10の誤読、公式モデル情報・費用、既知6問＋新規6問、原文・生成指示・匿名採点方針を収録。現在19通信・$0.025879を保持。比較は未実行・未許可。"
+logical_id = "77ef4048-c2e1-4e99-aea5-ea4cc219b585"
+content_hash = "sha256:bba71b4f6e3a33a137f06b0bde432617bfd537b70b98a015e73ea0cf3908d22e"
+size = 57674
+mtime_ms = 1789721877422
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/77ef4048-c2e1-4e99-aea5-ea4cc219b585/be3c5f4d-4456-40e3-8500-431cb338e20f"
+storage_version_token = "1789722014861093"
+content_type = "text/html"
+
+[[outputs]]
+id = "DM92CzZD1PP18_tlK-6hb"
+uri = "file://evidence-work/model-comparison-runs/reading-comparison-01/comparison-result.html"
+type = "html"
+title = "Luna / Sol比較試験：停止・未完了の最終報告"
+description = "追加1通信・累計20通信で停止。匿名AIレビュー確定後に開示。既知6問／新規6問の実行状況、利用量・計算費用と留保額、停止理由、判断できない点を保存。比較可能な完了ペアは0組。"
+logical_id = "091e20d6-47e4-4a19-8e17-563fbef78c68"
+content_hash = "sha256:a32a368a480b4015f0de17247a514ec3f4e802b918a93a98b5fcf7f42ccf537b"
+size = 39853
+mtime_ms = 1789723663626
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/091e20d6-47e4-4a19-8e17-563fbef78c68/cef2dac0-6e3c-49c4-a66b-d92daf4aba7a"
+storage_version_token = "1789723747037304"
+content_type = "text/html"
+
+[[outputs]]
+id = "Fws_j_F5Ba6uxftYpsmxf"
+uri = "file://evidence-work/model-comparison-runs/reading-comparison-01-resume/comparison-resume-result.html"
+type = "html"
+title = "比較試験の修正・再開結果（未確認設定により停止）"
+description = "Q10は設定の証拠不足だけを理由に除外。項目別照合と26件のオフライン試験後、追加1通信で未確認の課金関連項目を検出し停止。累計21／43通信、予約額の維持・二重計上なし、匿名AIレビューと未実行分を収録。"
+logical_id = "abde223f-9965-4b39-8a5e-ca18b1ce08eb"
+content_hash = "sha256:f8fa542b1f67c3d49ae1b545e3da6634869fe056637b6c919f6b63e9f863cf14"
+size = 20631
+mtime_ms = 1789725709791
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/abde223f-9965-4b39-8a5e-ca18b1ce08eb/348d737c-9b1c-4a25-acda-46eb958b0a3c"
+storage_version_token = "1789725791622250"
+content_type = "text/html"
+
+[[outputs]]
+id = "hZi4l4kxtE4WSDCYlTirY"
+uri = "file://evidence-work/model-comparison-diagnosis/reading-comparison-01/diagnosis-report.html"
+type = "html"
+title = "停止9項目の診断・H06本文評価・最小再開案"
+description = "追加モデルAPI送信0。正確な階層・型・拒否検査・公式根拠・復元不能範囲を整理。本文評価は通信条件と分離。21／43通信、既知費用＋予約額$0.1353765を維持。"
+logical_id = "a480fcbe-ba7b-4be7-b78d-25e257547689"
+content_hash = "sha256:aab598084d60052a5632c17fe8646e57dbce529e778528362f6b80433c875a65"
+size = 80099
+mtime_ms = 1789726891989
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/a480fcbe-ba7b-4be7-b78d-25e257547689/72be1aae-3de8-4f38-9534-10b629dfaf60"
+storage_version_token = "1789726929382891"
+content_type = "text/html"
+
+[[outputs]]
+id = "FRi3SSD1m0Fzv-1gfyneX"
+uri = "file://attached_assets/reading-comparison-02-final-report.html"
+type = "html"
+title = "Luna / Sol 比較結果・訂正追記版"
+description = "21送信の結果、固定した8組の比較、検査器の誤検知を訂正した独立補足評価、利用量・費用・所要時間を収録。元の台帳・採点は変更していません。"
+logical_id = "ca25c295-b482-454f-b768-8733804c0e19"
+content_hash = "sha256:47416bad5a20406a8a19ee572b7867ae10e9ad4427494e4a865625d5eebe4807"
+size = 22016
+mtime_ms = 1789739739008
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/ca25c295-b482-454f-b768-8733804c0e19/012b5f7b-fc24-4d20-880f-6f6a6b83c14f"
+storage_version_token = "1789739745284916"
+content_type = "text/html"
+
+[[outputs]]
+id = "UEwUoyuQT5A8Tc_sZutHr"
+uri = "file://attached_assets/offline-parent-evaluation-preparation.html"
+type = "html"
+title = "比較終了記録・回帰事例・保護者向け10問の評価案"
+description = "追加モデルAPI送信なし。主解析・補足・参考評価を分離し、原文付き回帰事例、H06の解釈上の留保、各質問の回答範囲・確認条件・禁止断定・本文と隣接表示の要件をまとめました。"
+logical_id = "a3882a6d-735f-42ec-951d-d248cfdcfadc"
+content_hash = "sha256:934a39d7cb96c2003f72219364fc519dc36c2c705c6356dfb47ae1ea0efa9c12"
+size = 1497663
+mtime_ms = 1789742757929
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/a3882a6d-735f-42ec-951d-d248cfdcfadc/be3ffcca-fd7a-4313-90a8-92e525430666"
+storage_version_token = "1789742762265614"
+content_type = "text/html"
+
+[[outputs]]
+id = "Abj1dKPIhG24lt2n30zRP"
+uri = "file://evidence-work/parent-reading-evaluation/execution-01/report/final-results.html"
+type = "html"
+title = "10問の実回答・原文照合・AI評価レポート"
+description = "モデル回答5問と通信なし表示5問を別集計。質問全文、未修正の回答、対応原文22件、2つのAI評価と判定差、費用・残予約を収録。育児助言・資料採用承認ではありません。"
+logical_id = "73ce8b29-e648-4099-87b2-973448f88381"
+content_hash = "sha256:494f848297a8492c135b243a32736ea8a4e5de43fe45d72eb8aedd3b25725a46"
+size = 1574816
+mtime_ms = 1789745548077
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/73ce8b29-e648-4099-87b2-973448f88381/28ffbbfb-d7de-4eb2-aad8-56d6bd814a79"
+storage_version_token = "1789745651285590"
+content_type = "text/html"
+
+[[outputs]]
+id = "X0P-2gt6NEcCGZR64cBP8"
+uri = "file://evidence-work/parent-reading-evaluation/revision-01/revision-report.html"
+type = "html"
+title = "追加通信なしの修正案・検出限界とP02編集見本"
+description = "全10問の過去結果を保持し、4分類、P01/P10の原因、P04/P06の解釈境界、出典単位の最小改修案を収録。通常相談経路は未変更。"
+logical_id = "8ad36aab-aa98-4263-a2bb-a8ba13c94e01"
+content_hash = "sha256:45256b6a78c366228004ea65f6ac49cf1712f52b6a8a107ef0f8da2be5d3d493"
+size = 1480012
+mtime_ms = 1789768504942
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/8ad36aab-aa98-4263-a2bb-a8ba13c94e01/1b64a91a-3874-41f7-aef8-b3e31b638735"
+storage_version_token = "1789768553393908"
+content_type = "text/html"
+
+[[outputs]]
+id = "7YUWZAnHWXhzChfuEf9k1"
+uri = "file://evidence-work/parent-reading-evaluation/fact-display-pilot-01/pilot-report.html"
+type = "html"
+title = "共通表示の最小実装・4問のスマートフォン画面と検証結果"
+description = "5つの出典単位データを共通表示器で再利用。AI未接続、追加送信0、53項目のオフライン確認。一時環境は削除済み。固定表示の保護範囲と意味検査の限界を分けて記録。"
+logical_id = "8942df39-91aa-46a3-8c02-84e6eab1b48f"
+content_hash = "sha256:5226381ef6b044a40f320101f4c719e824c499a11cb89ce39ed38637e1da00f4"
+size = 7155089
+mtime_ms = 1789769299721
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/8942df39-91aa-46a3-8c02-84e6eab1b48f/1b3284b5-117b-47dc-9608-87ef7bd17d56"
+storage_version_token = "1789769340008812"
+content_type = "text/html"
+
+[[outputs]]
+id = "4jq4aFMg2cJnqIre-kMQ4"
+uri = "file://evidence-work/parent-reading-evaluation/fact-display-pilot-01/P01-mobile.png"
+type = "image"
+title = "P01 — スマートフォン画面例（縦全体）"
+description = "実際の共通表示器から保存した390px幅の画面。集計範囲は未確認、夜間＋昼寝との充足比較なし。AI生成回答ではありません。"
+logical_id = "0f96a7a5-d3e3-4155-ab74-acdcb7c745e6"
+content_hash = "sha256:f6371979b6358be6143e49956b4b36f63dbdbcbc4584e571420afb1541472720"
+size = 459374
+mtime_ms = 1789769161921
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/0f96a7a5-d3e3-4155-ab74-acdcb7c745e6/6929a435-61a9-44bc-9fed-314bb135e4a5"
+storage_version_token = "1789769342774938"
+content_type = "image/png"
+
+[[outputs]]
+id = "9nxfRlrqA0clt6BGyEdGl"
+uri = "file://evidence-work/parent-reading-evaluation/display-refinement-01/display-report.html"
+type = "html"
+title = "表示整理後の4画面と重複比較"
+description = "390px幅の4問の冒頭・全体画像、整理前後の比較、結論の編集見本との区別、データ不変と一時環境の片付けを記録しています。"
+logical_id = "f8040e71-10ce-4abb-8f15-619e2b8d56a8"
+content_hash = "sha256:f4814214f671733afc81f809b6ee632fd6282ad371fd46efb195bd02d8dfbe8f"
+size = 4597566
+mtime_ms = 1789769984509
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/f8040e71-10ce-4abb-8f15-619e2b8d56a8/d1c2fe65-7b2a-4e9e-87bd-d03332f37d51"
+storage_version_token = "1789769994684471"
+content_type = "text/html"
+
+[[outputs]]
+id = "3GJwmceuntesbQ7pNXRsS"
+uri = "file://evidence-work/parent-reading-evaluation/display-refinement-01/P01-mobile-top.png"
+type = "image"
+title = "P01：短い結論と睡眠時間の範囲表示"
+description = "保存原文の確認範囲に限定した結論を冒頭に表示。11〜14時間を対象・集計範囲未確認とまとめた390px幅の実画面です。"
+logical_id = "d17d4d3a-7261-4ce0-9238-e3685217de76"
+content_hash = "sha256:526da40fcdcb11291b3448ec62869b4a58a5a1a68e2a3deb73a6ee20b4de40b6"
+size = 87774
+mtime_ms = 1789769873485
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/d17d4d3a-7261-4ce0-9238-e3685217de76/ccb9ec3a-1715-4c5c-862a-2f53fb5c5709"
+storage_version_token = "1789769996247518"
+content_type = "image/png"
+
+[[outputs]]
+id = "5XHukR9zB-30BltiAD15Y"
+uri = "file://evidence-work/parent-reading-evaluation/p01-aggregation-addendum-01/comparison-report.html"
+type = "html"
+title = "P01：追加根拠・新旧表示と引用先・検証結果"
+description = "議事録の原文と前後文脈、利用条件、CDCの照合記録、新旧390px表示、関連付け解除と不適合条件の検証をまとめました。追加モデルAPI送信0・承認状態変更なし・一時環境片付け済み。"
+logical_id = "e996ce62-3f42-4890-9ef5-577d97f95eb4"
+content_hash = "sha256:3fae34076286321d1b1ff785e114687f56cbc8f973deb9765300d38fa0270808"
+size = 2978664
+mtime_ms = 1789771824068
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/e996ce62-3f42-4890-9ef5-577d97f95eb4/ed84ea8c-f15c-4031-a7b0-c84458468492"
+storage_version_token = "1789771845069312"
+content_type = "text/html"
+
+[[outputs]]
+id = "W5eaoqSSR-1128MbynDRV"
+uri = "file://evidence-work/parent-reading-evaluation/p01-aggregation-addendum-01/new-top-mobile.png"
+type = "image"
+title = "P01：議事録を関連付けた条件付き編集見本"
+description = "昼寝込みの11〜14時間、同じ1日分の実睡眠なら約11時間、個別の十分さや健康判断は別、という区別を表示しています。"
+logical_id = "85c274ae-7bdb-48c0-a7a6-63dbe65a00e2"
+content_hash = "sha256:0d25abae7b8a467978dc0be4b11f57f61880ddb68b3cf64e03ff1ed33ec54a5f"
+size = 96823
+mtime_ms = 1789771685476
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/85c274ae-7bdb-48c0-a7a6-63dbe65a00e2/c66b8bce-3dcd-44da-b4ea-e92b9d57d3e5"
+storage_version_token = "1789771847129187"
+content_type = "image/png"
+
+[[outputs]]
+id = "QbUNOyfMBF7lrRUWijxN-"
+uri = "file://evidence-work/parent-reading-evaluation/retrieval-fact-connection-01/connection-report.html"
+type = "html"
+title = "入力→根拠検索→事実表示：非公開接続の検証レポート"
+description = "入力から結果までの画面例、実際につながった部分と未接続部分、言い換え・年齢・複数対象の結果、検索漏れと資料／事実データ不足の区別を収録。一時環境は削除済み。"
+logical_id = "91b0b793-d40f-420e-b563-6e60a089c62e"
+content_hash = "sha256:55e2f715048b459dff52a7f87f7d83a2fad9f51a4c443154836126941ccd228c"
+size = 6481896
+mtime_ms = 1789773142647
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/91b0b793-d40f-420e-b563-6e60a089c62e/5feb1fec-d61d-4e41-a8e1-a152644ef1d5"
+storage_version_token = "1789773166387403"
+content_type = "text/html"
+
+[[outputs]]
+id = "fBeCOW8AssZN3TTf2_gtG"
+uri = "file://evidence-work/parent-reading-evaluation/vocabulary-inventory-review-01/inventory-search-report.html"
+type = "html"
+title = "収録状況の訂正・4資料11区分一覧・日常語検索の検証"
+description = "E01-S03の保存済み／前回未投入を訂正。11区分の収録・検索・説明データ、言い換えと誤検索、画面例を収録。過去記録は上書きしていません。"
+logical_id = "88ef38c3-2b5f-4a5f-ac98-5635e495adef"
+content_hash = "sha256:662c5683f8d81fe85bbefde61d3b00acb95263ac84d3dde54bbf8606007aec02"
+size = 4093281
+mtime_ms = 1789773945003
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/88ef38c3-2b5f-4a5f-ac98-5635e495adef/f036e1e2-7e42-49f0-851c-a62dc17a86df"
+storage_version_token = "1789773977216193"
+content_type = "text/html"
+
+[[outputs]]
+id = "_bWfvKcm2gj0ra5AbF9hA"
+uri = "file://evidence-work/parent-reading-evaluation/vocabulary-inventory-review-01/inventory.csv"
+type = "table"
+title = "4資料・11区分の収録状況一覧（CSV）"
+description = "原文・必須文脈、前回／今回の投入、実検索の確認例、説明用事実データ、正式承認を分けた一覧です。"
+logical_id = "4713d8a1-01fb-45c6-b2fd-2883e016ae3c"
+content_hash = "sha256:0f04001c5a7e45e88fa1e9437a352dd85f9385118084374716634d85b63fffa1"
+size = 2457
+mtime_ms = 1789773944763
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/4713d8a1-01fb-45c6-b2fd-2883e016ae3c/548781cd-9951-458a-b790-fd871da5620d"
+storage_version_token = "1789773978486022"
+content_type = "text/csv"
+
+[[outputs]]
+id = "O34o4WCucB1gzweBp0fUk"
+uri = "file://evidence-work/parent-reading-evaluation/candidate-relevance-gate-01/candidate-relevance-report.html"
+type = "html"
+title = "検索候補と表示用根拠の分離：検証レポート"
+description = "修正前に固定した既知5例・新規7例の結果、確認画面、誤検索からの表示防止、確認の手間と取りこぼし、誤った話題確認が残す限界を記録。"
+logical_id = "5ea25325-78c0-42b3-b4c3-cc340972dc14"
+content_hash = "sha256:71281c7fb76158cf8474058b234d64af8b8378f2dac265f49edaa3fb253609a8"
+size = 3137917
+mtime_ms = 1789775871327
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/5ea25325-78c0-42b3-b4c3-cc340972dc14/1883ab78-a982-4b1c-9d32-753e108269b6"
+storage_version_token = "1789775966816231"
+content_type = "text/html"
+
+[[outputs]]
+id = "ArcYgQKEJOi9I2zbUm722"
+uri = "file://evidence-work/parent-reading-evaluation/candidate-relevance-gate-01/case-metrics.csv"
+type = "table"
+title = "ケース別の検証結果（CSV）"
+description = "関連・無関係な候補取得、事実表示や比較への到達、確認停止、関連質問の停止、追加操作を区別した記録です。"
+logical_id = "6d460e71-93f3-4977-a0f4-d878a72b39b8"
+content_hash = "sha256:6ee63f2c86412d2d9eaa9a7cf806c875d53f626c5118c4d722559a7e880aeca4"
+size = 2371
+mtime_ms = 1789775871315
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/6d460e71-93f3-4977-a0f4-d878a72b39b8/1975f833-6018-488f-9e9c-7fd8fe1ebf18"
+storage_version_token = "1789775968014877"
+content_type = "text/csv"
+
+[[outputs]]
+id = "kPxuz9VJOBAF1qrkwr4I3"
+uri = "file://evidence-work/parent-reading-evaluation/material-selection-preview-01/material-selection-report.html"
+type = "html"
+title = "非公開プレビューの操作手順・画面記録"
+description = "資料の選択と睡眠比較を分けた操作、入力変更時の挙動、プレビューの起動・終了方法を収録。動くプレビューはReplitのVNC画面で操作できます。"
+logical_id = "cdc74a3d-dc3e-4ab4-8cc6-8c988615ca44"
+content_hash = "sha256:034062e3d6b3c5e408a294819fc1b899036c55e3f881f0d3a3c7e8330be2895b"
+size = 3338498
+mtime_ms = 1789777316406
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/cdc74a3d-dc3e-4ab4-8cc6-8c988615ca44/dbfe742c-d7ee-45e8-bd6f-c0cd09469e7e"
+storage_version_token = "1789777459550707"
+content_type = "text/html"
+
+[[outputs]]
+id = "QFOptewQDuCBdjn48KwJB"
+uri = "file://evidence-work/parent-reading-evaluation/material-input-preview-01/attempt-1789779345272/report-ja.html"
+type = "html"
+title = "修正版プレビュー：年齢別の画面・確認結果"
+description = "歳が空欄・8か月、0歳8か月、1歳8か月、年齢不明を再現した画面と、根拠確認・表示整理の検証結果。操作する画面は起動済みのVNCです。"
+logical_id = "1cc7cf8e-5c90-4bad-a472-37cae0c16d44"
+content_hash = "sha256:e71c1e594bc7ffb44403907ccbe5b89a5f7a979181787199efd0debaf771aad1"
+size = 6287440
+mtime_ms = 1789779383673
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/1cc7cf8e-5c90-4bad-a472-37cae0c16d44/a990e61e-a39e-47e3-8482-51f57c33e1f9"
+storage_version_token = "1789779440226794"
+content_type = "text/html"
+
+[[outputs]]
+id = "YD_BgE1y28dx9MsIiguGo"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-editorial-preview-01/index.html"
+type = "html"
+title = "育児相談の編集見本 — 3つの会話場面"
+description = "保存済み資料に基づく編集見本です。実際のAI回答ではありません。「根拠を見る」と検証者向け詳細を分離し、送信・予約・履歴共有は行いません。"
+logical_id = "41d4f4de-36f3-40f0-aef8-8b6146663872"
+content_hash = "sha256:57a08dce6942758f970f317452664558a2b93cb6f6f2fd9f0b1f8e20190eb1ec"
+size = 1374435
+mtime_ms = 1789805332120
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/41d4f4de-36f3-40f0-aef8-8b6146663872/8d620806-2b3f-4443-8f0c-7456bc7f43a2"
+storage_version_token = "1789805476484605"
+content_type = "text/html"
+
+[[outputs]]
+id = "wTpdQiJUIUZwgm2oBd3w-"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-editorial-preview-02/index.html"
+type = "html"
+title = "会話見本：質問と回答を先に表示"
+description = "編集見本・AI未接続。利用者向け画面からレビュー情報とメモ欄を分離した、3場面の修正版です。"
+logical_id = "0da6c394-8549-4cf7-9d81-65e30c93cc86"
+content_hash = "sha256:b54fd4244b46c7804b7d546ac83051d182738fade34cc7dbc38073a3210034a8"
+size = 1371199
+mtime_ms = 1789806064036
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/0da6c394-8549-4cf7-9d81-65e30c93cc86/19b4ca2c-e0df-453f-a467-41676116f33e"
+storage_version_token = "1789806146838791"
+content_type = "text/html"
+
+[[outputs]]
+id = "PCugBFSoi7CyJehQ6Hlg6"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-editorial-preview-02/reviewer.html"
+type = "html"
+title = "別紙：原文・対象範囲・利用条件の確認記録"
+description = "3〜5歳の昼寝を含む睡眠時間をAASM公式原論文で確認した記録。1〜2歳向け補足とは区別し、資料承認や外部AI利用許可は変更していません。"
+logical_id = "6712d0d4-6f06-403f-8df8-3b4f1e78b2de"
+content_hash = "sha256:289d462b6e19c030115847fbde350ea9991ca618138ac861abe755549732d482"
+size = 19360
+mtime_ms = 1789806064088
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/6712d0d4-6f06-403f-8df8-3b4f1e78b2de/f1779c0a-9d2f-4c24-882d-7d4a982b28fb"
+storage_version_token = "1789806148159437"
+content_type = "text/html"
+
+[[outputs]]
+id = "qzlBj9JQqgH86Rd6QEJgW"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-handoff-preview-01/spec.html"
+type = "html"
+title = "We育の相談仕様：担当体制と引き継ぎ"
+description = "5分野の担当範囲、医療相談との境界、本人による要約・宛先確認、未契約時の扱いを統合した仕様です。"
+logical_id = "e40b906a-16c4-45a3-bea5-b53a62698b13"
+content_hash = "sha256:5e3cf665a0f74288a6344518d62c477281fbf7c1128cd0baadbf064c5a05ca1d"
+size = 1367841
+mtime_ms = 1789807361560
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/e40b906a-16c4-45a3-bea5-b53a62698b13/a8067270-f145-4fb8-abca-f1e259e761d5"
+storage_version_token = "1789807473665159"
+content_type = "text/html"
+
+[[outputs]]
+id = "h3Du5gZucggZ6YxtkcV_s"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-handoff-preview-01/index.html"
+type = "html"
+title = "修正版：困りごとを具体的に理解する会話見本"
+description = "6・4・5往復の異なる進行。偏食は人への希望をその場で尊重し、支度は引き継がず相談を続けます。AI未接続・担当者未契約・送信なし。"
+logical_id = "7d0fb56b-ff59-4b82-9ff2-ba47c757083d"
+content_hash = "sha256:ee1787df8ec3eee0148f8320c4775b19079b472608f9d54983ebdf2c5f7ecdb3"
+size = 1384351
+mtime_ms = 1789808103448
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/7d0fb56b-ff59-4b82-9ff2-ba47c757083d/9e9fa6a3-02f4-4ac2-83e2-e9cb2c524d47"
+storage_version_token = "1789808151116983"
+content_type = "text/html"
+
+[[outputs]]
+id = "6xth9tFexv6g9yqcjDbfb"
+uri = "file://evidence-work/parent-reading-evaluation/conversation-handoff-preview-01/transcript.txt"
+type = "text"
+title = "修正版の会話全文と要約"
+description = "3場面の会話全文、本人による要約修正、途中で人への相談を選んだ場合の要約を収録しています。"
+logical_id = "a68a8272-45ff-45ac-b32b-259477416b49"
+content_hash = "sha256:6fc36b5b5f372de3aa9bf7b2bf2e8eb5d2aeb55ea70ea5b8764577490587e925"
+size = 18014
+mtime_ms = 1789808101036
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/a68a8272-45ff-45ac-b32b-259477416b49/4d7e28db-14ff-469b-8c70-7eb4f28e0f06"
+storage_version_token = "1789808152555808"
+content_type = "text/plain"
+
+[[outputs]]
+id = "HlwOJPl7R9gBpiI3gZv9H"
+uri = "file://evidence-work/practical-guidance-pilot-01/report.html"
+type = "html"
+title = "実践的な育児情報：本文準備・検索検証報告"
+description = "4資料群・現行17区分の準備内容、利用条件と保留、4相談の実検索結果に結び付けた編集見本、一時DBの後片付け結果をまとめました。"
+logical_id = "a6ba922c-3360-4311-a7ef-dae96208a45f"
+content_hash = "sha256:707b947e96669edefc6fa172ce309e95b211e4bfa2d4f9976d09f102f41c5cf7"
+size = 1367024
+mtime_ms = 1789865302440
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/a6ba922c-3360-4311-a7ef-dae96208a45f/ab83025f-1ed9-4910-a783-82f3432ba881"
+storage_version_token = "1789865356863831"
+content_type = "text/html"
+
+[[outputs]]
+id = "_nRs-mgeHr6QIE_zMgVHB"
+uri = "file://evidence-work/parenting-expansion-02/report.html"
+type = "html"
+title = "育児情報の追加準備・検索検証報告"
+description = "海外8候補（準備・検証済み3資料／保留5候補）、書籍6冊の台帳、自治体情報の保存・更新手順、根拠を見る付き編集見本、既存17区分の保持と一時環境の削除確認をまとめました。"
+logical_id = "b4286061-8e62-432e-8430-01cdaf93f067"
+content_hash = "sha256:1f8b083b53da05e0da6e545900754f82018b791c0f411492aaf44bdf83487c35"
+size = 1390337
+mtime_ms = 1789873869114
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b4286061-8e62-432e-8430-01cdaf93f067/399f5e32-a35c-4cba-b1ab-697737311a79"
+storage_version_token = "1789873956824001"
+content_type = "text/html"
+
+[[outputs]]
+id = "R3uVIdaXKpjWdqJgHIK6a"
+uri = "file://evidence-work/parenting-expansion-03/report.html"
+type = "html"
+title = "指定6地域・書籍6冊の詳細報告"
+description = "公式URL・確認日、全自治体の調査状態、支援9件、指定書籍6冊の調査状況を確認できます。"
+logical_id = "db242da4-c815-4672-9a75-04dfe0609faf"
+content_hash = "sha256:79e67f9fe2966838392ea27aa10a82c7dce4174fc40fd7e79b6938766d92f08b"
+size = 1584564
+mtime_ms = 1789876267744
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/db242da4-c815-4672-9a75-04dfe0609faf/fbd77209-7af2-4c28-a261-ee5778da7a81"
+storage_version_token = "1789876436087008"
+content_type = "text/html"
+
+[[outputs]]
+id = "skYDlCLWH1MPchEhNqOtK"
+uri = "file://evidence-work/parenting-expansion-03/scope-correction.md"
+type = "text"
+title = "対象地域・指定書籍の訂正記録"
+description = "地域指定済みの現状、6地域の実在支援、指定6冊と過去追加候補の区別、確認済み検証結果を整理しました。"
+logical_id = "be6dbc55-1b46-472e-be76-cba6c19916df"
+content_hash = "sha256:455341c6e2a611c18b5f132af273a7b9fe587746c726de4a2a1fbd5e0bc686e5"
+size = 5925
+mtime_ms = 1789876426376
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/be6dbc55-1b46-472e-be76-cba6c19916df/0c5bba2b-e320-40b1-bd7d-f2b8bab15cec"
+storage_version_token = "1789876432867511"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "oGv78uf3aW3UL5MGPajXO"
+uri = "file://evidence-work/parenting-expansion-04/report.html"
+type = "html"
+title = "育児・自治体情報の拡充報告（検索検証は未完了）"
+description = "既存35＋新規準備16の統合一覧、6市区×3目的、書籍6冊の差分調査、検索検証の停止理由をまとめています。"
+logical_id = "5c98fb10-9a88-4f2f-a950-aace39879fb0"
+content_hash = "sha256:f8fdd658e8a43e307bd484361b36f870bcb411a80196a674da51a76af2245f98"
+size = 1590221
+mtime_ms = 1789877667551
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/5c98fb10-9a88-4f2f-a950-aace39879fb0/196c2e9d-e665-4f9f-828e-78770f9fd836"
+storage_version_token = "1789877695175633"
+content_type = "text/html"
+
+[[outputs]]
+id = "zKWw9VAD2AHfVxCXlB729"
+uri = "file://evidence-work/parenting-expansion-04/catalog.md"
+type = "text"
+title = "既存・新規を合わせた51区分の一覧"
+description = "既存35区分と追加準備16区分を区別し、相談用途・出典・限界・利用条件・検証状態を記録しています。"
+logical_id = "b1b412ab-61ba-4f1f-b1a5-15530d8e4071"
+content_hash = "sha256:0bd2764dd4467b6d546ede11de86a60af491b0595b703a93f3236e152d03db72"
+size = 112240
+mtime_ms = 1789877620299
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b1b412ab-61ba-4f1f-b1a5-15530d8e4071/b2ea9293-565d-477d-be87-4d192ed3ea24"
+storage_version_token = "1789877697384514"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "zjfvdopugqo19P_C12Oty"
+uri = "file://evidence-work/search-repair-05/summary-ja.md"
+type = "text"
+title = "検索停止の修正・検証結果"
+description = "実測原因、地域と話題の分離、追加16区分の取得・出典表示、既存検索の維持、後片付けをまとめています。"
+logical_id = "4441add9-191c-4872-92f3-cad09a17817f"
+content_hash = "sha256:7613d4e74c7212517acfe171fb3bb77a4bf63b899ddf705568951974ac19970d"
+size = 5304
+mtime_ms = 1789879037147
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/4441add9-191c-4872-92f3-cad09a17817f/f7122c4b-f208-499b-b6bd-189e3cf35770"
+storage_version_token = "1789879046399146"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "y9sKcXLVyYykT1Gno17Ry"
+uri = "file://evidence-work/search-repair-05/report.html"
+type = "html"
+title = "検索修正の詳細検証記録"
+description = "元の質問・一致辞書行・展開数の比較と、独立ケースごとの成功・失敗・未実行を確認できます。"
+logical_id = "52ef138f-0d88-4688-969a-2e065c46e21c"
+content_hash = "sha256:80a374860057e40d4e12130d9058499c4b6e9c995cdcf6cbd9a659f4d92a3b5d"
+size = 42510
+mtime_ms = 1789878658958
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/52ef138f-0d88-4688-969a-2e065c46e21c/0cda2f80-43ba-4648-a066-0e46e19d80fa"
+storage_version_token = "1789879047734638"
+content_type = "text/html"
+
+[[outputs]]
+id = "roaBNHSmEYSQfeUd3j0b8"
+uri = "file://evidence-work/cfa100-06/summary-ja.md"
+type = "text"
+title = "「はじめの100か月」取り込み・検証報告"
+description = "原文の再照合、8区分と必須文脈の対応付け、既存51区分の維持、検索・表示・境界試験と未確認事項。"
+logical_id = "142ffcda-c5b0-49ec-aff6-9a6384035c66"
+content_hash = "sha256:8ca5709bab486dad099c9bc4d43339077a3ede4e5d4f511cdb9b646d51dbbcd4"
+size = 6300
+mtime_ms = 1789882302567
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/142ffcda-c5b0-49ec-aff6-9a6384035c66/3f5a735a-46a2-4d49-b12c-6f072ea5b9ef"
+storage_version_token = "1789882330825198"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "2LMdjhi6xANidWZzEOIMF"
+uri = "file://evidence-work/cfa100-06/browser/offline.html"
+type = "html"
+title = "「はじめの100か月」オフライン確認画面"
+description = "実測データを使った資料検索と共通表示。編集見本であり実際のAI回答ではありません。モデル・サーバーへの送信なし。"
+logical_id = "dd338e07-d114-47d1-a542-0de219075fc9"
+content_hash = "sha256:8622313919894462b8729ba3f20d839a5a0c7d22a4dccea92fdb6054592fd807"
+size = 3552416
+mtime_ms = 1789882196939
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/dd338e07-d114-47d1-a542-0de219075fc9/53b552c5-4a24-4fc1-a867-5728b28f45ef"
+storage_version_token = "1789882334539563"
+content_type = "text/html"
+
+[[outputs]]
+id = "uJGg-Tuc73CE0L7qaExM_"
+uri = "file://evidence-work/daily-conversations-07/preview/index.html"
+type = "html"
+title = "日常の育児相談10例｜会話プレビュー"
+description = "10例を切り替えて読めるオフラインの編集見本。実モデル回答ではありません。出典は「根拠を見る」にまとめています。"
+logical_id = "9504105a-c5cc-4aac-afb6-747468b8f3bf"
+content_hash = "sha256:c046bcf776b9727fd1a1d5e6b55ba43ad21164c13edfd7c4f87db536098dd672"
+size = 1396541
+mtime_ms = 1789885038349
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/9504105a-c5cc-4aac-afb6-747468b8f3bf/125f4185-e477-486c-8110-a8b822f9398b"
+storage_version_token = "1789885100824162"
+content_type = "text/html"
+
+[[outputs]]
+id = "97eho2fDyYpjilw4LN6cZ"
+uri = "file://evidence-work/daily-conversations-07/report.md"
+type = "text"
+title = "10例の会話全文・参照区分・評価報告"
+description = "会話全文、原資料とWe育応用の区別、例ごとの6項目点検、残る資料不足、表示確認結果。"
+logical_id = "12f35da0-72dd-4563-95ed-c6d6dec1d99a"
+content_hash = "sha256:3bb8b930f8178caf9db932f75e6032dda5bf89cfb508884c73208746df7be525"
+size = 21224
+mtime_ms = 1789885069217
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/12f35da0-72dd-4563-95ed-c6d6dec1d99a/4fb5bea1-f69f-46e3-a4a4-f01c432e4b45"
+storage_version_token = "1789885102105375"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "erW22HR4CzQIRic5cDmCb"
+uri = "file://evidence-work/daily-conversations-07/preview/reviewer.html"
+type = "html"
+title = "検証者向け｜原文・必須文脈・判断記録"
+description = "親向け画面とは別の確認用資料。参照本文・版・必須文脈・承認状態・発言別の根拠と評価を記録。公開用ではありません。"
+logical_id = "f6f85c81-a672-4906-a2b1-3ebd05c3110c"
+content_hash = "sha256:fb2a0ea707152a8ff57e224c41cdd343d146cf1514f926b82d978eadf1e45143"
+size = 1402081
+mtime_ms = 1789885038357
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/f6f85c81-a672-4906-a2b1-3ebd05c3110c/f9e7f54e-68e4-46e0-b233-0f7a562af6c9"
+storage_version_token = "1789885105416143"
+content_type = "text/html"
+
+[[outputs]]
+id = "lMS3b59lbPiYbVSP8oo5R"
+uri = "file://evidence-work/regional-support-09/preview/index.html"
+type = "html"
+title = "地域の子育て支援｜操作プレビュー"
+description = "6地域・4目的から探す試作。保存は画面を開いている間のみ。通常アプリ・既存DBには接続していません。"
+logical_id = "fb49e742-a895-4471-97b2-8d16b1bad30b"
+content_hash = "sha256:401276298637cb778cc30baf7b0b9e2bc2950daf250a60da5489961c15549f51"
+size = 1396621
+mtime_ms = 1789896207312
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/fb49e742-a895-4471-97b2-8d16b1bad30b/20b07b42-7d07-4ee6-abc1-c4ce4c3c9798"
+storage_version_token = "1789896264356099"
+content_type = "text/html"
+
+[[outputs]]
+id = "LNGZLtlYLm4SP0W_VC5cd"
+uri = "file://evidence-work/regional-support-09/preview/report.md"
+type = "text"
+title = "表示した支援21件・操作確認報告"
+description = "地域別の支援一覧、確認日、表示範囲と操作確認結果。"
+logical_id = "739587af-5e09-4cf0-94c6-b78279b2dfe2"
+content_hash = "sha256:628895a75c72a6b1d69b571b50e4ee96982ccd75c47bedfaf707cffb6d083558"
+size = 7212
+mtime_ms = 1789896207316
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/739587af-5e09-4cf0-94c6-b78279b2dfe2/5157dbee-46cf-42d5-95f2-e421849a8430"
+storage_version_token = "1789896265614300"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "Hm9Ti0YDOTanz5m_MMSzw"
+uri = "file://evidence-work/regional-support-09/data/unconfirmed.md"
+type = "text"
+title = "確認できなかった情報"
+description = "未確認の料金・条件・更新日などを記録。未掲載は支援の不存在を意味しません。"
+logical_id = "1a615b9c-977d-40ed-bed0-5152feb7d6c0"
+content_hash = "sha256:47d38396cc64f333c32d5e8a5b14e9d19be570c30d63fe8cc974698e51edbc4a"
+size = 5527
+mtime_ms = 1789895847436
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/1a615b9c-977d-40ed-bed0-5152feb7d6c0/ba250546-6c9d-4657-a611-46f865c29deb"
+storage_version_token = "1789896266868306"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "u5WwVKC_xiPUCsvpOrpJe"
+uri = "file://evidence-work/regional-support-09/preview/mobile-home.png"
+type = "image"
+title = "主要画面：スマートフォンのホーム"
+description = "AI相談を使わず、地域の支援を探す入口。"
+logical_id = "baf9037e-70c9-471c-8de1-e2bb51d51fc9"
+content_hash = "sha256:2d33c9df046b74a0077f7361d86d6a8d6eab9f38dc98d851c014d8156fad5075"
+size = 55317
+mtime_ms = 1789896230752
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/baf9037e-70c9-471c-8de1-e2bb51d51fc9/43e3c37b-1dbf-4c72-befb-e14e6de9936f"
+storage_version_token = "1789896268376665"
+content_type = "image/png"
+
+[[outputs]]
+id = "nrSXVHHTiHzClwCP9kyA9"
+uri = "file://evidence-work/regional-support-09/preview/mobile-list.png"
+type = "image"
+title = "主要画面：支援一覧"
+description = "地域と目的から支援の概要・対象・料金を確認。"
+logical_id = "642770da-b50a-48f6-8fe8-15246cd4d732"
+content_hash = "sha256:1285d30f2a9025d9bf0faa9c88c8358f4fb000192c6cbde3af7d54716194da58"
+size = 79735
+mtime_ms = 1789896231760
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/642770da-b50a-48f6-8fe8-15246cd4d732/b624093d-8638-4a0c-a0f5-4fcff513c25f"
+storage_version_token = "1789896270326202"
+content_type = "image/png"
+
+[[outputs]]
+id = "G5UfmipfbhNqtnmRdaD9-"
+uri = "file://evidence-work/regional-support-09/preview/desktop-detail.png"
+type = "image"
+title = "主要画面：利用方法・公式案内・保存"
+description = "未確認項目を明示した詳細画面。"
+logical_id = "9a7e3f0a-c68b-49ab-a652-49d840724ea0"
+content_hash = "sha256:de3effab68dbe766b9dd6cbe8d47d77cf2a419df01b45d277a8d2c2295f28ef3"
+size = 147635
+mtime_ms = 1789896236920
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/9a7e3f0a-c68b-49ab-a652-49d840724ea0/8ae8e009-9609-4038-885e-2ec4eae34eee"
+storage_version_token = "1789896272781887"
+content_type = "image/png"
+
+[[outputs]]
+id = "U3YLIUYO4GAZsSGAHYP5h"
+uri = "file://evidence-work/private-parenting-trial-10/plan/report.md"
+type = "text"
+title = "育児相談5場面｜通信前の試験計画"
+description = "会話の進め方、資料の確認状況、モデル・送信上限・費用案、未解決事項をまとめています。今回は送信0件です。"
+logical_id = "b1f1d86e-5320-4f4d-ade0-0e8e240d259b"
+content_hash = "sha256:63e030975aeb79decbd03f8b2c854290bd00bcc4486ef15e228f1210ac8eda94"
+size = 12112
+mtime_ms = 1789896944068
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b1f1d86e-5320-4f4d-ade0-0e8e240d259b/927573bc-0e0f-4c5d-8b7b-47988f4a28bd"
+storage_version_token = "1789897188661907"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "be-5bbRPTIUGPWrhNGsJG"
+uri = "file://evidence-work/private-parenting-trial-10/offline/final-receipt.json"
+type = "unspecified"
+title = "通信なしの確認記録"
+description = "入力除外、送信停止、生回答と評価の分離、画面確認、過去の閉鎖記録の不変性。合成テストと実回答を区別しています。"
+logical_id = "089c121c-8404-4da0-bdfc-657fa22c3f0c"
+content_hash = "sha256:dbd0d2c7bf08ec6a00670095ec257becf2c1656f107ce2f86b7ffc909115cae8"
+size = 3230
+mtime_ms = 1789897174691
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/089c121c-8404-4da0-bdfc-657fa22c3f0c/0cabcc2b-d559-44ab-968b-0b7ed2848a37"
+storage_version_token = "1789897189929803"
+content_type = "application/octet-stream"
+
+[[outputs]]
+id = "jlX1hNJONMPI6tmsN1kln"
+uri = "file://evidence-work/private-parenting-trial-11/offline/report.md"
+type = "text"
+title = "通信前準備・修正完了報告"
+description = "入力組み立てから履歴・生回答保存・評価・画面表示までの接続確認と、場面別の準備状況・費用案。今回のAPI送信は0件。"
+logical_id = "c066ed7d-dc7e-413a-ab83-c3fe0bb5fba2"
+content_hash = "sha256:08616a91d5450d29d7f0e279ca24912c54841967801eac33aa30670cdb30d69d"
+size = 5576
+mtime_ms = 1789898651019
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/c066ed7d-dc7e-413a-ab83-c3fe0bb5fba2/1313c242-b517-4553-a8af-15a291aa5ae6"
+storage_version_token = "1789898675855694"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "xN5NukxhoZ_pN9C37DHuF"
+uri = "file://evidence-work/private-parenting-trial-11/plan/history-reconciliation.md"
+type = "text"
+title = "過去の通信履歴の照合"
+description = "比較試験まで累計42、その後の保護者向け5通信を含めて累計47。旧台帳と閉鎖済み枠は変更していません。"
+logical_id = "b15b2a72-422c-479b-a07e-3721c843fc0b"
+content_hash = "sha256:0757b6102e3b83c94e39762bd871f6ff9d1ff494dfc57e2c25daec8fb8c9d8fa"
+size = 1495
+mtime_ms = 1789898210968
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b15b2a72-422c-479b-a07e-3721c843fc0b/5a2c8590-1358-4187-aa2e-349a786c24ef"
+storage_version_token = "1789898677124271"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "JWna4c7PB8ff0BvgEcNF-"
+uri = "file://evidence-work/private-parenting-trial-11/plan/rights-plan.md"
+type = "text"
+title = "資料ごとの条件・対応・具体的な保留事項"
+description = "本文範囲、入力・保存・表示の条件、実装で対応した事項と残る判断。"
+logical_id = "90e33843-a48d-4722-a538-4710fa93f050"
+content_hash = "sha256:542d83d8c2a50c176cb5d983b0e7fc15531def4a1904cf3cb3c3f940d738e385"
+size = 4103
+mtime_ms = 1789898283811
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/90e33843-a48d-4722-a538-4710fa93f050/0e0fe767-7d6f-4ac5-828e-47c50917ad58"
+storage_version_token = "1789898679035101"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "xDZuk9aq_HFOBkK5jXgop"
+uri = "file://evidence-work/private-parenting-trial-11/plan/protocol.md"
+type = "text"
+title = "固定した会話・評価の進め方"
+description = "固定事実内での自然な続行、別の有用案の評価、品質問題と試験設計上の限界の区別。"
+logical_id = "fd631a2e-1240-4b11-98ea-2a9241d526dc"
+content_hash = "sha256:12936d56f9e9dfaef03294e5bd431ba04e64dfb64f2bc5fe7db2b7423c96810c"
+size = 7168
+mtime_ms = 1789898402232
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/fd631a2e-1240-4b11-98ea-2a9241d526dc/f59c7420-6856-444c-81fa-fe193b6b9a2f"
+storage_version_token = "1789898680797893"
+content_type = "text/markdown"
+
+[[outputs]]
+id = "qZ08BlF6NqjrYwent7MQE"
+uri = "file://evidence-work/private-parenting-trial-12/delivery/index.html"
+type = "html"
+title = "実モデル試験：会話全文と評価"
+description = "3場面の無修正の会話全文を先頭に掲載。続いて回答別の5項目評価と、通信・利用量・費用の記録。外部通信なしで閲覧できます。"
+logical_id = "b9df47b6-06cf-4e98-9bec-6d0b5ced0af4"
+content_hash = "sha256:a9725acbc71a78cd4f115ec1db186099a66688fd185b9a18488b4109e064beb6"
+size = 3843434
+mtime_ms = 1789913763415
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/b9df47b6-06cf-4e98-9bec-6d0b5ced0af4/a94e8b85-fa10-4f50-b3d8-7d8f7e627042"
+storage_version_token = "1789913828821917"
+content_type = "text/html"
+
+[[outputs]]
+id = "8dA-laPzMnqFuUt5R_oCt"
+uri = "file://evidence-work/private-parenting-trial-12/delivery/report.md"
+type = "text"
+title = "実モデル試験の保存用報告書"
+description = "6通信で終了・閉鎖済み。生回答、最終評価、技術検証を分けた報告です。"
+logical_id = "d4c23fb0-5cf5-45f9-84d0-b732591c8030"
+content_hash = "sha256:271677e82811515ff78e1753c5333f08b0e7cd6fcfeba9ae2bcf3acf34dfae79"
+size = 18410
+mtime_ms = 1789913763407
+storage_uri = "gcs://replit-rams-assets-pike/rams/assets/repl:a383d74a-0ec8-425d-bfe8-2da6a2de7cad/d4c23fb0-5cf5-45f9-84d0-b732591c8030/1dd74a6a-6d0d-41cd-b3f6-4267f507f87e"
+storage_version_token = "1789913830182995"
+content_type = "text/markdown"

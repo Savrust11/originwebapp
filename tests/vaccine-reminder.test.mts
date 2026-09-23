@@ -8,6 +8,7 @@ import {
   type VaccineReminder,
 } from "../client/src/lib/vaccine-reminder";
 import {
+  VACCINE_DEFINITIONS,
   getNextDoseRecommendation,
   getVaccineById,
   getVaccineStatus,
@@ -26,6 +27,129 @@ function v(id: string) {
 }
 
 const BIRTHDAY = "2026-01-01";
+
+// ---------- vaccine definition integrity ----------
+
+{
+  const definitionsById = new Map(VACCINE_DEFINITIONS.map((definition) => [definition.id, definition]));
+  const groups = new Map<string, typeof VACCINE_DEFINITIONS>();
+
+  check(
+    "definitions: vaccine ids are unique",
+    definitionsById.size === VACCINE_DEFINITIONS.length,
+  );
+
+  for (const definition of VACCINE_DEFINITIONS) {
+    const group = groups.get(definition.group) ?? [];
+    group.push(definition);
+    groups.set(definition.group, group);
+
+    check(
+      `${definition.id}: standardAgeMonths is within its age group`,
+      definition.standardAgeMonths >= definition.ageGroupMin
+        && definition.standardAgeMonths <= definition.ageGroupMax,
+      `(standard=${definition.standardAgeMonths}, range=${definition.ageGroupMin}-${definition.ageGroupMax})`,
+    );
+
+    if (definition.minIntervalDays !== null) {
+      check(
+        `${definition.id}: configured minIntervalDays is positive`,
+        definition.minIntervalDays > 0,
+        `(minIntervalDays=${definition.minIntervalDays})`,
+      );
+    }
+
+    if (definition.previousDoseId) {
+      const previous = definitionsById.get(definition.previousDoseId);
+      check(
+        `${definition.id}: previousDoseId exists`,
+        previous !== undefined,
+        `(${definition.previousDoseId})`,
+      );
+      check(
+        `${definition.id}: previous dose links back`,
+        previous?.nextDoseId === definition.id,
+        `(previous.nextDoseId=${previous?.nextDoseId ?? "missing"})`,
+      );
+      check(
+        `${definition.id}: previous dose is adjacent in the same group`,
+        previous?.group === definition.group
+          && previous.doseNumber === definition.doseNumber - 1,
+        `(previous=${previous?.group ?? "missing"} #${previous?.doseNumber ?? "missing"})`,
+      );
+    }
+
+    if (definition.nextDoseId) {
+      const next = definitionsById.get(definition.nextDoseId);
+      check(
+        `${definition.id}: nextDoseId exists`,
+        next !== undefined,
+        `(${definition.nextDoseId})`,
+      );
+      check(
+        `${definition.id}: next dose links back`,
+        next?.previousDoseId === definition.id,
+        `(next.previousDoseId=${next?.previousDoseId ?? "missing"})`,
+      );
+      check(
+        `${definition.id}: next dose is adjacent in the same group`,
+        next?.group === definition.group
+          && next.doseNumber === definition.doseNumber + 1,
+        `(next=${next?.group ?? "missing"} #${next?.doseNumber ?? "missing"})`,
+      );
+    }
+
+    if (definition.intervalBaseDoseId) {
+      const intervalBase = definitionsById.get(definition.intervalBaseDoseId);
+      check(
+        `${definition.id}: intervalBaseDoseId is an earlier dose in the same group`,
+        intervalBase?.group === definition.group
+          && intervalBase.doseNumber < definition.doseNumber,
+        `(intervalBase=${intervalBase?.group ?? "missing"} #${intervalBase?.doseNumber ?? "missing"})`,
+      );
+    }
+  }
+
+  for (const [groupName, definitions] of groups) {
+    const sorted = [...definitions].sort((a, b) => a.doseNumber - b.doseNumber);
+    const totalDoses = sorted[0].totalDoses;
+    check(
+      `${groupName}: totalDoses is consistent`,
+      sorted.every((definition) => definition.totalDoses === totalDoses),
+    );
+    check(
+      `${groupName}: definition count matches totalDoses`,
+      sorted.length === totalDoses,
+      `(count=${sorted.length}, totalDoses=${totalDoses})`,
+    );
+    check(
+      `${groupName}: doseNumber is consecutive from 1`,
+      sorted.every((definition, index) => definition.doseNumber === index + 1),
+      `(doseNumbers=${sorted.map((definition) => definition.doseNumber).join(",")})`,
+    );
+    check(
+      `${groupName}: standardAgeMonths does not decrease by dose order`,
+      sorted.every((definition, index) =>
+        index === 0 || definition.standardAgeMonths >= sorted[index - 1].standardAgeMonths
+      ),
+      `(standardAgeMonths=${sorted.map((definition) => definition.standardAgeMonths).join(",")})`,
+    );
+    check(
+      `${groupName}: definitions form one ordered chain`,
+      sorted.every((definition, index) => {
+        const expectedPreviousId = index === 0 ? null : sorted[index - 1].id;
+        const expectedNextId = index === sorted.length - 1 ? null : sorted[index + 1].id;
+        return definition.previousDoseId === expectedPreviousId
+          && definition.nextDoseId === expectedNextId;
+      }),
+    );
+  }
+
+  check(
+    "hepB_3: interval is measured from hepB_1",
+    definitionsById.get("hepB_3")?.intervalBaseDoseId === "hepB_1",
+  );
+}
 
 // ---------- getVaccineStatus ----------
 

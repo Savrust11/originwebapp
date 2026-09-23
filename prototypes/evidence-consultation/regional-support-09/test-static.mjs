@@ -1,0 +1,20 @@
+import fs from "node:fs";
+import path from "node:path";
+import assert from "node:assert/strict";
+import {fileURLToPath} from "node:url";
+
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),"../../..");
+const out=path.join(root,"evidence-work/regional-support-09/preview");
+const html=fs.readFileSync(path.join(out,"index.html"),"utf8");
+const catalog=JSON.parse(fs.readFileSync(path.join(root,"evidence-work/regional-support-09/data/catalog.json"),"utf8"));
+assert.equal(catalog.municipalities.length,6);
+for(const text of ["地域の支援を探す","子どもを預けたい","家事・育児を手伝ってほしい","誰かに相談したい","親子で行ける場所を探したい","このアプリでは、まだ詳しい情報を掲載していません","保存はこの画面を開いている間だけ","相談全文は渡しません"])assert(html.includes(text),text);
+for(const forbidden of ["localStorage","sessionStorage","indexedDB","fetch(","WebSocket","EventSource","XMLHttpRequest"])assert(!html.includes(forbidden),`forbidden browser persistence/network: ${forbidden}`);
+assert(html.includes("connect-src 'none'"));
+assert(!html.includes("sourceRef"),"reviewer-only source metadata leaked into parent HTML");
+assert(!html.includes("versionId"),"reviewer-only version leaked into parent HTML");
+const byId=new Map(catalog.services.map(x=>[x.id,x]));
+assert.equal(byId.size,catalog.services.length);
+assert(catalog.services.some(x=>x.purposes.length>1),"multi-purpose shared service fixture required");
+assert(catalog.services.some(x=>!x.fees||/未確認/.test(x.fees)),"unknown-fee fixture required");
+console.log("PASS: static regional-support boundary and interaction contract");

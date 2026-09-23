@@ -1,0 +1,14 @@
+{
+  "controllerModule": "../controller.mjs",
+  "geographyModule": "../geography.mjs",
+  "controllerExport": "createController",
+  "geographyExport": "resolveRegion",
+  "constructor": "{ search, resolveRegion, onChange }",
+  "methods": ["setInput({question,region})", "submit()", "getState()", "dispose()"],
+  "searchInput": "{question,region,geography,signal}",
+  "searchOutput": "{results:[{isMunicipal,sourceId,versionId,sectionId,originalUrl,...}],diagnostics}",
+  "region": "{prefecture,municipality,ward} or null",
+  "states": ["idle","searching","needs_city","not_collected","invalid_region","incomplete","ready","error"],
+  "replayFile": "evidence-work/search-repair-05/validation/cases.json",
+  "rules": "Use controller unchanged with injected measured replay search; pending work invalidated on ANY question/region change, including geography/diagnostics. Bare 中区 asks city once and permits only nonmunicipal guidance. No fees/eligibility/contact in ambiguous/unknown/invalid context. incomplete must explicitly say retrieval guard prevented complete search, never no services. invalid_region asks corrected prefecture/city/ward. geography.notice must be shown on conflicting city mention; structured selection authoritative. No source/rights fabrication."
+}

@@ -178,7 +178,7 @@ export function generateMemoriesPdf({ childName, birthday, allLogs }: MemoriesPd
         const color = MILESTONE_COLORS[log.type] || purple;
         const dateStr = format(new Date(log.createdAt), "d日", { locale: ja });
         const text = log.message
-          ?.replace(/^(はじめて|できた|ことば|きょうみ|マイルストーン)[：:]\s*/u, "")
+          ?.replace(new RegExp("^(はじめて|できた|ことば|きょうみ|マイルストーン)[：:]\\s*", "u"), "")
           ?.replace(/を記録しました！?$/, "")
           ?.trim() || log.message || "";
         html += `<div class="milestone-item">

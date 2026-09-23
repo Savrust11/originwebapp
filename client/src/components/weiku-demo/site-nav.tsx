@@ -54,15 +54,9 @@ export function SiteNav() {
           ))}
         </ul>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center lg:flex">
           <a href="#cta" className="text-sm font-medium text-charcoal/75 transition-colors hover:text-grape">
             お問い合わせ
-          </a>
-          <a
-            href="#cta"
-            className="rounded-full bg-grape px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-grape/25 transition-transform hover:-translate-y-0.5 hover:bg-grape-deep"
-          >
-            We育を試す
           </a>
         </div>
 
@@ -95,9 +89,9 @@ export function SiteNav() {
           <a
             href="#cta"
             onClick={() => setOpen(false)}
-            className="mt-5 block rounded-full bg-grape px-5 py-3 text-center text-base font-bold text-white"
+            className="mt-4 block py-3 text-base font-medium text-charcoal/80"
           >
-            We育を試す
+            お問い合わせ
           </a>
         </div>
       )}

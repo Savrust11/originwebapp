@@ -425,4 +425,4 @@ export const BABY_FOOD_PRODUCTS: BabyFoodProduct[] = [
   },
 ];
 
-export const BABY_FOOD_BRANDS = [...new Set(BABY_FOOD_PRODUCTS.map(p => p.brand))];
+export const BABY_FOOD_BRANDS = Array.from(new Set(BABY_FOOD_PRODUCTS.map(p => p.brand)));

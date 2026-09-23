@@ -2,8 +2,21 @@
 - [Demo mode (login-free /demo/app)](demo-mode.md) — /demo is the marketing LP; app demo moved to /demo/app; patch window.fetch (hooks call fetch directly); snapshot/restore localStorage on enter/exit.
 - [performedBy multi-performer attribution](performer-attribution.md) — performedBy may be a '・'-joined multi-value string ('papa・mama'); split + includes(), never === in attribution/points logic.
 - [Log update route allowlist](log-update-route.md) — new editable log columns must be added to the /api/logs/:id/update Zod allowlist + payload, not just storage.
-- [Auth identity model & ownership](auth-identity-model.md) — normal ops use client userId(papa/mama)+familyId, NOT sessions; session-gated routes break in preview/native; ownership must check BOTH familyId AND userId (IDOR).
+- [Auth identity boundaries](auth-identity-model.md) — legacy family identifiers are not private identity; consultations must require verified sessions, even when preview/native login is unavailable.
 - [db:push wants to drop the session table](db-push-session-table.md) — never confirm the drop (kills login sessions); add columns via direct ALTER TABLE instead.
 - [Phase-gated record buttons](phase-gated-buttons.md) — a log type missing from the next age phase silently vanishes on the birthday (home + customize); check phases.ts first on "ボタンが消えた" reports.
 - [Server-side SEO injection](server-seo-injection.md) — per-route OG/title/canonical injected via server seo map; req.path is mount-relative in catch-all; SPA fallback files bypass rewrite.
+- [Legacy familyId rotation](family-id-rotation.md) — rotation renames family_id in all tables via information_schema; old→new mapping only disclosed during a 72h grace window (security tradeoff).
+- [Sleep session↔log linkage](sleep-session-log-linkage.md) — use log.sleepSessionId for durations, never timestamp proximity; Timeline still has the legacy 2-min heuristic.
 - [Dialog scroll pattern](dialog-scroll-pattern.md) — form dialogs need max-h-[80vh]+overflow-y-auto or the save button goes off-screen on mobile; curl the API first on "保存できない" reports.
+- [Supporter operating constraints](supporter-operating-constraints.md) — shared facility accounts, no automatic inactivity/offline lock, and retained printed PDFs are intentional requirements.
+- [Japanese print verification](print-verification.md) — valid PDF bytes and correct DOM text can still render Japanese as squares; inspect rendered output.
+- [Protected development data](protected-development-data.md) — the user’s development DB contains existing data; integration tests must use newly owned disposable storage.
+- [Publishing task changes](publishing-task-changes.md) — verify changes reached the main project before recommending republish; task previews can differ from the publishing source.
+- [Evidence validation boundary](evidence-validation-boundary.md) — fictional tests prove engineering behavior, not clinical quality; source adoption and real-corpus retrieval review remain separate.
+- [Frozen prototype reuse](frozen-prototype-reuse.md) — preserve archived helper bytes; use checked isolation-only adapters rather than rewriting old evaluators or promoting candidate sources.
+- [Retrieval scope diagnostics](retrieval-scope-diagnostics.md) — separate saved, loaded, retrievable and fact-ready; alias presence alone does not prove a working concept-to-original link.
+- [Private prototype previews](private-prototype-preview.md) — workspace VNC can keep an owned offline preview interactive without exposing a public-by-default development URL.
+- [Conversation-first design](conversation-first-editorial-policy.md) — answer within evidence before clarification/referral; private authored samples, not production fixed replies.
+- [Source reuse purpose](source-reuse-purpose.md) — private/offline does not establish noncommercial use; preserve prior provider facts while checking new source-rights deltas.
+- [Live trial preflight](live-trial-preflight.md) — inject transport faults before paid calls; unresolved reservations must block even a different scene.

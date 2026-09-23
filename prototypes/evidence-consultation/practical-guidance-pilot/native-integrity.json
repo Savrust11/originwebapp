@@ -1,0 +1,9 @@
+{
+  "format": "weiku.practical-guidance-native-integrity.v1",
+  "modules": {
+    "tests/run-ephemeral-tests.mjs": "e08964add63b728f00c8b912278d1c7ad787b424c5f09dc6675ff3d8661918ab",
+    "tests/run-managed-tests.mjs": "f02b414f651d2f1a70177c3b0faa10444ec109f0acde4426ae0c32bd1817d5f8",
+    "server/evidence/search.ts": "ce2bcb4391ff48732854fd057246d15107e40bc8652c07d10814f2b006a42b8a"
+  },
+  "searchSqlSha256": "884eb8bddbfc6b3859506b622d2c94d078fefbc8a2e7beb2521792bd4a159d4e"
+}

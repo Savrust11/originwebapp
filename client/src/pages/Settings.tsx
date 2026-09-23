@@ -23,6 +23,7 @@ import { api } from "@shared/routes";
 import { useAuth } from "@/hooks/use-auth";
 import { useUserType, setUserTypeGlobal } from "@/hooks/use-user-type";
 import { useUserLabels } from "@/hooks/use-user-labels";
+import { useConsultationStatus } from "@/hooks/use-consultations";
 import { phases, getPhaseForAge, getActionsForPhase, PhaseActionConfig } from "@/lib/phases";
 
 const settingsSchema = z.object({
@@ -1366,6 +1367,7 @@ export default function Settings() {
   const { updateRole } = useAuth();
   const [, navigate] = useLocation();
   const { toast } = useToast();
+  const consultationStatus = useConsultationStatus();
 
   const activeChildId = localStorage.getItem("activeChildId");
   const activeChild = childrenList.find((c: any) => String(c.id) === activeChildId) || childrenList[0] || null;
@@ -1430,6 +1432,24 @@ export default function Settings() {
               ようこそ、ぶどうの木へ。まずはお子様のお名前とお誕生日をお聞かせくださいませ。このアプリの大切な主役でございます。
             </p>
           </div>
+        )}
+        {consultationStatus.data?.enabled && consultationStatus.data.authenticated && consultationStatus.data.eligible && (
+          <Link
+            href="/consultations"
+            className="mb-6 flex items-center justify-between rounded-[24px] border-2 border-purple-100 bg-white/80 p-5 shadow-sm transition-colors hover:bg-purple-50"
+            data-testid="link-consultations-settings"
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-100">
+                <MessageSquare className="h-5 w-5 text-purple-600" />
+              </span>
+              <span>
+                <span className="block text-sm font-bold text-gray-700">個別相談</span>
+                <span className="block text-[10px] text-gray-400">相談内容を記録・管理する</span>
+              </span>
+            </span>
+            <ChevronRight className="h-5 w-5 text-purple-400" />
+          </Link>
         )}
 
         {isLoading ? (
@@ -1592,6 +1612,36 @@ export default function Settings() {
             <VaccineReminderSection />
 
             <FeedbackSection />
+
+            <Link href="/supporter/manage">
+              <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-4 rounded-[24px] shadow-sm border border-purple-100 cursor-pointer" data-testid="link-supporter-manage">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                    <HandHeart className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-700">サポーター管理</p>
+                    <p className="text-[10px] text-gray-400">利用権限・招待を管理</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </div>
+            </Link>
+
+            <Link href="/supporter">
+              <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-4 rounded-[24px] shadow-sm border border-green-100 cursor-pointer" data-testid="link-supporter-portal">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                    <Users className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-700">サポーターポータル</p>
+                    <p className="text-[10px] text-gray-400">お子さまの記録を確認・入力</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
+              </div>
+            </Link>
 
             <Link href="/tips">
               <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-4 rounded-[24px] shadow-sm border border-gray-100 cursor-pointer" data-testid="link-tips">

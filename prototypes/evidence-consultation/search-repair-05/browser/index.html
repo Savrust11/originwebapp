@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>地域を取り違えない検索・オフライン確認</title>
+  <style>
+    @font-face {
+      font-family: "Noto Sans JP";
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: block;
+      src: url("../../../../node_modules/@fontsource/noto-sans-jp/files/noto-sans-jp-japanese-400-normal.woff2") format("woff2");
+    }
+    :root { color-scheme: light; font-family: "Noto Sans JP", sans-serif; color: #17332d; background: #eef5f1; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(900px, calc(100% - 28px)); margin: 28px auto; }
+    header, form, #panel { background: #fff; border: 1px solid #cbded6; border-radius: 18px; padding: 22px; margin-bottom: 16px; box-shadow: 0 8px 24px #17332d10; }
+    h1 { font-size: 1.55rem; margin: 0 0 8px; }
+    .eyebrow { color: #3f6e62; font-weight: 700; font-size: .8rem; letter-spacing: .08em; }
+    .notice { margin: 8px 0 0; color: #526862; }
+    label { display: block; font-weight: 700; margin: 0 0 15px; }
+    input { width: 100%; margin-top: 6px; border: 1px solid #9db9af; border-radius: 10px; padding: 11px; font: inherit; }
+    .region { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    button { border: 0; border-radius: 999px; background: #176f5b; color: white; font: inherit; font-weight: 700; padding: 11px 22px; cursor: pointer; }
+    #status { font-weight: 700; }
+    .clarification { padding: 14px; border-left: 5px solid #d9942b; background: #fff5df; }
+    .not-collected { padding: 14px; background: #edf2ff; border-radius: 10px; }
+    article { border-top: 1px solid #dbe7e2; padding: 16px 0; }
+    article h2 { font-size: 1rem; margin: 0 0 8px; }
+    .summary { white-space: pre-line; }
+    details { color: #3d554f; font-size: .88rem; }
+    .binding { overflow-wrap: anywhere; }
+    [hidden] { display: none !important; }
+    @media (max-width: 620px) { .region { grid-template-columns: 1fr; } main { margin-top: 14px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">開発用・オフライン確認</div>
+    <h1>地域を取り違えない検索</h1>
+    <p class="notice">用意済みの測定結果だけを再生します。通常アプリ・ネットワーク・データベースには接続しません。</p>
+  </header>
+  <form id="search-form">
+    <label>相談したいこと
+      <input id="question" name="question" autocomplete="off" placeholder="例：中区で子どもを少し預けたい">
+    </label>
+    <div class="region">
+      <label>都道府県<input id="prefecture" name="prefecture" autocomplete="off"></label>
+      <label>市区町村<input id="municipality" name="municipality" autocomplete="off"></label>
+      <label>区（政令市）<input id="ward" name="ward" autocomplete="off"></label>
+    </div>
+    <button id="submit" type="submit">この条件で探す</button>
+  </form>
+  <section id="panel" aria-live="polite">
+    <div id="status">質問と地域を入力してください。</div>
+    <div id="geography-notice"></div>
+    <div id="clarification"></div>
+    <div id="results"></div>
+  </section>
+</main>
+<script type="module" src="./app.mjs"></script>
+</body>
+</html>
