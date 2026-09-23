@@ -6,3 +6,25 @@ vite.config.ts.*
 *.tar.gz
 test-results/
 playwright-report/
+
+# Replit / editor environment state
+.local/
+.config/
+sedK6SoEg
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Database dumps — NEVER commit.
+# docs/*.sql migrations stay tracked; only dump-shaped names are blocked.
+*.dump
+*.sql.gz
+*backup*.sql
+*_prod_*.sql
+*dump*.sql
+weiku-backup/
+
+# Large research artifacts (kept locally, out of git)
+evidence-work/
